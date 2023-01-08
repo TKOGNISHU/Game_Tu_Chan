@@ -2,14 +2,17 @@
 </script>
 
 <template>
-  <header>
+    <header>
 
-  </header>
+    </header>
 
-  <main>
-    <router-view />
-  </main>
+    <main class="bg-dark">
+        <router-view />
+    </main>
 </template>
 
 <style scoped>
+main {
+    height: 100vh;
+}
 </style>

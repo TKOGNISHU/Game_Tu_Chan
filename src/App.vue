@@ -1,4 +1,5 @@
 <script setup>
+import Function from '@/components/Function.vue'
 </script>
 
 <template>
@@ -7,7 +8,10 @@
     </header>
 
     <main class="bg-dark">
-        <router-view />
+        <Function />
+        <section class="position-relative" style="top: -100%; z-index: 1;">
+            <router-view />
+        </section>
     </main>
 </template>
 

@@ -10,14 +10,14 @@
 export default {
     data() {
         return {
-            avatars: [
-                {
+            avatars: {
+                'monk': {
                     first: '@/assets/img/nam-tu-si/nam_tu_si_no_background.png',
                     second: '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png',
                     between: '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png',
                     finally: '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png',
                 },
-            ],
+            },
             skills: {
                 'normal': {
                     first: '@/assets/img/skills/normal/normal_first.png',
@@ -92,67 +92,6 @@ export default {
                         preStatuses: [0], // > 0 => pre heal, < 0 => pre damage
                     },
                     { // defense
-                        you: [
-                            {
-                                stt: 1,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 2,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 3,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 4,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 5,
-                                health: 1000,
-                                mp: 100,
-                            },
-                        ],
-                        defense: [
-                            {
-                                stt: 1,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 2,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 3,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 4,
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                stt: 5,
-                                health: 1000,
-                                mp: 100,
-                            },
-                        ],
-                        local: 1,
-                        beingAttacked: [1],
-                        damage: [100],
-                        effect: ['http://localhost...'],
-                        heal: [0],
-                        beingHealed: [0],
-                        preStatuses: [0],
                     },
                 ]
             ]

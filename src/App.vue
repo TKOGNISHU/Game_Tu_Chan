@@ -3,14 +3,12 @@ import Function from '@/components/Function.vue'
 </script>
 
 <template>
-    <header>
-
-    </header>
-
-    <main class="bg-dark">
-        <Function />
-        <section class="position-relative" style="top: -100%; z-index: 1;">
+    <main class="text-center bg-dark">
+        <section class="position-relative d-inline-block">
+            <Function />
             <router-view />
+            <!-- <section class="position-relative" style="top: -100%; z-index: 1;">
+            </section> -->
         </section>
     </main>
 </template>

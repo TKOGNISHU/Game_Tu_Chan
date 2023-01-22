@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from "vue-router"
 
 const routes = [
     {
+        path: '/quest/:id/fight',
+        component: () => import ('@/resource/views/Fight.vue')
+    },
+    {
         path: '/quest',
         component: () => import ('@/resource/views/Quest.vue')
     },

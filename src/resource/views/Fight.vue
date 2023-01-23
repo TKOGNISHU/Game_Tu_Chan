@@ -5,39 +5,41 @@
         <div class="row battle-field">
             <div class="col bg-dark">
                 <div class="row g-0">
-                    <div v-for="i of [1, 2, 3]" class="col bg-success" style="height: 140px;">
-                        <!-- <img v-if="renderLocalY(i, plot[0][0].you[yLocal])" 
-                            :src="avatars[plot[0][0].you[yLocal].avatar].first" alt=""> -->
-                            <h1 v-if="renderLocalY(i, plot[0][0].you[yLocal].local)">{{ plot[0][0].you[yLocal].local }}</h1>
+                    <div v-for="i of [3, 2, 1]" class="col position-relative bg-success" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 you-${i}`" style="z-index: 100;" :src="avatars[status.you[i].avatar].first" alt="">
+                        
+                        <div class="position-absolute top-0 bottom-0 start-0" style="margin-top: -50px;">
+                            <img class="h-75" src="@/assets/img/skills/normal/normal_first.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col bg-danger" style="height: 140px;"></div>
-                    <div class="col bg-success" style="height: 140px;"></div>
-                    <div class="col bg-warning" style="height: 140px;"></div>
+                    <div v-for="i of [6, 5, 4]" class="col position-relative bg-danger" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 you-${i}`" :src="avatars[status.you[i].avatar].first" alt="">
+                    </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col bg-warning" style="height: 140px;"></div>
-                    <div class="col bg-danger" style="height: 140px;"></div>
-                    <div class="col bg-success" style="height: 140px;"></div>
+                    <div v-for="i of [9, 8, 7]" class="col position-relative bg-warning" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 you-${i}`" :src="avatars[status.you[i].avatar].first" alt="">
+                    </div>
                 </div>
             </div>
             <div class="col-1"></div>
             <div class="col bg-dark">
                 <div class="row g-0">
-                    <div class="col bg-success" style="height: 140px;"></div>
-                    <div class="col bg-warning" style="height: 140px;"></div>
-                    <div class="col bg-danger" style="height: 140px;"></div>
+                    <div v-for="i of [3, 2, 1]" class="col position-relative bg-success" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                    </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col bg-danger" style="height: 140px;"></div>
-                    <div class="col bg-success" style="height: 140px;"></div>
-                    <div class="col bg-warning" style="height: 140px;"></div>
+                    <div v-for="i of [6, 5, 4]" class="col position-relative bg-danger" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                    </div>
                 </div>
                 <div class="row g-0">
-                    <div class="col bg-warning" style="height: 140px;"></div>
-                    <div class="col bg-danger" style="height: 140px;"></div>
-                    <div class="col bg-success" style="height: 140px;"></div>
+                    <div v-for="i of [9, 8, 7]" class="col position-relative bg-warning" style="height: 140px;">
+                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,6 +47,11 @@
 </template>
 
 <script>
+import monkFirst from '@/assets/img/nam-tu-si/nam_tu_si_no_background.png'
+import monkSecond from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png'
+import monkBetween from '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png'
+import monkFinally from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png'
+
 export default {
     data() {
         return {
@@ -52,10 +59,10 @@ export default {
             dLocal: 0,
             avatars: {
                 'monk': {
-                    first: '@/assets/img/nam-tu-si/nam_tu_si_no_background.png',
-                    second: '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png',
-                    between: '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png',
-                    finally: '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png',
+                    first: monkFirst,
+                    second: monkSecond,
+                    between: monkBetween,
+                    finally: monkFinally,
                 },
             },
             skills: {
@@ -64,68 +71,65 @@ export default {
                     finally: '@/assets/img/skills/normal/normal_finally.png',
                 },
             },
+            status: {
+                you: {
+                    1: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    3: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    5: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    7: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    9: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                },
+                defense: {
+                    1: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    3: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    5: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    7: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                    9: {
+                        avatar: 'monk',
+                        health: 1000,
+                        mp: 100,
+                    },
+                }
+            },
             plot: [ // turn
                 [ // turn 1
                     { // you
-                        you: [
-                            {
-                                local: 1,
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                local: 3,
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                local: 5,
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                local: 7,
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                local: 9,
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                        ],
-                        defense: [
-                            {
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                            {
-                                avatar: 'monk',
-                                health: 1000,
-                                mp: 100,
-                            },
-                        ],
                         local: 1,
                         preStatuses: [0], // > 0 => pre heal, < 0 => pre damage // list of status is actions before attacker attack.
                         beingAttacked: [1], // 1, 2, 3, 4, 5, first row, last row, first column, last column

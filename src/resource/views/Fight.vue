@@ -15,7 +15,7 @@
                         <div class="position-absolute top-0 bottom-0 start-0" style="margin-top: -100px;">
                             <img class="h-75" src="@/assets/img/skills/normal/normal_first.png" alt="">
 
-                            <img class="position-absolute h-25" style="top: 22%; left: 36%;" src="@/assets/img/skills/normal/normal_finally.png" alt="">
+                            <img :class="`position-absolute h-25 you-skill-${i}`" style="top: 22%; left: 36%;" src="@/assets/img/skills/normal/normal_finally.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -167,6 +167,7 @@ export default {
                     second.classList.add('d-none')
                 })
 
+                this.actionSkill('you-skill-1', 'defense-3')
                 await timeout(time).then(async () => {
                     this.chantingFinish(who, index)
                 })
@@ -191,6 +192,10 @@ export default {
                     })
                 })
             })
+        },
+        async actionSkill(yourSkill = 'you-skill-1', object = 'defense-3') {
+            const skill = $(`.${yourSkill}`)
+            skill.style.translate = `${$(`.${object}`).x - $(`.${yourSkill}`).x - $(`.${object}`).offsetWidth - $(`.${yourSkill}`).offsetWidth}px 0px`
         }
     },
     mounted() {

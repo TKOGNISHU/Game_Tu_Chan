@@ -28,12 +28,6 @@ export default {
     async created() {
     },
     async mounted() {
-        // const background = $('.background')
-        // const width = $('body').offsetWidth
-        // const height = $('body').offsetHeight
-
-        // background.style.width = width
-        // background.style.height = height
     },
 }
 

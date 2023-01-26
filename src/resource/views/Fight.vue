@@ -3,13 +3,19 @@
         <div class="status-bar" style="height: 100px;"><h1>Status</h1></div>
 
         <div class="row battle-field">
+            <!-- you -->
             <div class="col bg-dark">
                 <div class="row g-0">
                     <div v-for="i of [3, 2, 1]" class="col position-relative bg-success" style="height: 140px;">
-                        <img v-if="status.you[i]" :class="`h-100 you-${i}`" style="z-index: 100;" :src="avatars[status.you[i].avatar].first" alt="">
+                        <img v-if="status.you[i]" :class="`h-100 you-${i}-first`" style="z-index: 100;" :src="avatars[status.you[i].avatar].first" alt="">
+                        <img v-if="status.you[i]" :class="`h-100 d-none you-${i}-second`" style="z-index: 100;" :src="avatars[status.you[i].avatar].second" alt="">
+                        <img v-if="status.you[i]" :class="`h-100 d-none you-${i}-between`" style="z-index: 100;" :src="avatars[status.you[i].avatar].between" alt="">
+                        <img v-if="status.you[i]" @load="chanting('you', i, 1000)" :class="`h-100 d-none you-${i}-finally`" style="z-index: 100;" :src="avatars[status.you[i].avatar].finally" alt="">
                         
-                        <div class="position-absolute top-0 bottom-0 start-0" style="margin-top: -50px;">
+                        <div class="position-absolute top-0 bottom-0 start-0" style="margin-top: -100px;">
                             <img class="h-75" src="@/assets/img/skills/normal/normal_first.png" alt="">
+
+                            <img class="position-absolute h-25" style="top: 22%; left: 36%;" src="@/assets/img/skills/normal/normal_finally.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -25,20 +31,21 @@
                 </div>
             </div>
             <div class="col-1"></div>
+            <!-- defense -->
             <div class="col bg-dark">
                 <div class="row g-0">
                     <div v-for="i of [3, 2, 1]" class="col position-relative bg-success" style="height: 140px;">
-                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                        <img v-if="status.defense[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
                 <div class="row g-0">
                     <div v-for="i of [6, 5, 4]" class="col position-relative bg-danger" style="height: 140px;">
-                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                        <img v-if="status.defense[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
                 <div class="row g-0">
                     <div v-for="i of [9, 8, 7]" class="col position-relative bg-warning" style="height: 140px;">
-                        <img v-if="status.you[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.you[i].avatar].first" alt="">
+                        <img v-if="status.defense[i]" :class="`h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
             </div>
@@ -146,12 +153,53 @@ export default {
         }
     },
     methods: {
-        renderLocalY(i, local) {
-            console.log(i, local, this.yLocal++)
-            if (this.yLocal < 5) {
-                return i == local
-            }
+        async chanting(who, index, time) {
+            const first = $(`.${who}-${index}-first`)
+            const second = $(`.${who}-${index}-second`)
+            const between = $(`.${who}-${index}-between`)
+            const final = $(`.${who}-${index}-finally`)
+
+            timeout(1000).then(async () => {
+                second.classList.remove('d-none')
+                first.classList.add('d-none')
+                await timeout(30).then(async () => {
+                    final.classList.remove('d-none')
+                    second.classList.add('d-none')
+                })
+
+                await timeout(time).then(async () => {
+                    this.chantingFinish(who, index)
+                })
+            })
+        },
+        async chantingFinish(who, index) {
+            const first = $(`.${who}-${index}-first`)
+            const second = $(`.${who}-${index}-second`)
+            const between = $(`.${who}-${index}-between`)
+            const final = $(`.${who}-${index}-finally`)
+
+            timeout(0).then(async () => {
+                between.classList.remove('d-none')
+                final.classList.add('d-none')
+                await timeout(50).then(async () => {
+                    second.classList.remove('d-none')
+                    between.classList.add('d-none')
+
+                    await timeout(50).then(async () => {
+                        first.classList.remove('d-none')
+                        second.classList.add('d-none')
+                    })
+                })
+            })
         }
+    },
+    mounted() {
     }
+}
+
+function timeout(ms) {
+    return new Promise((resolve) => {
+        return setTimeout(resolve, ms)
+    })
 }
 </script>

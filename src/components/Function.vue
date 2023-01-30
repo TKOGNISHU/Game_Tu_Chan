@@ -1,6 +1,6 @@
 <template>
     <section>
-        <img class="" style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep.jpg" alt="">
+        <img class="" style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep(1).jpg" alt="">
     
         <router-link v-if="this.$route.path == '/'" class="position-absolute d-inline-flex flex-column align-items-center text-decoration-none" style="bottom: 5%; right: 5%;" to="quest">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/Ảnh chụp màn hình 2023-01-08 091407123123.png" alt="">

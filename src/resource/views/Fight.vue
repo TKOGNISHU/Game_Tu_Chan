@@ -2,11 +2,11 @@
     <section class="position-absolute top-0 end-0 start-0 h-100 text-center background">
         <section class="status-bar" style="height: 150px;"><h1>Status</h1></section>
 
-        <section class="row battle-field">
+        <section class="row battle-field ms-5 me-5">
             <!-- you  -->
             <div class="col bg-dark">
                 <div class="row g-0">
-                    <div v-for="i of [7, 4, 1]" :class="`col position-relative bg-success ${`you-${i}`}`" style="height: 140px;">
+                    <div v-for="i of [7, 4, 1]" :class="`col position-relative ${`you-${i}`}`" style="height: 100px;">
                         <img v-if="status.you[i]" :class="`d-inline-block h-100 you-${i}-first`" style="z-index: 100;" :src="avatars[status.you[i].avatar].first" alt="">
                         <img v-if="status.you[i]" :class="`d-inline-block h-100 d-none you-${i}-second`" style="z-index: 100;" :src="avatars[status.you[i].avatar].second" alt="">
                         <img v-if="status.you[i]" :class="`d-inline-block h-100 d-none you-${i}-between`" style="z-index: 100;" :src="avatars[status.you[i].avatar].between" alt="">
@@ -14,31 +14,31 @@
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div v-for="i of [8, 5, 2]" class="col position-relative bg-danger" style="height: 140px;">
+                    <div v-for="i of [8, 5, 2]" class="col position-relative" style="height: 100px;">
                         <img v-if="status.you[i]" :class="`h-100 you-${i}`" :src="avatars[status.you[i].avatar].first" alt="">
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div v-for="i of [9, 6, 3]" class="col position-relative bg-warning" style="height: 140px;">
+                    <div v-for="i of [9, 6, 3]" class="col position-relative" style="height: 100px;">
                         <img v-if="status.you[i]" :class="`h-100 you-${i}`" :src="avatars[status.you[i].avatar].first" alt="">
                     </div>
                 </div>
             </div>
-            <div class="col-1"></div>
+            <div class="col-2"></div>
             <!-- defense -->
             <div class="col bg-dark">
                 <div class="row g-0">
-                    <div v-for="i of [1, 4, 7]" :class="`col position-relative bg-success`" style="height: 140px;">
+                    <div v-for="i of [1, 4, 7]" :class="`col position-relative`" style="height: 100px;">
                         <img v-if="status.defense[i]" :class="`d-inline-block h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div v-for="i of [2, 5, 8]" class="col position-relative bg-danger" style="height: 140px;">
+                    <div v-for="i of [2, 5, 8]" class="col position-relative" style="height: 100px;">
                         <img v-if="status.defense[i]" :class="`d-inline-block h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
                 <div class="row g-0">
-                    <div v-for="i of [3, 6, 9]" class="col position-relative bg-warning" style="height: 140px;">
+                    <div v-for="i of [3, 6, 9]" class="col position-relative" style="height: 100px;">
                         <img v-if="status.defense[i]" :class="`d-inline-block h-100 defense-${i}`" style="transform: scaleX(-1);" :src="avatars[status.defense[i].avatar].first" alt="">
                     </div>
                 </div>
@@ -48,16 +48,30 @@
         <!-- Skills -->
         <section>
             <template v-for="(value, key, index) in skysState">
-                <img :class="`position-fixed d-inline-block ${key}`" :src="value.image" :style="value.style" alt="">
+                <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="value.style" alt="">
             </template>
             
             <template v-for="(value, key, index) in magicRings">
-                <img :class="`position-fixed d-inline-block ${key}`" :src="value.image" :style="value.style" alt="">
+                <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="value.style" alt="">
             </template>
 
             <template v-for="(value, key, index) in skills">
-                <img v-for="i in value.amount" :class="`position-fixed d-inline-block skill-${key}`" :src="value.image" :style="value.style" alt="">
+                <img v-for="i in value.amount" :class="`position-fixed d-inline-block d-none skill-${key}`" :src="value.image" :style="value.style" alt="">
             </template>
+        </section>
+
+        <!-- damage -->
+        <section>
+            <!-- heal -->
+            <p class="position-fixed fw-bold text-success fs-4 d-none you-heal" style="z-index: 1000;">+1000</p>
+            <!-- damage -->
+            <p class="position-fixed fw-bold text-danger fs-4 d-none pt-3 ps-5 you-damage" style="z-index: 1000;">-1000</p>
+            <!-- heal -->
+            <p class="position-fixed fw-bold text-success fs-4 d-none defense-heal" style="z-index: 1000;">+1000</p>
+            <!-- damage -->
+            <p class="position-fixed fw-bold text-danger fs-4 d-none pt-5 ps-5 defense-damage" style="z-index: 1000;">-1000</p>
+
+            <button @click="test" class="position-fixed">Click me!</button>
         </section>
     </section>
 </template>
@@ -182,11 +196,17 @@ export default {
             const between = $(`.${who}-${index}-between`)
             const final = $(`.${who}-${index}-finally`)
 
+            const magic_ring_normal = '.magic_ring_normal'
+            const skill = '.skill-normal'
+            const defense = '.defense-3'
+
             timeout(1000).then(async () => {
                 // Display skill
                 if (index == 1) {
-                    this.setLocalFirst('magic_ring_normal', `${who}-${index}`)
-                    this.setLocalFirst('skill-normal', `${who}-${index}`)
+                    $(magic_ring_normal).classList.toggle('d-none')
+                    $(skill).classList.toggle('d-none')
+                    this.setLocalFirst(magic_ring_normal, `.${who}-${index}`)
+                    this.setLocalFirst(skill, `.${who}-${index}`)
                 }
 
                 second.classList.remove('d-none')
@@ -198,15 +218,17 @@ export default {
 
                 await timeout(500).then(async () => {
                     if (index == 1) {
-                        this.actionSkill(`${who}-${index}`, 'skill-normal', 'defense-5')
+                        this.actionSkill(`${who}-${index}`, skill, defense)
                     }
                 })
                 await timeout(time).then(async () => {
                     this.chantingFinish(who, index)
                     // Hidden skill
                     if (index == 1) {
-                        this.setLocalFirst('magic_ring_normal', `app`)
-                        this.setLocalFirst('skill-normal', `app`)
+                        $(magic_ring_normal).classList.toggle('d-none')
+                        $(skill).classList.toggle('d-none')
+                        this.setLocalFirst(magic_ring_normal, '.app')
+                        this.setLocalFirst(skill, '.app')
                     }
                 })
             })
@@ -232,19 +254,19 @@ export default {
             })
         },
         setLocalFirst(yourSkill, object) {
-            const skill = $(`.${yourSkill}`)
+            const skill = $(yourSkill)
             // Local rect on viewport
-            const skillRect = $(`.${yourSkill}`).getBoundingClientRect()
-            const objectRect = $(`.${object}`).getBoundingClientRect()
+            const skillRect = $(yourSkill).getBoundingClientRect()
+            const objectRect = $(object).getBoundingClientRect()
 
             skill.style.top = `${objectRect.y}px`
             skill.style.left = `${objectRect.x}px`
         },
         async actionSkill(who, yourSkill, object) {
-            const skill = $(`.${yourSkill}`)
+            const skill = $(yourSkill)
             // Local rect on viewport
-            const skillRect = $(`.${yourSkill}`).getBoundingClientRect()
-            const defense = $(`.${object}`).getBoundingClientRect()
+            const skillRect = $(yourSkill).getBoundingClientRect()
+            const defense = $(object).getBoundingClientRect()
             // 
             const x =   defense.x
                       - skillRect.x // => object <=> yourSkill
@@ -255,6 +277,16 @@ export default {
                       + skillRect.height / 2
 
             skill.style.translate = `${x}px ${y}px`
+        },
+        test() {
+            const youHeal = $('.you-heal')
+            const youDamage = $('.you-damage')
+            const defenseHeal = $('.defense-heal')
+            const defenseDamage = $('.defense-damage')
+            youHeal.classList.toggle('d-none')
+            youDamage.classList.toggle('d-none')
+            defenseHeal.classList.toggle('d-none')
+            defenseDamage.classList.toggle('d-none')
         }
     },
     mounted() {
@@ -267,3 +299,40 @@ function timeout(ms) {
     })
 }
 </script>
+
+<style>
+.you-heal {
+    animation: you-display 0.2s linear forwards;
+}
+.you-damage {
+    animation: you-display 0.2s linear forwards;
+}
+.defense-heal {
+    animation: defense-display 0.2s linear forwards;
+}
+.defense-damage {
+    animation: defense-display 0.2s linear forwards;
+}
+
+@keyframes you-display {
+    from {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+    to {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+}
+
+@keyframes defense-display {
+    from {
+        margin-top: 10px;
+        margin-left: -10px;
+    }
+    to {
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+}
+</style>

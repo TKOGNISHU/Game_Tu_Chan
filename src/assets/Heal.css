@@ -1,0 +1,186 @@
+.Heal {
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+.signle3 {
+	animation: 1.11s linear 0s 1 normal forwards running signle3;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes signle3 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	90.09% {
+		transform: translateY(-280px);
+	}
+}
+.signle2 {
+	animation: 1.11s linear 0s 1 normal forwards running signle2;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes signle2 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-329px);
+	}
+}
+.signle1 {
+	animation: 1.11s linear 0s 1 normal forwards running signle1;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes signle1 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-400px);
+	}
+}
+.doupble5 {
+	animation: 1.11s linear 0s 1 normal forwards running doupble5;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes doupble5 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-524px);
+	}
+}
+.doupble4 {
+	animation: 1.11s linear 0s 1 normal forwards running doupble4;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes doupble4 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-300px);
+	}
+}
+.doupble3 {
+	animation: 1.11s linear 0s 1 normal forwards running doupble3;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes doupble3 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-500px);
+	}
+}
+.doupble2 {
+	animation: 1.11s linear 0s 1 normal forwards running doupble2;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes doupble2 {
+	0% {
+		opacity: 0.3;
+		transform: translateY(0px);
+	}
+	11.71% {
+		opacity: 0.7;
+	}
+	18.02% {
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+	90.09% {
+		opacity: 0.3;
+		transform: translateY(-310px);
+	}
+}
+.doupble1 {
+	animation: 1.11s linear 0s 1 normal forwards running doupble1;
+	transform-box: fill-box;
+	transform-origin: 50% 50%
+}
+@keyframes doupble1 {
+	0% {
+		transform: translateY(0px);
+		opacity: 0.3;
+	}
+	90.09% {
+		transform: translateY(-346.1300000000001px);
+		opacity: 0.3;
+	}
+	63.06% {
+		opacity: 0.7;
+	}
+}

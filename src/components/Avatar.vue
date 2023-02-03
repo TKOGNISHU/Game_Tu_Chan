@@ -1,5 +1,6 @@
 <template>
-    <div class="position-relative d-inline-block display-status" style="height: 100px;">
+    <!-- Set height from <Avatar style=height: ???"" /> -->
+    <div class="position-relative d-inline-block display-status">
         <img :class="`h-100 ${who}-${index}-first`"
                 :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
                 :src="avatars[avatarType].first" alt="">

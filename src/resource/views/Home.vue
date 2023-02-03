@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Board from '@/components/Board.vue'
+import Board from '@/components/board/Board.vue'
 
 export default {
     components: { Board,  },

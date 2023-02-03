@@ -9,6 +9,19 @@
     object-position: center;
 }
 
+.display-status:hover > .board-info {
+    display: block;
+}
+
+.animation {
+    /* animation: translateBackground 1.0s steps(10) infinite; */
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+    animation-name: translateBackground;
+    animation-duration: 2.0s; /** specify duration before and after*/
+    /* animation-iteration-count: infinite; */
+    animation-timing-function: steps(10);
+}
+
 @media (hover: hover) {
   a:hover {
     background-color: hsla(160, 100%, 37%, 0.2);
@@ -16,4 +29,10 @@
 }
 
 @media (min-width: 1024px) {
+}
+
+@keyframes translateBackground {
+    100% {
+        background-position-x: -100px;
+    }
 }

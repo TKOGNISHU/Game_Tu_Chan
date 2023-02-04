@@ -13,10 +13,10 @@
     display: block;
 }
 
-.animation {
+.animation-100 {
     /* animation: translateBackground 1.0s steps(10) infinite; */
     /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-    animation-name: translateBackground;
+    animation-name: translateBackground-100;
     animation-duration: 2.0s; /** specify duration before and after*/
     /* animation-iteration-count: infinite; */
     animation-timing-function: steps(10);
@@ -31,7 +31,7 @@
 @media (min-width: 1024px) {
 }
 
-@keyframes translateBackground {
+@keyframes translateBackground-100 {
     100% {
         background-position-x: -100px;
     }

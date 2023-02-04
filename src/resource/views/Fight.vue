@@ -28,15 +28,23 @@
                 <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="`${value.style}`" alt="">
             </template>
             
-            <template v-for="(value, key, index) in magicRings">
-                <img :class="`position-fixed top-0 start-0 d-inline-block d-none ${key}`" :src="value.image" :style="`z-index: 1000; ${value.style}`" alt="">
+            <template v-for="(value, key, index) in figures">
+                <div
+                    :class="`position-fixed top-0 start-0 d-none ${value.animation} ${key}`"
+                    :style="`height: 200px;
+                            z-index: 1000; 
+                            background-image: url('${value.effect}');
+                            background-size: cover; background-repeat: no-repeat; ${value.style};`"
+                ></div>
+                <!-- <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="`z-index: 1000; ${value.style}`" alt=""> -->
             </template>
 
             <template v-for="(value, key, index) in skills">
-                <div v-for="i in value.amount" 
+                <div v-for="i in value.amount"
                     :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
-                    :style="`height: 200px; margin-top: -100px; z-index: 1000; 
-                            background-image: url('${value.effects.begin}');
+                    :style="`height: 200px; margin-top: -100px; 
+                            z-index: 1001; 
+                            background-image: url('${value.effects.action}');
                             background-size: cover; background-repeat: no-repeat; ${value.style};`"
                 ></div>
                 <!-- <img v-for="i in value.amount" :class="`position-fixed d-inline-block d-none skill-${key}`" :src="value.effects.begin" :style="value.style" alt="">
@@ -81,13 +89,14 @@ export default {
             skysState: {
 
             },
-            magicRings: {
+            figures: {
                 magic_ring_normal: {
-                    image: magic_ring_normal,
-                    style: 'width: 150px; margin-top: -150px; margin-left: -20px'
+                    effect: magic_ring_normal,
+                    style: 'width: 100px; margin-top: -150px; margin-left: -100px',
+                    animation: '',
                 },
             },
-            skills: {
+            skills: { // action skill
                 'normal': {
                     // local: 'you', // you - defense - sky
                     amount: 1, // number of skill attend to defense same time
@@ -100,14 +109,17 @@ export default {
                     }
                 },
                 'normal-heal': {
+                    type: 'buff',
                     amount: 2, // number of skill attend to defense same time
                     style: 'width: 100px; background-size: auto; background-position-y: 100%;',
-                    animation: 'animation',
+                    animation: 'animation-100',
+                    startIs: 'object', // sky: from sky / you: from people action skill / object: immediacy from object be attacked, vd skill from earth, ect.
+                    delay: 0, // delay between (sky/figure) and action
                     effects: {
                         sky: '',
-                        begin: heal_1s,
-                        end: heal_1s
-                    }
+                        figure: 'magic_ring_normal', // from you
+                        action: heal_1s, // animation from you -> object / immediately object
+                    },
                 }
             },
             status: {
@@ -169,15 +181,14 @@ export default {
             plot: [ // turn
                 { // turn 1
                     you: {
-                        actor: -1,
+                        actor: -7,
                         effects: [
                             {
                                 name: 'normal-heal',
                                 objects: [1],
-                                effectType: 'damage',
-                                damages: [1000],
-                                buffs: [],
-                                deBuffs: [],
+                                damages: [],
+                                buffs: [2000],
+                                debuffs: [],
                             }
                         ]
                     },
@@ -199,50 +210,107 @@ export default {
         }
     },
     methods: {
+        displaySkill(who, actorIndex, objects, skyName, skyClass, figureName, figureClass, skillClass) {
+            // Display sky
+            if (skyName) {}
+            // Display figure
+            if (figureName) {
+                this.setLocalSkillWithObject(figureClass, `.${who}-${actorIndex}`)
+                $(figureClass).classList.toggle('d-none')
+            }
+            // Display skills
+            for(let i = 0; i < objects.length; i++) {
+                $(`${skillClass}-${i + 1}`).classList.toggle('d-none')
+                this.setLocalSkillWithObject(`${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
+            }
+        },
+        toggleNumber(skillName, effect, who, objectIndex, indexSkill) {
+            const skillType = this.skills[skillName].type
+            const effectType = `${skillType}s`
+            const effectNumbers = effect[effectType]
+            
+            if (effectNumbers.length > 0) {
+                this.ToggleNumberAnimation(skillType, who, objectIndex, effectNumbers[indexSkill])
+            }
+        },
+        ToggleNumberAnimation(type, who, index, number) {
+            const types = {
+                buff: {
+                    sign: '+',
+                    object: $(`.${who}__heal-${index}`),
+                },
+                debuff: {
+                    sign: '-',
+                    object: $(`.${who}__damage-${index}`),
+                },
+                damage: {
+                    sign: '-',
+                    object: $(`.${who}__damage-${index}`),
+                },
+            }
+            console.log(type, who, index, number)
+
+            types[type].object.innerText = `${types[type].sign}${number}`
+            types[type].object.classList.toggle('d-none')
+        },
         async actionPlot() {
             const time = 1000;
-            const magic_ring_normal = '.magic_ring_normal'
 
             // try {
                 for (let turn of this.plot) {
                     // from you
                     for(let effect of turn.you.effects) { // effect on a turn
-                        const skill = `.skill-${effect.name}`
+                        const skillName = effect.name
+                        const skillClass = `.skill-${skillName}`
                         const index = -turn.you.actor
-                        console.log(effect)
+                        // figure
+                        const figureName = this.skills[skillName].effects.figure
+                        const figureClass = `.${figureName}`
+                        // console.log(effect)
     
                         // Chanting
                         await this.chanting('you', index)
+                        await timeout(1000)
     
                         // Display skill, set local
-                        this.setLocalSkillWithObject(magic_ring_normal, `.you-${index}`)
-                        $(magic_ring_normal).classList.toggle('d-none')
-                        for(let i = 0; i < effect.objects.length; i++) {
-                            $(`${skill}-${i + 1}`).classList.toggle('d-none')
-                            this.setLocalSkillWithObject(`${skill}-${i}`, `.you-${index}`)
-                        }
+                        this.displaySkill(
+                            'you', index, effect.objects,
+                            '', '', // sky
+                            figureName, figureClass, //figure
+                            skillClass // skill
+                        )
 
                         // object is attacked
                         for(let i = 0; i < effect.objects.length; i++) {
-                            const object = effect.objects[i]
-
-                            console.log(i, object)
-                            const defense = `.defense-${object}`
+                            const objectIndex = effect.objects[i]
+                            // console.log(i, object)
+                            const defense = `.defense-${objectIndex}`
     
-                            // attack
+                            // attacking
                             await timeout(500).then(async () => {
-                                this.setLocalSkillWithObject(`${skill}-${i + 1}`, defense)
+                                this.setLocalSkillWithObject(`${skillClass}-${i + 1}`, defense)
                             })
+
+                            // Display number animation
+                            this.toggleNumber(skillName, effect, 'defense', objectIndex, i)
                         }
     
+                        // Hidden skills
+                        await timeout(time).then(() => {
+                            // hidden figure
+                            if (figureName) {
+                                this.setLocalFirst(figureClass)
+                            }
+                            // hidden skills
+                            for(let i = 0; i < effect.objects.length; i++) {
+                                const objectIndex = effect.objects[i]
+                                this.setLocalFirst(`${skillClass}-${i + 1}`)
+
+                                // hidden number animation
+                                this.toggleNumber(skillName, effect, 'defense', objectIndex, i)
+                            }
+                        })
                         // Chanting finish
-                        for(let i = 0; i < effect.objects.length; i++) {
-                            await timeout(time).then(async () => {
-                                // Hidden skill
-                                this.setLocalFirst(magic_ring_normal)
-                                this.setLocalFirst(`${skill}-${i + 1}`)
-                            })
-                        }
                         await this.chantingFinish('you', index)
                     }
     
@@ -255,18 +323,16 @@ export default {
         async chanting(who, index) {
             const first = $(`.${who}-${index}-first`)
             const second = $(`.${who}-${index}-second`)
-            const between = $(`.${who}-${index}-between`)
             const final = $(`.${who}-${index}-finally`)
-            
-            timeout(1000).then(async () => {
 
-                second.classList.remove('d-none')
-                first.classList.add('d-none')
-                await timeout(30).then(async () => {
-                    final.classList.remove('d-none')
-                    second.classList.add('d-none')
-                })
+            second.classList.remove('d-none')
+            first.classList.add('d-none')
+            await timeout(30).then(async () => {
+                final.classList.remove('d-none')
+                second.classList.add('d-none')
             })
+            // timeout(1000).then(async () => {
+            // })
         },
         async chantingFinish(who, index) {
             const first = $(`.${who}-${index}-first`)
@@ -274,17 +340,15 @@ export default {
             const between = $(`.${who}-${index}-between`)
             const final = $(`.${who}-${index}-finally`)
 
-            timeout(0).then(async () => {
-                between.classList.remove('d-none')
-                final.classList.add('d-none')
-                await timeout(50).then(async () => {
-                    second.classList.remove('d-none')
-                    between.classList.add('d-none')
+            between.classList.remove('d-none')
+            final.classList.add('d-none')
+            await timeout(50).then(async () => {
+                second.classList.remove('d-none')
+                between.classList.add('d-none')
 
-                    await timeout(50).then(async () => {
-                        first.classList.remove('d-none')
-                        second.classList.add('d-none')
-                    })
+                await timeout(50).then(async () => {
+                    first.classList.remove('d-none')
+                    second.classList.add('d-none')
                 })
             })
         },
@@ -308,24 +372,24 @@ export default {
             skill.style.translate = `${x}px ${y}px`
         },
         test() {
-            const youHeal = $('.you__heal-1')
-            const youDamage = $('.you__damage-1')
-            const healSkill = $('.skill-heal_1s')
-            const defenseHeal = $('.defense__heal-1')
-            const defenseDamage = $('.defense__damage-1')
+            // const youHeal = $('.you__heal-1')
+            // const youDamage = $('.you__damage-1')
+            // const healSkill = $('.skill-heal_1s')
+            // const defenseHeal = $('.defense__heal-1')
+            // const defenseDamage = $('.defense__damage-1')
 
-            youHeal.classList.toggle('d-none')
-            youDamage.classList.toggle('d-none')
-            defenseHeal.classList.toggle('d-none')
-            defenseDamage.classList.toggle('d-none')
+            // youHeal.classList.toggle('d-none')
+            // youDamage.classList.toggle('d-none')
+            // defenseHeal.classList.toggle('d-none')
+            // defenseDamage.classList.toggle('d-none')
 
-            // healSkill.classList.toggle('d-none')
-            this.chanting('you', 5, 1000)
+            // // healSkill.classList.toggle('d-none')
+            // this.chanting('you', 5, 1000)
+            this.actionPlot()
         }
     },
     mounted() {
         this.actionPlot()
-        // this.chanting('you', 5, 1000)
     }
 }
 

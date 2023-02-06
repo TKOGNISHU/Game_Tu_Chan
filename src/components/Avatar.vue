@@ -13,7 +13,7 @@
         <img :class="`h-100 d-none ${who}-${index}-finally`"
                 :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
                 :src="avatars[avatarType].finally" alt="">
-    
+
         <!-- heal -->
         <p :class="`position-absolute top-50 fw-bold text-success fs-5
             d-none ${who}__heal-${index} ${who}__number--animation`"

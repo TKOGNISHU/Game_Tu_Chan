@@ -294,14 +294,14 @@ export default {
                     defense: {
                         actor: 5,
                         effects: [
-                            // {
-                            //     type: 'damage',
-                            //     damages: [50],
-                            // },
-                            // {
-                            //     type: 'remove',
-                            //     name: 'fire',
-                            // }
+                            {
+                                type: 'damage',
+                                damages: [50],
+                            },
+                            {
+                                type: 'remove',
+                                name: 'fire',
+                            }
                         ]
                     },
                 },
@@ -313,8 +313,6 @@ export default {
             return `${skillType}s`
         },
         async actionPlot() {
-            const time = 1000;
-
             // try {
                 for (let turn of this.plot) {
                     for(const actor of Object.keys(turn)) {
@@ -324,9 +322,10 @@ export default {
                         // effect on a turn
                         for(let effect of turn[actor].effects) {
                             switch (effect.type) {
-                                case 'skill':
+                                case 'skill': {
                                     // every effect only one object type who is effected, object type is effected!
                                     const skillName = effect.name
+                                    const skillType = this.skills[skillName].type
                                     const skillClass = `.skill-${skillName}`
                                     const index = Math.abs(turn[actor].actor)
                                     // figure
@@ -336,8 +335,8 @@ export default {
             
                                     // Chanting
                                     await this.chanting(actor, index)
-                                    await timeout(1000)
-                
+                                    await timeout(900)
+
                                     // Display skill, set local
                                     this.displaySkill(
                                         actor, index, effect.objects,
@@ -366,11 +365,11 @@ export default {
                                         this.computedDamage(objectTypeBeEffected, objectIndex, effect, i, skillName)
         
                                         // Display number animation
-                                        this.toggleNumber(skillName, effect, objectTypeBeEffected, objectIndex, i)
+                                        this.toggleNumber(skillType, effect, objectTypeBeEffected, objectIndex, i)
                                     }
-                
+
                                     // Hidden skills
-                                    await timeout(time).then(() => {
+                                    await timeout(900).then(() => {
                                         // hidden figure
                                         if (figureName) {
                                             $(figureClass).classList.add('d-none')
@@ -384,16 +383,14 @@ export default {
 
                                             $(presentSkillClass).classList.add('d-none')
                                             this.setLocalFirst(presentSkillClass)
-            
-                                            // hidden number animation
-                                            this.toggleNumber(skillName, effect, objectTypeBeEffected, objectIndex, i)
                                         }
                                     })
                                     // Chanting finish
                                     await this.chantingFinish(actor, index)
 
                                     break
-                                case 'action':
+                                }
+                                case 'action': {
                                     const stateName = effect.name
 
                                     for(let i = 0; i < effect.objects.length; i++) {
@@ -406,16 +403,31 @@ export default {
                                         state.classList.remove('d-none')
                                     }
                                     break
-                                case 'remove':
+                                }
+                                case 'remove': {
+                                    const index = turn[actor].actor
+                                    const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
+                                    const skill = $(`.${objectTypeBeEffected}__state-${effect.name}-${index}`)
+
+                                    skill.classList.add('d-none')
                                     break
-                                case 'damage':
+                                }
+                                default: {// damage/heal, it's display number
+                                    const skillType = effect.type
+                                    const index = turn[actor].actor
+                                    const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
+                                    
+                                    this.toggleNumber(skillType, effect, objectTypeBeEffected, index, 0)
+                                    
                                     break
-                                case 'heal':
-                                    break
+                                }
                             }
                         }
-                        await timeout(1000)
+                        // Timeout each actor on turn
+                        await timeout(400)
                     }
+                    // Timeout each turn
+                    await timeout(500)
                 }
             // } catch (e) {
             //     console.log('ERROR: ', e)
@@ -445,8 +457,8 @@ export default {
                 }
             }
         },
-        toggleNumber(skillName, effect, who, objectIndex, indexSkill) {
-            const skillType = this.skills[skillName].type
+        toggleNumber(skillType, effect, who, objectIndex, indexSkill) {
+            // Damage effect, [100, 10, ...]
             const effectNumbers = effect[this.getTypeEffect(skillType)]
 
             if (effectNumbers.length > 0) {
@@ -454,18 +466,21 @@ export default {
             }
         },
         ToggleNumberAnimation(type, who, index, number) {
+            const i = Math.abs(index)
             const types = {
                 heal: {
                     sign: '+',
-                    object: $(`.${who}__heal-${index}`),
+                    object: $(`.${who}__heal-${i}`),
                 },
                 damage: {
                     sign: '-',
-                    object: $(`.${who}__damage-${index}`),
+                    object: $(`.${who}__damage-${i}`),
                 },
             }
             types[type].object.innerText = `${types[type].sign}${number}`
-            types[type].object.classList.toggle('d-none')
+            types[type].object.classList.remove('d-none')
+
+            timeout(1500).then(() => types[type].object.classList.add('d-none'))
         },
         computedDamage(objectTypeBeEffected, objectIndex, effect, index, skillName) {
             const skillType = this.skills[skillName].type

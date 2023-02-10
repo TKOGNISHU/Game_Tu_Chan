@@ -65,10 +65,12 @@ export default {
 
 <style>
 .you__number--animation {
-    animation: you-number 0.2s linear forwards;
+    animation: 
+        you-number 0.2s linear forwards;
 }
 .defense__number--animation {
-    animation: defense-number 0.2s linear forwards;
+    animation: 
+        defense-number 0.2s linear forwards;
 }
 
 @keyframes you-number {
@@ -94,6 +96,13 @@ export default {
         margin-top: 0px;
         margin-left: 0;
         opacity: 1;
+    }
+}
+
+@keyframes hidden {
+    to {
+        display: none;
+        background-color: red;
     }
 }
 </style>

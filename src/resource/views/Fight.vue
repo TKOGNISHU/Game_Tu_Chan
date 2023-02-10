@@ -7,7 +7,7 @@
             <div class="col bg-dark">
                 <div v-for="j of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" class="row g-0">
                     <div v-for="i of j" :class="`col ${`you-${i}`}`">
-                        <Avatar v-if="status.you[i]" style="height: 100px" :status="status.you[i]" :avatars="avatars" who="you" :index="i"/>
+                        <Avatar v-if="status.you[i]" style="height: 100px" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
                     </div>
                 </div>
             </div>
@@ -16,7 +16,7 @@
             <div class="col bg-dark">
                 <div v-for="j of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" class="row g-0">
                     <div v-for="i of j" :class="`col ${`defense-${i}`}`">
-                        <Avatar v-if="status.defense[i]" style="height: 100px" :status="status.defense[i]" :avatars="avatars" who="defense" :index="i"/>
+                        <Avatar v-if="status.defense[i]" style="height: 100px" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <template v-for="(value, key, index) in figures">
                 <div
                     :class="`position-fixed top-0 start-0 d-none ${value.animation} ${key}`"
-                    :style="`height: 200px;
+                    :style="`height: 200px; margin-left: -100px;
                             z-index: 1000; 
                             background-image: url('${value.effect}');
                             background-size: cover; background-repeat: no-repeat; ${value.style};`"
@@ -49,14 +49,14 @@
             <template v-for="(value, key, index) in skills">
                 <div v-for="i in value.amount"
                     :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
-                    :style="`height: 200px; margin-top: -100px; 
+                    :style="`height: 200px; margin-top: -100px;
                             z-index: 1001; 
                             background-image: url('${value.effects.action}');
                             background-size: cover; background-repeat: no-repeat; ${value.style};`"
                 ></div>
             </template>
             <!-- State -->
-            <template v-for="(value, key, index) in states">
+            <!-- <template v-for="(value, key, index) in states">
                 <div v-for="i in value.amount"
                     :class="`position-fixed top-0 start-0 ${value.animation} skill-${key}-${i}`"
                     :style="`height: 25px; width: 25px;
@@ -64,7 +64,7 @@
                             background-image: url('${value.effect}');
                             background-size: cover; background-repeat: no-repeat; ${value.style};`"
                 ></div>
-            </template>
+            </template> -->
         </section>
 
         <!-- damage -->
@@ -109,20 +109,22 @@ export default {
             figures: {
                 magic_ring_normal: {
                     effect: magic_ring_normal,
-                    style: 'width: 100px; margin-top: -150px; margin-left: -100px',
+                    style: 'width: 100px; margin-top: -150px;',
                     animation: '',
                 },
             },
             skills: { // action skill
                 'normal': {
-                    // local: 'you', // you - defense - sky
+                    type: 'damage',
                     amount: 1, // number of skill attend to defense same time
                     style: 'width: 100px; background-size: 100%; background-position-y: 75%',
                     animation: '',
+                    startIs: 'you',
+                    delay: 0, // delay between (sky/figure) and action
                     effects: {
                         sky: '',
-                        begin: normal_finally,
-                        end: normal_finally
+                        figure: 'magic_ring_normal', // from you
+                        action: normal_finally, // animation from you -> object / immediately object
                     }
                 },
                 'normal-heal': {
@@ -151,55 +153,79 @@ export default {
                 you: {
                     1: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 100,
+                        currentMp: 100,
+                        states: ['fire','fire',],
                     },
                     3: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                     5: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
+                        states: ['fire','fire',],
                     },
                     7: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                     9: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                 },
                 defense: {
                     1: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
+                        states: ['fire','fire',],
                     },
                     3: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                     5: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                     7: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
                     },
                     9: {
                         avatar: 'monk',
-                        health: 1000,
+                        hp: 1000,
                         mp: 100,
+                        currentHp: 1000,
+                        currentMp: 100,
+                        states: ['fire','fire',],
                     },
                 }
             },
@@ -210,7 +236,7 @@ export default {
                         effects: [
                             {
                                 name: 'normal-heal',
-                                objects: [1],
+                                objects: [-1],
                                 damages: [],
                                 buffs: [2000],
                                 debuffs: [],
@@ -222,7 +248,7 @@ export default {
                         effects: [
                             {
                                 name: 'normal-heal',
-                                objects: [-1],
+                                objects: [5],
                                 damages: [],
                                 buffs: [2000],
                                 debuffs: [],
@@ -230,16 +256,14 @@ export default {
                         ]
                     },
                 },
-                { // turn 1
+                { // turn 2
                     you: {
                         actor: -1,
                         effects: [
                             {
-                                name: 'normal-heal',
+                                name: 'normal',
                                 objects: [9],
-                                damages: [],
-                                buffs: [2000],
-                                debuffs: [],
+                                damages: [2000],
                             }
                         ]
                     },
@@ -247,11 +271,9 @@ export default {
                         actor: 3,
                         effects: [
                             {
-                                name: 'normal-heal',
+                                name: 'normal',
                                 objects: [-5],
-                                damages: [],
-                                buffs: [2000],
-                                debuffs: [],
+                                damages: [2000],
                             }
                         ]
                     },
@@ -260,49 +282,6 @@ export default {
         }
     },
     methods: {
-        displaySkill(who, actorIndex, objects, skyName, skyClass, figureName, figureClass, skillClass) {
-            // Display sky
-            if (skyName) {}
-            // Display figure
-            if (figureName) {
-                this.setLocalSkillWithObject(figureClass, `.${who}-${actorIndex}`)
-                $(figureClass).classList.toggle('d-none')
-            }
-            // Display skills
-            for(let i = 0; i < objects.length; i++) {
-                $(`${skillClass}-${i + 1}`).classList.toggle('d-none')
-                this.setLocalSkillWithObject(`${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
-            }
-        },
-        toggleNumber(skillName, effect, who, objectIndex, indexSkill) {
-            const skillType = this.skills[skillName].type
-            const effectType = `${skillType}s`
-            const effectNumbers = effect[effectType]
-            
-            if (effectNumbers.length > 0) {
-                this.ToggleNumberAnimation(skillType, who, objectIndex, effectNumbers[indexSkill])
-            }
-        },
-        ToggleNumberAnimation(type, who, index, number) {
-            const types = {
-                buff: {
-                    sign: '+',
-                    object: $(`.${who}__heal-${index}`),
-                },
-                debuff: {
-                    sign: '-',
-                    object: $(`.${who}__damage-${index}`),
-                },
-                damage: {
-                    sign: '-',
-                    object: $(`.${who}__damage-${index}`),
-                },
-            }
-            console.log(type, who, index, number)
-
-            types[type].object.innerText = `${types[type].sign}${number}`
-            types[type].object.classList.toggle('d-none')
-        },
         async actionPlot() {
             const time = 1000;
 
@@ -331,20 +310,24 @@ export default {
                                 actor, index, effect.objects,
                                 '', '', // sky
                                 figureName, figureClass, //figure
-                                skillClass // skill
+                                skillName, skillClass // skill
                             )
     
                             // object is attacked
                             for(let i = 0; i < effect.objects.length; i++) {
                                 // console.log(i, object)
+                                const presentSkillClass = `${skillClass}-${i + 1}`
                                 const objectIndex = (effect.objects[i] < 0) ? (-effect.objects[i]) : (effect.objects[i])
                                 const defense = `.${objectTypeBeEffected}-${objectIndex}`
         
                                 // attacking
                                 await timeout(500).then(async () => {
-                                    this.setLocalSkillWithObject(`${skillClass}-${i + 1}`, defense)
+                                    if (this.skills[skillName].startIs == 'object') {
+                                        $(presentSkillClass).classList.remove('d-none')
+                                    }
+                                    this.setLocalSkillWithObject(actor, presentSkillClass, defense)
                                 })
-    
+
                                 // Display number animation
                                 this.toggleNumber(skillName, effect, objectTypeBeEffected, objectIndex, i)
                             }
@@ -353,12 +336,15 @@ export default {
                             await timeout(time).then(() => {
                                 // hidden figure
                                 if (figureName) {
+                                    $(figureClass).classList.add('d-none')
                                     this.setLocalFirst(figureClass)
                                 }
                                 // hidden skills
                                 for(let i = 0; i < effect.objects.length; i++) {
+                                    const presentSkillClass = `${skillClass}-${i + 1}`
                                     const objectIndex = (effect.objects[i] < 0) ? (-effect.objects[i]) : (effect.objects[i])
-                                    this.setLocalFirst(`${skillClass}-${i + 1}`)
+                                    $(presentSkillClass).classList.add('d-none')
+                                    this.setLocalFirst(presentSkillClass)
     
                                     // hidden number animation
                                     this.toggleNumber(skillName, effect, objectTypeBeEffected, objectIndex, i)
@@ -367,11 +353,63 @@ export default {
                             // Chanting finish
                             await this.chantingFinish(actor, index)
                         }
+                        await timeout(1000)
                     }
                 }
             // } catch (e) {
             //     console.log('ERROR: ', e)
             // }
+        },
+        displaySkill(who, actorIndex, objects, skyName, skyClass, figureName, figureClass, skillName, skillClass) {
+            // Display sky
+            if (skyName) {}
+            // Display figure
+            if (figureName) {
+                this.setLocalSkillWithObject(who, figureClass, `.${who}-${actorIndex}`)
+                $(figureClass).classList.remove('d-none')
+                // Flip horizontally
+                if (who == 'defense') {
+                    $(figureClass).classList.add('flip-horizontal')
+                    $(figureClass).classList.add('left-100')
+                }
+            }
+            // Display skills
+            if (this.skills[skillName].startIs == 'you') {
+                for(let i = 0; i < objects.length; i++) {
+                    $(`${skillClass}-${i + 1}`).classList.remove('d-none')
+                    this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
+                    if (who == 'defense') {
+                        $(`${skillClass}-${i+1}`).classList.add('flip-horizontal')
+                    }
+                }
+            }
+        },
+        toggleNumber(skillName, effect, who, objectIndex, indexSkill) {
+            const skillType = this.skills[skillName].type
+            const effectType = `${skillType}s`
+            const effectNumbers = effect[effectType]
+
+            if (effectNumbers.length > 0) {
+                this.ToggleNumberAnimation(skillType, who, objectIndex, effectNumbers[indexSkill])
+            }
+        },
+        ToggleNumberAnimation(type, who, index, number) {
+            const types = {
+                buff: {
+                    sign: '+',
+                    object: $(`.${who}__heal-${index}`),
+                },
+                debuff: {
+                    sign: '-',
+                    object: $(`.${who}__damage-${index}`),
+                },
+                damage: {
+                    sign: '-',
+                    object: $(`.${who}__damage-${index}`),
+                },
+            }
+            types[type].object.innerText = `${types[type].sign}${number}`
+            types[type].object.classList.toggle('d-none')
         },
         async chanting(who, index) {
             const first = $(`.${who}-${index}-first`)
@@ -405,19 +443,29 @@ export default {
         },
         setLocalFirst(yourSkill) {
             const skill = $(yourSkill)
-            skill.classList.toggle('d-none')
+            const isExistFlipClass = Array.from(skill.classList).find((cls) => cls == 'flip-horizontal')
+            const isExistLeft100Class = Array.from(skill.classList).find((cls) => cls == 'left-100')
+
+            if (isExistFlipClass) {
+                skill.classList.toggle('flip-horizontal')
+            }
+
+            if (isExistLeft100Class) {
+                skill.classList.toggle('left-100')
+            }
+
             skill.style.translate = `0px 0px`
         },
-        async setLocalSkillWithObject(yourSkill, object) {//(who, yourSkill, object)
+        async setLocalSkillWithObject(who, yourSkill, object) {//(who, yourSkill, object)
             const skill = $(yourSkill)
             // Local rect on viewport
             const skillRect = skill.getBoundingClientRect()
             const defense = $(object).getBoundingClientRect()
             // 
-            const x =   defense.x
-                    + defense.width / 2
-                    - skillRect.width / 2
-            // 
+            let x =   defense.x
+                        + defense.width / 2
+                        - skillRect.width / 2
+
             const y =   defense.y
 
             skill.style.translate = `${x}px ${y}px`
@@ -452,33 +500,3 @@ function timeout(ms) {
 
 <style>
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Old Structure
-    
-                    <div v-for="i of [8, 5, 2]" :class="`col position-relative ${`you-${i}`}`" style="height: 100px;">
-                        <img v-if="status.you[i]" :class="`d-inline-block h-100 display-status you-${i}-first`" style="z-index: 100;" :src="avatars[status.you[i].avatar].first" alt="">
-                        <img v-if="status.you[i]" :class="`d-inline-block h-100 d-none you-${i}-second`" style="z-index: 100;" :src="avatars[status.you[i].avatar].second" alt="">
-                        <img v-if="status.you[i]" :class="`d-inline-block h-100 d-none you-${i}-between`" style="z-index: 100;" :src="avatars[status.you[i].avatar].between" alt="">
-                        <img v-if="status.you[i]" @load="chanting('you', i, 1000)" :class="`h-100 d-none you-${i}-finally`" style="z-index: 100;" :src="avatars[status.you[i].avatar].finally" alt="">
-
-                        <p v-if="status.you[i]" :class="`position-absolute top-50 fw-bold text-success fs-5 d-none you__heal-${i} you__number--animation`" style="z-index: 1000;">+1000</p>
-
-                        <p v-if="status.you[i]" :class="`position-absolute top-50 fw-bold text-danger fs-5 pt-4 d-none you__damage-${i} you__number--animation`" style="z-index: 1000;">-1000</p>
-
-
-                        <BoardStatus v-if="status.you[i]" name="Hạo Thiên"/>
-                    </div>
- -->
-
-

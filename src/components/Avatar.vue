@@ -22,9 +22,20 @@
         <p :class="`position-absolute top-50 fw-bold text-danger fs-5 pt-4
             d-none ${who}__damage-${index} ${who}__number--animation`"
             style="z-index: 1000;">-1000</p>
+
+        <!-- state -->
+        <div class="position-absolute top-0" 
+            :style="`${who == 'you' ? 'left: -50%;' : 'right: -50%;'} width: 25px; z-index: 1002;`">
+            <div v-for="(e, i) in status.states"
+                :class="`${states[e].animation} state-${e}-${index}`"
+                :style="`height: 25px;
+                        background-image: url('${states[e].effect}');
+                        background-size: cover; background-repeat: no-repeat; ${states[e].style};`"
+            ></div>
+        </div>
     
         <!-- Status -->
-        <BoardStatus name="Hạo Thiên"/>
+        <BoardStatus :who="who" :index="index" name="Hạo Thiên" :status="status"/>
     </div>
 </template>
 
@@ -36,6 +47,7 @@ export default {
     props: {
         status: { type: Object, default: {} },
         avatars: { type: Object, default: {} },
+        states: { type: Object, default: {} },
         who: { type: String, default: 'you' },
         index: { type: Number, default: 1},
     },
@@ -43,6 +55,10 @@ export default {
         return {
             avatarType: this.status.avatar
         }
+    },
+    methods: {
+    },
+    mounted() {
     }
 }
 </script>

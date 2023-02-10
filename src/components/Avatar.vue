@@ -15,19 +15,19 @@
                 :src="avatars[avatarType].finally" alt="">
 
         <!-- heal -->
-        <p :class="`position-absolute top-50 fw-bold text-success fs-5
+        <p :class="`position-absolute bottom-0 fw-bold text-success fs-5
             d-none ${who}__heal-${index} ${who}__number--animation`"
-            style="z-index: 1000;">+1000</p>
+            style="z-index: 10000;">+1000</p>
         <!-- damage -->
-        <p :class="`position-absolute top-50 fw-bold text-danger fs-5 pt-4
+        <p :class="`position-absolute bottom-0 fw-bold text-danger fs-5 pt-4
             d-none ${who}__damage-${index} ${who}__number--animation`"
-            style="z-index: 1000;">-1000</p>
+            style="z-index: 10000;">-1000</p>
 
         <!-- state -->
         <div class="position-absolute top-0" 
             :style="`${who == 'you' ? 'left: -50%;' : 'right: -50%;'} width: 25px; z-index: 1002;`">
             <div v-for="(e, i) in status.states"
-                :class="`${states[e].animation} state-${e}-${index}`"
+                :class="`${states[e].animation} ${who}__state-${e}-${index} d-none`"
                 :style="`height: 25px;
                         background-image: url('${states[e].effect}');
                         background-size: cover; background-repeat: no-repeat; ${states[e].style};`"
@@ -74,12 +74,12 @@ export default {
 @keyframes you-number {
     from {
         margin-top: 10px;
-        margin-left: -50%;
+        margin-left: 50%;
         opacity: 0;
     }
     to {
         margin-top: 0px;
-        margin-left: -100%;
+        margin-left: 0;
         opacity: 1;
     }
 }
@@ -87,12 +87,12 @@ export default {
 @keyframes defense-number {
     from {
         margin-top: 10px;
-        margin-left: 50%;
+        margin-left: -50%;
         opacity: 0;
     }
     to {
         margin-top: 0px;
-        margin-left: 100%;
+        margin-left: 0;
         opacity: 1;
     }
 }

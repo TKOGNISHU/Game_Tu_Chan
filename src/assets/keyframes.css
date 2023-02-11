@@ -1,0 +1,70 @@
+
+/* Keyframes */
+@keyframes translateBackground-50-3pic {
+    0% {
+        background-position-x: 0px;
+    }
+    50% {
+        background-position-x: -50px;
+    }
+    100% {
+        background-position-x: -100px;
+    }
+}
+
+@keyframes translateBackground-50-4pic {
+    0% {
+        background-position-x: 0px;
+    }
+    10% {
+        background-position-x: -50px;
+    }
+    15% {
+        background-position-x: -100px;
+    }
+    20% {
+        background-position-x: -150px;
+    }
+    100% {
+        background-position-x: -150px;
+    }
+}
+
+@keyframes translateBackground-100 {
+    100% {
+        background-position-x: -100px;
+    }
+}
+
+@keyframes you-number {
+    from {
+        margin-top: 10px;
+        margin-left: 50%;
+        opacity: 0;
+    }
+    to {
+        margin-top: 0px;
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes defense-number {
+    from {
+        margin-top: 10px;
+        margin-left: -50%;
+        opacity: 0;
+    }
+    to {
+        margin-top: 0px;
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes hidden {
+    to {
+        display: none;
+        background-color: red;
+    }
+}

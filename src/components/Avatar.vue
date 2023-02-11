@@ -1,7 +1,27 @@
 <template>
     <!-- Set height from <Avatar style=height: ???"" /> -->
-    <div class="position-relative d-inline-block display-status">
-        <img :class="`h-100 ${who}-${index}-first`"
+    <div class="position-relative d-inline-block display-status" style=" width: 50px;">
+        <div class="w-100 position-absolute" style="height: 100px;">
+            <div
+                :class="`h-100 ${who}-${index}-normal`"
+                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                        background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
+                        background-size: cover; background-repeat: no-repeat;`"
+            ></div>
+            <div
+                :class="`h-100 ${avatars[avatarType]['chanting-normal'].animation} ${who}-${index}-chanting d-none`"
+                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                        background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
+                        background-size: cover; background-repeat: no-repeat;`"
+            ></div>
+            <div
+                :class="`h-100 ${avatars[avatarType]['chantingFinish-normal'].animation} ${who}-${index}-chantingFinish d-none`"
+                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                        background-image: url('${avatars[avatarType]['chantingFinish-normal'].effect}');
+                        background-size: cover; background-repeat: no-repeat;`"
+            ></div>
+        </div>
+        <!-- <img :class="`h-100 ${who}-${index}-first`"
                 :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
                 :src="avatars[avatarType].first" alt="">
         <img :class="`h-100 d-none ${who}-${index}-second`"
@@ -12,7 +32,7 @@
                 :src="avatars[avatarType].between" alt="">
         <img :class="`h-100 d-none ${who}-${index}-finally`"
                 :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
-                :src="avatars[avatarType].finally" alt="">
+                :src="avatars[avatarType].finally" alt=""> -->
 
         <!-- heal -->
         <p :class="`position-absolute bottom-0 fw-bold text-success fs-5
@@ -71,38 +91,5 @@ export default {
 .defense__number--animation {
     animation: 
         defense-number 0.2s linear forwards;
-}
-
-@keyframes you-number {
-    from {
-        margin-top: 10px;
-        margin-left: 50%;
-        opacity: 0;
-    }
-    to {
-        margin-top: 0px;
-        margin-left: 0;
-        opacity: 1;
-    }
-}
-
-@keyframes defense-number {
-    from {
-        margin-top: 10px;
-        margin-left: -50%;
-        opacity: 0;
-    }
-    to {
-        margin-top: 0px;
-        margin-left: 0;
-        opacity: 1;
-    }
-}
-
-@keyframes hidden {
-    to {
-        display: none;
-        background-color: red;
-    }
 }
 </style>

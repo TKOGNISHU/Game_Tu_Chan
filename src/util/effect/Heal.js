@@ -1,7 +1,7 @@
 import Effect from './Effect'
 
 class Heal extends Effect {
-    Heal(type, objects = [], heals = []) {
+    constructor(type, objects = [], heals = []) {
         super(type)
         this.objects = objects
         this.heals = heals

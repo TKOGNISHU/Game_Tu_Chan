@@ -77,6 +77,8 @@
 <script>
 import Avatar from '@/components/Avatar.vue'
 
+import chanting from '@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png'
+import chantingFinish from '@/assets/img/nam-tu-si/Immortality-200-chantingFinish.png'
 import monkFirst from '@/assets/img/nam-tu-si/nam_tu_si_no_background.png'
 import monkSecond from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png'
 import monkBetween from '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png'
@@ -97,6 +99,14 @@ export default {
             dLocal: 0,
             avatars: {
                 'monk': {
+                    'chanting-normal': {
+                        effect: chanting,
+                        animation: 'animation-50-3pic',
+                    },
+                    'chantingFinish-normal':  {
+                        effect: chantingFinish,
+                        animation: 'animation-50-4pic',
+                    },
                     first: monkFirst,
                     second: monkSecond,
                     between: monkBetween,
@@ -334,7 +344,7 @@ export default {
                                     // console.log(effect)
             
                                     // Chanting
-                                    await this.chanting(actor, index)
+                                    await this.chanting(actor, index, 2000)
                                     await timeout(900)
 
                                     // Display skill, set local
@@ -385,8 +395,6 @@ export default {
                                             this.setLocalFirst(presentSkillClass)
                                         }
                                     })
-                                    // Chanting finish
-                                    await this.chantingFinish(actor, index)
 
                                     break
                                 }
@@ -500,34 +508,26 @@ export default {
                 this.status[objectTypeBeEffected][objectIndex].currentHp = hp
             }
         },
-        async chanting(who, index) {
-            const first = $(`.${who}-${index}-first`)
-            const second = $(`.${who}-${index}-second`)
-            const final = $(`.${who}-${index}-finally`)
+        async chanting(who, index, time) {
+            const _this = this
+            const normal = $(`.${who}-${index}-normal`)
+            const chanting = $(`.${who}-${index}-chanting`)
 
-            second.classList.remove('d-none')
-            first.classList.add('d-none')
-            await timeout(30).then(async () => {
-                final.classList.remove('d-none')
-                second.classList.add('d-none')
+            normal.classList.toggle('d-none')
+            chanting.classList.toggle('d-none')
+            timeout(time).then(() => {
+                chanting.classList.toggle('d-none')
+                _this.chantingFinish(who, index)
             })
         },
         async chantingFinish(who, index) {
-            const first = $(`.${who}-${index}-first`)
-            const second = $(`.${who}-${index}-second`)
-            const between = $(`.${who}-${index}-between`)
-            const final = $(`.${who}-${index}-finally`)
+            const normal = $(`.${who}-${index}-normal`)
+            const chantingFinish = $(`.${who}-${index}-chantingFinish`)
 
-            between.classList.remove('d-none')
-            final.classList.add('d-none')
-            await timeout(50).then(async () => {
-                second.classList.remove('d-none')
-                between.classList.add('d-none')
-
-                await timeout(50).then(async () => {
-                    first.classList.remove('d-none')
-                    second.classList.add('d-none')
-                })
+            chantingFinish.classList.toggle('d-none')
+            timeout(1000).then(() => {
+                normal.classList.toggle('d-none')
+                chantingFinish.classList.toggle('d-none')
             })
         },
         setLocalFirst(yourSkill) {
@@ -559,19 +559,7 @@ export default {
 
             skill.style.translate = `${x}px ${y}px`
         },
-        test() {
-            // const youHeal = $('.you__heal-1')
-            // const youDamage = $('.you__damage-1')
-            // const healSkill = $('.skill-heal_1s')
-            // const defenseHeal = $('.defense__heal-1')
-            // const defenseDamage = $('.defense__damage-1')
-            // youHeal.classList.toggle('d-none')
-            // youDamage.classList.toggle('d-none')
-            // defenseHeal.classList.toggle('d-none')
-            // defenseDamage.classList.toggle('d-none')
-            // // healSkill.classList.toggle('d-none')
-            // this.chanting('you', 5, 1000)
-
+        async test() {
             this.actionPlot()
         }
     },

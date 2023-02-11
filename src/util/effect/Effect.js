@@ -1,5 +1,5 @@
 class Effect {
-    Effect(type) {
+    constructor(type) {
         this.type = type
     }
 }

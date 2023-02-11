@@ -1,4 +1,5 @@
 @import './base.css';
+@import './keyframes.css';
 
 #app {
   font-weight: normal;
@@ -11,6 +12,24 @@
 
 .display-status:hover > .board-info {
     display: inline-block;
+}
+
+.animation-50-3pic {
+    animation-name: translateBackground-50-3pic;
+    /* animation-delay: 1s; */
+    animation-duration: 0.2s;
+    /* animation-iteration-count: infinite; */
+    animation-fill-mode: forwards;
+    animation-timing-function: steps(1);
+}
+
+.animation-50-4pic {
+    animation-name: translateBackground-50-4pic;
+    /* animation-delay: 1s; */
+    animation-duration: 1.5s;
+    /* animation-iteration-count: infinite; */
+    animation-fill-mode: forwards;
+    animation-timing-function: steps(1);
 }
 
 .animation-100 {
@@ -48,10 +67,4 @@
 }
 
 @media (min-width: 1024px) {
-}
-
-@keyframes translateBackground-100 {
-    100% {
-        background-position-x: -100px;
-    }
 }

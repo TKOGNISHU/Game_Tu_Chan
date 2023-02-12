@@ -6,8 +6,10 @@
             <!-- you  @load="chanting('you', i, 1000)" -->
             <div class="col bg-dark">
                 <div v-for="j of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" class="row g-0">
-                    <div v-for="i of j" :class="`col ${`you-${i}`}`">
-                        <Avatar v-if="status.you[i]" style="height: 100px" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                    <div v-for="i of j" :class="`col`" style="height: 100px">
+                        <div :class="`h-100 ${`you-${i}`}`">
+                            <Avatar v-if="status.you[i]" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -15,8 +17,10 @@
             <!-- defense -->
             <div class="col bg-dark">
                 <div v-for="j of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" class="row g-0">
-                    <div v-for="i of j" :class="`col ${`defense-${i}`}`">
-                        <Avatar v-if="status.defense[i]" style="height: 100px" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                    <div v-for="i of j" :class="`col`">
+                        <div :class="`${`defense-${i}`}`" style="height: 100px">
+                            <Avatar v-if="status.defense[i]" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,12 +81,19 @@
 <script>
 import Avatar from '@/components/Avatar.vue'
 
+import Immortality from '@/util/Immortality.js'
+import Skill from '@/util/Skill.js'
+import Figure from '../../util/Figures.js'
+import State from '../../util/State.js'
+import ActionPlot from '../../util/ActionPlot.js'
+
 import chanting from '@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png'
 import chantingFinish from '@/assets/img/nam-tu-si/Immortality-200-chantingFinish.png'
-import monkFirst from '@/assets/img/nam-tu-si/nam_tu_si_no_background.png'
-import monkSecond from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png'
-import monkBetween from '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png'
-import monkFinally from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png'
+
+// import monkFirst from '@/assets/img/nam-tu-si/nam_tu_si_no_background.png'
+// import monkSecond from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png'
+// import monkBetween from '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png'
+// import monkFinally from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png'
 
 import magic_ring_normal from '@/assets/img/skills/normal/normal_first.png'
 import normal_finally from '@/assets/img/skills/normal/normal_finally.png'
@@ -95,8 +106,6 @@ export default {
     components: { Avatar, },
     data() {
         return {
-            yLocal: 0,
-            dLocal: 0,
             avatars: {
                 'monk': {
                     'chanting-normal': {
@@ -107,26 +116,24 @@ export default {
                         effect: chantingFinish,
                         animation: 'animation-50-4pic',
                     },
-                    first: monkFirst,
-                    second: monkSecond,
-                    between: monkBetween,
-                    finally: monkFinally,
                 },
             },
             skysState: {
 
             },
             figures: {
-                magic_ring_normal: {
+                magic_ring_normal: new Figure({
+                    name: 'magic_ring_normal',
                     effect: magic_ring_normal,
                     style: 'width: 100px; margin-top: -150px;',
                     animation: '',
-                },
+                }),
             },
             skills: { // action skill
-                'normal': {
+                'normal': new Skill({
+                    name: 'normal',
                     type: 'damage',
-                    amount: 1, // number of skill attend to defense same time
+                    amount: 5, // number of skill attend to defense same time
                     style: 'width: 100px; background-size: 100%; background-position-y: 75%',
                     animation: '',
                     startIs: 'you',
@@ -136,8 +143,9 @@ export default {
                         figure: 'magic_ring_normal', // from you
                         action: normal_finally, // animation from you -> object / immediately object
                     }
-                },
-                'normal-heal': {
+                }),
+                'normal-heal': new Skill({
+                    name: 'normal-heal',
                     type: 'heal',
                     amount: 2, // number of skill attend to defense same time
                     style: 'width: 100px; background-size: auto; background-position-y: 100%;',
@@ -149,94 +157,105 @@ export default {
                         figure: 'magic_ring_normal', // from you
                         action: heal_1s, // animation from you -> object / immediately object
                     },
-                }
+                }),
             },
             states: {
-                fire: {
+                fire: new State({
+                    name: 'fire',
                     type: 'damage', // damage/heal/'' ('' when effect decrease atk/... not hp or mp)
                     amount: 1,
                     effect: fire,
                     style: '',
                     animation: 'animation-100-04-2-infinite',
-                }
+                })
             },
             status: {
                 you: {
-                    1: {
+                    1: new Immortality({
+                        index: -1,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
-                    3: {
+                    }),
+                    3: new Immortality({
+                        index: -3,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
-                    5: {
+                    }),
+                    5: new Immortality({
+                        index: -5,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
                         states: ['fire',],
-                    },
-                    7: {
+                    }),
+                    7: new Immortality({
+                        index: -7,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
-                    9: {
+                    }),
+                    9: new Immortality({
+                        index: -9,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
+                    }),
                 },
                 defense: {
-                    1: {
+                    1: new Immortality({
+                        index: 1,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
                         states: ['fire','fire',],
-                    },
-                    3: {
+                    }),
+                    3: new Immortality({
+                        index: 3,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
-                    5: {
+                    }),
+                    5: new Immortality({
+                        index: 5,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
                         states: ['fire',],
-                    },
-                    7: {
+                    }),
+                    7: new Immortality({
+                        index: 7,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
-                    9: {
+                    }),
+                    9: new Immortality({
+                        index: 9,
                         avatar: 'monk',
                         hp: 1000,
                         mp: 100,
                         currentHp: 1000,
                         currentMp: 100,
-                    },
+                    }),
                 }
             },
             plot: [ // turn // if actor / object < 0 => you else defense
@@ -273,8 +292,8 @@ export default {
                             {
                                 type: 'skill',
                                 name: 'normal',
-                                objects: [5],
-                                damages: [200],
+                                objects: [5, 1],
+                                damages: [200, 300],
                             },
                             {
                                 type: 'action',
@@ -311,7 +330,13 @@ export default {
                             {
                                 type: 'remove',
                                 name: 'fire',
-                            }
+                            },
+                            {
+                                type: 'skill',
+                                name: 'normal',
+                                objects: [-1, -3, -5, -7, -9],
+                                damages: [20000, 30000, 10000, 10000, 10000],
+                            },
                         ]
                     },
                 },
@@ -319,6 +344,20 @@ export default {
         }
     },
     methods: {
+        async test() {
+            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+        }
+    },
+    mounted() {
+        new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+    }
+}
+</script>
+
+<style>
+</style>
+
+<!-- 
         getTypeEffect(skillType) {
             return `${skillType}s`
         },
@@ -344,7 +383,7 @@ export default {
                                     // console.log(effect)
             
                                     // Chanting
-                                    await this.chanting(actor, index, 2000)
+                                    await this.status[actor][index].chanting(2000)
                                     await timeout(900)
 
                                     // Display skill, set local
@@ -508,28 +547,6 @@ export default {
                 this.status[objectTypeBeEffected][objectIndex].currentHp = hp
             }
         },
-        async chanting(who, index, time) {
-            const _this = this
-            const normal = $(`.${who}-${index}-normal`)
-            const chanting = $(`.${who}-${index}-chanting`)
-
-            normal.classList.toggle('d-none')
-            chanting.classList.toggle('d-none')
-            timeout(time).then(() => {
-                chanting.classList.toggle('d-none')
-                _this.chantingFinish(who, index)
-            })
-        },
-        async chantingFinish(who, index) {
-            const normal = $(`.${who}-${index}-normal`)
-            const chantingFinish = $(`.${who}-${index}-chantingFinish`)
-
-            chantingFinish.classList.toggle('d-none')
-            timeout(1000).then(() => {
-                normal.classList.toggle('d-none')
-                chantingFinish.classList.toggle('d-none')
-            })
-        },
         setLocalFirst(yourSkill) {
             const skill = $(yourSkill)
             const isExistFlipClass = Array.from(skill.classList).find((cls) => cls == 'flip-horizontal')
@@ -559,21 +576,4 @@ export default {
 
             skill.style.translate = `${x}px ${y}px`
         },
-        async test() {
-            this.actionPlot()
-        }
-    },
-    mounted() {
-        this.actionPlot()
-    }
-}
-
-function timeout(ms) {
-    return new Promise((resolve) => {
-        return setTimeout(resolve, ms)
-    })
-}
-</script>
-
-<style>
-</style>
+ -->

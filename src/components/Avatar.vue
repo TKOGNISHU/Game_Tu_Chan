@@ -1,53 +1,41 @@
 <template>
     <!-- Set height from <Avatar style=height: ???"" /> -->
-    <div class="position-relative d-inline-block display-status" style=" width: 50px;">
+    <div class="h-100 position-relative d-inline-block display-status" style=" width: 50px;">
         <div class="w-100 position-absolute" style="height: 100px;">
             <div
-                :class="`h-100 ${who}-${index}-normal`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                :class="`h-100 ${status.who}-${status.indexABS}-normal`"
+                :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
                         background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
             <div
-                :class="`h-100 ${avatars[avatarType]['chanting-normal'].animation} ${who}-${index}-chanting d-none`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                :class="`h-100 ${avatars[avatarType]['chanting-normal'].animation} ${status.who}-${status.indexABS}-chanting d-none`"
+                :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
                         background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
             <div
-                :class="`h-100 ${avatars[avatarType]['chantingFinish-normal'].animation} ${who}-${index}-chantingFinish d-none`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'};
+                :class="`h-100 ${avatars[avatarType]['chantingFinish-normal'].animation} ${status.who}-${status.indexABS}-chantingFinish d-none`"
+                :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
                         background-image: url('${avatars[avatarType]['chantingFinish-normal'].effect}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
         </div>
-        <!-- <img :class="`h-100 ${who}-${index}-first`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
-                :src="avatars[avatarType].first" alt="">
-        <img :class="`h-100 d-none ${who}-${index}-second`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
-                :src="avatars[avatarType].second" alt="">
-        <img :class="`h-100 d-none ${who}-${index}-between`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
-                :src="avatars[avatarType].between" alt="">
-        <img :class="`h-100 d-none ${who}-${index}-finally`"
-                :style="`z-index: 100; ${who == 'defense' && 'transform: scaleX(-1)'}`"
-                :src="avatars[avatarType].finally" alt=""> -->
 
         <!-- heal -->
         <p :class="`position-absolute bottom-0 fw-bold text-success fs-5
-            d-none ${who}__heal-${index} ${who}__number--animation`"
+            d-none ${status.who}__heal-${status.indexABS} ${status.who}__number--animation`"
             style="z-index: 10000;">+1000</p>
         <!-- damage -->
         <p :class="`position-absolute bottom-0 fw-bold text-danger fs-5 pt-4
-            d-none ${who}__damage-${index} ${who}__number--animation`"
+            d-none ${status.who}__damage-${status.indexABS} ${status.who}__number--animation`"
             style="z-index: 10000;">-1000</p>
 
         <!-- state -->
         <div class="position-absolute top-0" 
-            :style="`${who == 'you' ? 'left: -50%;' : 'right: -50%;'} width: 25px; z-index: 1002;`">
+            :style="`${status.who == 'you' ? 'left: -50%;' : 'right: -50%;'} width: 25px; z-index: 1002;`">
             <div v-for="(e, i) in status.states"
-                :class="`${states[e].animation} ${who}__state-${e}-${index} d-none`"
+                :class="`${states[e].animation} ${status.who}__state-${e}-${status.indexABS} d-none`"
                 :style="`height: 25px;
                         background-image: url('${states[e].effect}');
                         background-size: cover; background-repeat: no-repeat; ${states[e].style};`"
@@ -55,25 +43,25 @@
         </div>
     
         <!-- Status -->
-        <BoardStatus :who="who" :index="index" name="Hạo Thiên" :status="status"/>
+        <BoardStatus name="Hạo Thiên" :status="status"/>
     </div>
 </template>
 
 <script>
 import BoardStatus from '@/components/board/Board-Status.vue'
 
+import Immortality from '@/util/Immortality.js'
+
 export default {
     components: { BoardStatus, },
     props: {
-        status: { type: Object, default: {} },
+        status: { type: Immortality, default: new Immortality({}) },
         avatars: { type: Object, default: {} },
         states: { type: Object, default: {} },
-        who: { type: String, default: 'you' },
-        index: { type: Number, default: 1},
     },
     data() {
         return {
-            avatarType: this.status.avatar
+            avatarType: this.status.avatar,
         }
     },
     methods: {

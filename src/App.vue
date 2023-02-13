@@ -1,11 +1,11 @@
 <script setup>
-import Function from '@/components/Function.vue'
+import Background from '@/components/Background.vue'
 </script>
 
 <template>
     <main class="text-center bg-dark">
         <section class="position-relative d-inline-block">
-            <Function />
+            <Background />
             <router-view />
             <!-- <section class="position-relative" style="top: -100%; z-index: 1;">
             </section> -->

@@ -21,7 +21,7 @@ class Immortality extends Base {
         this.states = states
     }
 
-    async chanting(time, type) {
+    async chanting(timeout, type) {
         const _this = this
 
         const chantingClass = `.${this.who}-${this.indexABS}-chanting${type ? `-${type}` : ''}`
@@ -30,7 +30,7 @@ class Immortality extends Base {
 
         normal.classList.toggle('d-none')
         chantingObject.classList.toggle('d-none')
-        this.timeout(time).then(() => {
+        this.timeout(timeout).then(() => {
             chantingObject.classList.toggle('d-none')
             _this.chantingFinish()
         })

@@ -59,22 +59,14 @@
                             background-size: cover; background-repeat: no-repeat; ${value.style};`"
                 ></div>
             </template>
-            <!-- State -->
-            <!-- <template v-for="(value, key, index) in states">
-                <div v-for="i in value.amount"
-                    :class="`position-fixed top-0 start-0 ${value.animation} skill-${key}-${i}`"
-                    :style="`height: 25px; width: 25px;
-                            z-index: 1001; 
-                            background-image: url('${value.effect}');
-                            background-size: cover; background-repeat: no-repeat; ${value.style};`"
-                ></div>
-            </template> -->
         </section>
 
         <!-- damage -->
         <section>
             <button @click="test" class="position-fixed">Click me!</button>
         </section>
+
+        <router-view name="bottom-function-fight" />
     </section>
 </template>
 
@@ -89,11 +81,6 @@ import ActionPlot from '../../util/ActionPlot.js'
 
 import chanting from '@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png'
 import chantingFinish from '@/assets/img/nam-tu-si/Immortality-200-chantingFinish.png'
-
-// import monkFirst from '@/assets/img/nam-tu-si/nam_tu_si_no_background.png'
-// import monkSecond from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_second.png'
-// import monkBetween from '@/assets/img/nam-tu-si/nam_tu_si_no_background_between.png'
-// import monkFinally from '@/assets/img/nam-tu-si/nam_tu_si_thi_phap_finally.png'
 
 import magic_ring_normal from '@/assets/img/skills/normal/normal_first.png'
 import normal_finally from '@/assets/img/skills/normal/normal_finally.png'
@@ -137,7 +124,7 @@ export default {
                     style: 'width: 100px; background-size: 100%; background-position-y: 75%',
                     animation: '',
                     startIs: 'you',
-                    delay: 0, // delay between (sky/figure) and action
+                    delay: 2000, // delay between (sky/figure) and action
                     effects: {
                         sky: '',
                         figure: 'magic_ring_normal', // from you
@@ -151,7 +138,7 @@ export default {
                     style: 'width: 100px; background-size: auto; background-position-y: 100%;',
                     animation: 'animation-100',
                     startIs: 'object', // sky: from sky / you: from people action skill / object: immediacy from object be attacked, vd skill from earth, ect.
-                    delay: 0, // delay between (sky/figure) and action
+                    delay: 2000, // delay between (sky/figure) and action
                     effects: {
                         sky: '',
                         figure: 'magic_ring_normal', // from you
@@ -320,6 +307,21 @@ export default {
                     },
                 },
                 { // turn 3
+                    you: {
+                        actor: -5,
+                        effects: [
+                            {
+                                type: 'damage',
+                                damages: [50],
+                            },
+                            {
+                                type: 'skill',
+                                name: 'normal',
+                                objects: [1, 3, 5, 7, 9],
+                                damages: [1000, 1000, 100, 1000, 1000]
+                            }
+                        ]
+                    },
                     defense: {
                         actor: 5,
                         effects: [

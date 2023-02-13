@@ -1,17 +1,17 @@
-import { createRouter, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from 'vue-router'
+
+import quest from './quest'
+import home from './home'
 
 const routes = [
     {
-        path: '/quest/:id/fight',
-        component: () => import ('@/resource/views/Fight.vue')
-    },
-    {
-        path: '/quest',
-        component: () => import ('@/resource/views/Quest.vue')
+        path: '/quest/:id',
+        children: [...quest],
     },
     {
         path: '/',
-        component: () => import ('@/resource/views/Home.vue')
+        component: () => import ('@/resource/views/Home.vue'),
+        children: [...home]
     }
 ]
 

@@ -19,12 +19,14 @@ class ActionPlot {
     }
 
     async play() {
+        const chantingFinishTimeout = 2500
+        const effectTimeout = 500
+        const changeActorTimeout = 1000
+        const changeTurnTimeout = 1000
         // try {
             for (let turn of this.plot) {
                 for(const actor of Object.keys(turn)) {
                     // every effect only one actor who is effecting
-                    // const actor = (turn[key].actor < 0) ? 'you' : 'defense'
-
                     // effect on a turn
                     for(let i = 0; i < turn[actor].effects.length; i++) {
                         let effect = turn[actor].effects[i]
@@ -41,7 +43,7 @@ class ActionPlot {
                                 // console.log(effect)
         
                                 // Chanting
-                                await this.status[actor][index].chanting(2000)
+                                await this.status[actor][index].chanting(chantingFinishTimeout)
                                 // await this.timeout(100)
 
                                 // Display skill, set local
@@ -52,7 +54,7 @@ class ActionPlot {
                                     skillName, skillClass // skill
                                 )
 
-                                await this.timeout(1000)
+                                await this.timeout(this.skills[skillName].delay)
                                 // object is attacked
                                 for(let i = 0; i < effect.objects.length; i++) {
                                     // console.log(i, object)
@@ -119,7 +121,7 @@ class ActionPlot {
                             default: {// damage/heal, it's display number
                                 const skillType = effect.type
                                 const index = turn[actor].actor
-                                const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
+                                const objectTypeBeEffected = (index < 0) ? 'you' : 'defense'
                                 
                                 this.toggleNumber(skillType, effect, objectTypeBeEffected, index, 0)
                                 
@@ -128,14 +130,14 @@ class ActionPlot {
                         }
                         // timeout each effect
                         if ((i + 1) < turn[actor].effects.length) {
-                            await this.timeout(500)
+                            await this.timeout(effectTimeout)
                         }
                     }
                     // this.Timeout each actor on turn
-                    await this.timeout(1000)
+                    await this.timeout(changeActorTimeout)
                 }
                 // this.Timeout each turn
-                await this.timeout(1000)
+                await this.timeout(changeTurnTimeout)
             }
         // } catch (e) {
         //     console.log('ERROR: ', e)
@@ -210,7 +212,7 @@ class ActionPlot {
         const currentHp = this.status[objectTypeBeEffected][objectIndex].currentHp
         if (currentHp > hp) {
             this.status[objectTypeBeEffected][objectIndex].currentHp = hp
-        } else if (currentHp < 0) {
+        } else if (currentHp <= 0) {
             const objectDeath = $(`.${objectTypeBeEffected}-${objectIndex}`)
 
             objectDeath.classList.add('d-none')
@@ -246,6 +248,10 @@ class ActionPlot {
         const y =   defense.y
 
         skill.style.translate = `${x}px ${y}px`
+    }
+
+    animationTranslateSkill(skillClass, newLocation) {
+
     }
 
     timeout(ms) {

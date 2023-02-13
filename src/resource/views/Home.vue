@@ -1,12 +1,16 @@
 <template>
     <!--  :style="`background-image: url('${background}');`" -->
     <section class="h-100 text-center background">
+        <router-view name="header-function" />
+
         
         <Board :isShow="isShow" @closeStatus="closeStatus">
             <div>
                 <h2 style="width: 600px; height: 400px;">Hahahhah</h2>
             </div>
         </Board>
+
+        <router-view name="bottom-function" />
     </section>
 </template>
 

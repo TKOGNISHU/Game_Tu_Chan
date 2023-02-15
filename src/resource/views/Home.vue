@@ -1,16 +1,23 @@
 <template>
     <!--  :style="`background-image: url('${background}');`" -->
-    <section class="h-100 text-center background">
-        <router-view name="header-function" />
+    <section class="position-relative top-0 h-100 background">
+        <!-- Background -->
+        <section class="" style="z-index: 1;">
+            <img class="" style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep(1).jpg" alt="">
+        </section>
 
-        
-        <Board :isShow="isShow" @closeStatus="closeStatus">
-            <div>
-                <h2 style="width: 600px; height: 400px;">Hahahhah</h2>
-            </div>
-        </Board>
-
-        <router-view name="bottom-function" />
+        <!--  -->
+        <section class="h-100" style="z-index: 10;">
+            <router-view name="header-function" />
+            
+            <Board :isShow="isShow" @closeStatus="closeStatus">
+                <div>
+                    <h2 style="width: 600px; height: 400px;">Hahahhah</h2>
+                </div>
+            </Board>
+    
+            <router-view name="bottom-function" />
+        </section>
     </section>
 </template>
 

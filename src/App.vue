@@ -1,11 +1,9 @@
 <script setup>
-import Background from '@/components/Background.vue'
 </script>
 
 <template>
     <main class="text-center bg-dark">
-        <section class="position-relative d-inline-block">
-            <Background />
+        <section class="d-inline-block">
             <router-view />
             <!-- <section class="position-relative" style="top: -100%; z-index: 1;">
             </section> -->

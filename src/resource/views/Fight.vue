@@ -2,11 +2,12 @@
     <section class="position-relative top-0 h-100 background">
         <!-- Background -->
         <section class="" style="z-index: 1;">
-            <img class="d-inline-block" style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep(1).jpg" alt="">
+            <img style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep(1).jpg" alt="">
         </section>
 
         <!--  -->
         <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10;">
+            <!-- Header -->
             <section class="status-bar" style="height: 150px;"><h1>YOU / DEFENSE</h1></section>
     
             <section class="row battle-field ms-5 me-5">
@@ -69,10 +70,11 @@
             </section>
     
             <!-- damage -->
-            <section>
+            <!-- <section>
                 <button @click="test" class="position-fixed">Click me!</button>
-            </section>
+            </section> -->
     
+            <!-- Bottom -->
             <router-view name="bottom-function-fight" />
         </section>
     </section>

@@ -6,7 +6,7 @@ export default [
             {
                 path: '',
                 components: {
-                    'bottom-function': () => import ('@/resource/views/function/Bottom-Function-Fight.vue'),
+                    'bottom-function-fight': () => import ('@/resource/views/function/Bottom-Function-Fight.vue'),
                 },
             },
         ]

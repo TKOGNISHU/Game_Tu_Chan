@@ -1,5 +1,5 @@
 <template>
-    <section :class="`position-absolute d-flex align-items-center justify-content-center board ${show()}`">
+    <section :class="`position-absolute d-flex align-items-center justify-content-center board ${!isShow ? 'd-none' : ''}`">
         <div class="d-flex flex-column align-items-center m-auto position-relative bg-board" style="margin-top: -16px;">
             <div class="board-content" style="z-index: 10000;">
                 <div class="w-100 d-flex align-items-center justify-content-center" style="margin-top: 16px;">
@@ -145,7 +145,7 @@ export default {
             if (!this.isShow) {
                 return 'd-none'
             }
-            
+
             return ''
         },
         load() {
@@ -154,7 +154,7 @@ export default {
             this.vy = boardBackground.offsetHeight
         }
     },
-    mounted() {
+    updated() {
         this.load()
     }
 }

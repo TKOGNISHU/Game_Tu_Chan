@@ -18,7 +18,7 @@
             <!-- Bottom -->
             <router-view @actionBoard="actionBoard" :isBoardShow="isShow" name="bottom-function" />
         </section>
-            
+
         <Board :isShow="isShow" @closeStatus="closeStatus">
             <div>
                 <h2 style="width: 700px; height: 550px;">Hahahhah</h2>
@@ -43,7 +43,6 @@ export default {
         },
         actionBoard() {
             this.isShow = true
-            console.log(this.isShow)
         }
     },
 }

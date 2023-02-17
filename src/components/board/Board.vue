@@ -1,5 +1,5 @@
 <template>
-    <section :class="`position-absolute d-flex align-items-center justify-content-center board ${!isShow ? 'd-none' : ''}`">
+    <section :class="`position-absolute d-flex align-items-center justify-content-center board ${!isShow ? 'd-none' : ''}`" style="background: rgba(0, 0, 0, 0.2)">
         <div class="d-flex flex-column align-items-center m-auto position-relative bg-board" style="margin-top: -16px;">
             <div class="board-content" style="z-index: 10000;">
                 <div class="w-100 d-flex align-items-center justify-content-center" style="margin-top: 16px;">
@@ -174,6 +174,6 @@ export default {
 }
 
 .board-background__body {
-    background-color: #64b9e982
+    background-color: #64b9e982;
 }
 </style>

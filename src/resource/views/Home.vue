@@ -53,8 +53,105 @@
                     </section>
                     <!-- Right -->
                     <section class="col">
-                        <div style="height: 100px; width: 46px;">
-                            <img class="h-100" src="@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png" alt="">
+                        <!-- Header -->
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="m-auto overflow-hidden" style="height: 100px; width: 46px;">
+                                    <img class="h-100" src="@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png" alt="">
+                                </div>
+                            </div>
+                            <div class="col-4 overflow-auto rounded px-2 py-1 board-characters" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                                <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
+                            </div>
+                        </div>
+                        <!-- Body - skills -->
+                        <div class="mt-3 row g-1">
+                            <div class="col-4">
+                                <div class="row g-1 overflow-auto board-characters" style="height: 100px; margin-left: 10px;">
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-for="(value, key, index) in skills">
+                                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                                            <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
+                                                <img :class="`h-100 w-100 skill-${key}-${i}`" :src="value.effects.action" alt="">
+                                            </button>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row g-1 overflow-auto rounded px-2 board-characters" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
+                                    <p>
+                                        Tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </section>
@@ -66,11 +163,46 @@
 <script>
 import Board from '@/components/board/Board.vue'
 
+import Skill from '@/util/Skill.js'
+
+import heal_1s from '@/assets/img/skills/skills-image/heal.png'
+import normal_finally from '@/assets/img/skills/skills-image/fire-draw-1-100.png'
+
 export default {
     components: { Board,  },
     data() {
         return {
             isShow: false,
+            skills: { // action skill
+                'normal': new Skill({
+                    name: 'normal',
+                    type: 'damage',
+                    amount: 5, // number of skill attend to defense same time
+                    style: 'width: 100px; background-size: 100%; background-position-y: 75%',
+                    animation: '',
+                    startIs: 'you',
+                    delay: 2000, // delay between (sky/figure) and action
+                    effects: {
+                        sky: '',
+                        figure: 'magic_ring_normal', // from you
+                        action: normal_finally, // animation from you -> object / immediately object
+                    }
+                }),
+                'normal-heal': new Skill({
+                    name: 'normal-heal',
+                    type: 'heal',
+                    amount: 2, // number of skill attend to defense same time
+                    style: 'width: 100px; background-size: auto; background-position-y: 100%;',
+                    animation: 'animation-100',
+                    startIs: 'object', // sky: from sky / you: from people action skill / object: immediacy from object be attacked, vd skill from earth, ect.
+                    delay: 2000, // delay between (sky/figure) and action
+                    effects: {
+                        sky: '',
+                        figure: 'magic_ring_normal', // from you
+                        action: heal_1s, // animation from you -> object / immediately object
+                    },
+                }),
+            },
         }
     },
     methods: {

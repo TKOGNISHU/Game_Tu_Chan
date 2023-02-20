@@ -76,3 +76,7 @@ body {
 button:hover {
   background-color: #0484ff99 !important;
 }
+
+button.active {
+  background-color: #042bff96 !important;
+}

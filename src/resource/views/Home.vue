@@ -17,18 +17,19 @@
             <section class="ms-3 me-5" style="min-width: 300px; max-width: 1000px; min-height: 300px; max-height: 500px;">
                 <!-- Header -->
                 <section class="text-start">
-                    <button @click.prevent="" class="rounded border-0 px-3 py-1 me-1 fw-semibold" style="background-color: #1a8fff6e; color: #05eaff;">Nhân Vật</button>
+                    <button @click.prevent="handleShowCharacter" data-board-btn-target="character" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn active" style="background-color: #1a8fff6e; color: #05eaff;">Nhân Vật</button>
                     
-                    <button @click.prevent="" class="rounded border-0 px-3 py-1 me-1 fw-semibold" style="background-color: #1a8fff6e; color: #05eaff;">Tu Luyện</button>
+                    <button @click.prevent="handleShowTraining" data-board-btn-target="training" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Tu Luyện</button>
                     
-                    <button @click.prevent="" class="rounded border-0 px-3 py-1 me-1 fw-semibold" style="background-color: #1a8fff6e; color: #05eaff;">Dàn Trận</button>
+                    <button @click.prevent="handleShowEmbattle" data-board-btn-target="embattle" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Dàn Trận</button>
                     
                 </section>
 
                 <!-- Body -->
-                <section class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2" style="border-color: #05ffe0 !important; width: 900px;">
+                <!-- Character -->
+                <section data-board-body-show="character" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2" style="border-color: #05ffe0 !important; width: 900px;">
                     <!-- Left -->
-                    <section class="col-2 border-end border-1 overflow-auto board-characters" style="height: 200px; border-color: #05beffcc !important;">
+                    <section class="col-2 border-end border-1 overflow-auto scrollbar" style="height: 200px; border-color: #05beffcc !important;">
                         <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
                             Hạo Thiên
                         </button>
@@ -60,7 +61,7 @@
                                     <img class="h-100" src="@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png" alt="">
                                 </div>
                             </div>
-                            <div class="col-4 overflow-auto rounded px-2 py-1 board-characters" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
+                            <div class="col-4 overflow-auto rounded px-2 py-1 scrollbar" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
                                 <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
                                 <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
                                 <p class="m-0 ms-1 p-0">Tư chất: <span>Ngũ hành linh căn</span></p>
@@ -72,7 +73,7 @@
                         <!-- Body - skills -->
                         <div class="mt-3 row g-1">
                             <div class="col-4">
-                                <div class="row g-1 overflow-auto board-characters" style="height: 100px; margin-left: 10px;">
+                                <div class="row g-1 overflow-auto scrollbar" style="height: 100px; margin-left: 10px;">
                                     <template v-for="(value, key, index) in skills">
                                         <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
                                             <button class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
@@ -146,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="row g-1 overflow-auto rounded px-2 board-characters" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
+                                <div class="row g-1 overflow-auto rounded px-2 scrollbar" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
                                     <p>
                                         Tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng, tâm như nước đọng
                                     </p>
@@ -154,6 +155,43 @@
                             </div>
                         </div>
                     </section>
+                </section>
+
+                <!-- Training -->
+                <section data-board-body-show="training" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2 d-none" style="border-color: #05ffe0 !important; width: 900px;">
+                    <!-- Left -->
+                    <section class="col-2 border-end border-1 overflow-auto scrollbar" style="height: 200px; border-color: #05beffcc !important;">
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Hạo Thiên
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Hàn Lập
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Tiêu Viêm
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Lăng Cung
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Yết Kiêu
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Yết Kiêu
+                        </button>
+                        <button class="w-100 py-1 mb-1 border-0 fw-semibold rounded" style="background-color: #006bff99; color: #05eaff;">
+                            Yết Kiêu
+                        </button>
+                    </section>
+
+                    <!-- Right -->
+                    <section class="col">
+
+                    </section>
+                </section>
+
+                <!-- Embattle -->
+                <section data-board-body-show="embattle" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2 d-none" style="border-color: #05ffe0 !important; width: 900px;">
                 </section>
             </section>
         </Board>
@@ -173,6 +211,9 @@ export default {
     data() {
         return {
             isShow: false,
+            board: {
+                show: 'character-btn',
+            },
             skills: { // action skill
                 'normal': new Skill({
                     name: 'normal',
@@ -211,6 +252,29 @@ export default {
         },
         actionBoard() {
             this.isShow = true
+        },
+        async handleShowCharacter(e) {
+            
+            this.showBoard(e)
+        },
+        async handleShowTraining(e) {
+            
+            this.showBoard(e)
+        },
+        async handleShowEmbattle(e) {
+            
+            this.showBoard(e)
+        },
+        showBoard(e) {
+            const currentBtnActive = $('.board-header-btn.active')
+            const currentTargetShow = $(`[data-board-body-show='${currentBtnActive.dataset.boardBtnTarget}']`)
+            const btn = e.target
+            const targetWillShow = $(`[data-board-body-show='${btn.dataset.boardBtnTarget}']`)
+
+            currentBtnActive.classList.remove('active')
+            currentTargetShow.classList.add('d-none')
+            btn.classList.add('active')
+            targetWillShow.classList.remove('d-none')
         }
     },
     async created() {

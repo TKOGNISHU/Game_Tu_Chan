@@ -18,6 +18,19 @@ class ActionPlot {
         return `${skillType}s`
     }
 
+    handleHP(who, objectIndex) {
+        const hp = this.status[who][objectIndex].hp
+        const currentHp = this.status[who][objectIndex].currentHp
+
+        if (currentHp > hp) {
+            this.status[who][objectIndex].currentHp = hp
+        } else if (currentHp <= 0) {
+            const objectDeath = $(`.${who}-${objectIndex}`)
+
+            objectDeath.classList.add('d-none')
+        }
+    }
+
     async play() {
         const chantingFinishTimeout = 2500
         const effectTimeout = 500
@@ -180,43 +193,21 @@ class ActionPlot {
 
     ToggleNumberAnimation(type, who, index, number) {
         const i = Math.abs(index)
-        const types = {
-            heal: {
-                sign: '+',
-                object: $(`.${who}__heal-${i}`),
-            },
-            damage: {
-                sign: '-',
-                object: $(`.${who}__damage-${i}`),
-            },
-        }
-        types[type].object.innerText = `${types[type].sign}${number}`
-        types[type].object.classList.remove('d-none')
+        const objectNumberDisplay = $(`.${who}__${type}-${i}`)
 
-        this.timeout(1500).then(() => types[type].object.classList.add('d-none'))
+        objectNumberDisplay.innerText = `${number}`
+        objectNumberDisplay.classList.remove('d-none')
+
+        this.timeout(1500).then(() => objectNumberDisplay.classList.add('d-none'))
     }
 
-    computedDamage(objectTypeBeEffected, objectIndex, effect, index, skillName) {
+    computedDamage(who, objectIndex, effect, index, skillName) {
         const skillType = this.skills[skillName].type
         const hpBeChanged = effect[this.getTypeEffect(skillType)][index]
+        
+        this.status[who][objectIndex].currentHp += new Number(hpBeChanged)
 
-        switch (skillType) {
-            case 'damage':
-                this.status[objectTypeBeEffected][objectIndex].currentHp -= hpBeChanged
-                break
-            case 'heal':
-                this.status[objectTypeBeEffected][objectIndex].currentHp += hpBeChanged
-                break
-        }
-        const hp = this.status[objectTypeBeEffected][objectIndex].hp
-        const currentHp = this.status[objectTypeBeEffected][objectIndex].currentHp
-        if (currentHp > hp) {
-            this.status[objectTypeBeEffected][objectIndex].currentHp = hp
-        } else if (currentHp <= 0) {
-            const objectDeath = $(`.${objectTypeBeEffected}-${objectIndex}`)
-
-            objectDeath.classList.add('d-none')
-        }
+        this.handleHP(who, objectIndex)
     }
 
     setLocalFirst(yourSkill) {

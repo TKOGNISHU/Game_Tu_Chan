@@ -265,7 +265,7 @@ export default {
                                 name: 'normal-heal',
                                 objects: [-1],
                                 damages: [],
-                                heals: [200],
+                                heals: ['+200'],
                             }
                         ]
                     },
@@ -277,7 +277,7 @@ export default {
                                 name: 'normal-heal',
                                 objects: [9],
                                 damages: [],
-                                heals: [600],
+                                heals: ['+600'],
                             }
                         ]
                     },
@@ -290,7 +290,7 @@ export default {
                                 type: 'skill',
                                 name: 'normal',
                                 objects: [5, 1],
-                                damages: [200, 300],
+                                damages: ['-200', '-300'],
                             },
                             {
                                 type: 'action',
@@ -306,7 +306,7 @@ export default {
                                 type: 'skill',
                                 name: 'normal',
                                 objects: [-5],
-                                damages: [200],
+                                damages: ['-200'],
                             },
                             {
                                 type: 'action',
@@ -322,13 +322,13 @@ export default {
                         effects: [
                             {
                                 type: 'damage',
-                                damages: [50],
+                                damages: ['-50'],
                             },
                             {
                                 type: 'skill',
                                 name: 'normal',
                                 objects: [1, 3, 5, 7, 9],
-                                damages: [1000, 1000, 100, 1000, 1000]
+                                damages: ['-1000', '-1000', '-100', '-1000', '-1000']
                             }
                         ]
                     },
@@ -337,7 +337,7 @@ export default {
                         effects: [
                             {
                                 type: 'damage',
-                                damages: [50],
+                                damages: ['-50'],
                             },
                             {
                                 type: 'remove',
@@ -347,7 +347,7 @@ export default {
                                 type: 'skill',
                                 name: 'normal',
                                 objects: [-1, -3, -5, -7, -9],
-                                damages: [20000, 30000, 10000, 10000, 10000],
+                                damages: ['-20000', '-30000', '-10000', '-10000', '-10000'],
                             },
                         ]
                     },

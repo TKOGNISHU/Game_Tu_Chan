@@ -9,6 +9,10 @@ const routes = [
         children: [...quest],
     },
     {
+        path: '/login',
+        component: () => import ('@/resource/views/Login.vue'),
+    },
+    {
         path: '/',
         component: () => import ('@/resource/views/Home.vue'),
         children: [...home]

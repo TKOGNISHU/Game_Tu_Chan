@@ -199,12 +199,12 @@
 </template>
 
 <script>
-import Board from '@/components/board/Board.vue'
-
-import Skill from '@/util/Skill.js'
-
-import heal_1s from '@/assets/img/skills/skills-image/heal.png'
-import normal_finally from '@/assets/img/skills/skills-image/fire-draw-1-100.png'
+import { Board } from '@/util/components.js'
+import {
+    Skill,
+    normal_finally,
+    heal_1s,
+} from '@/util/index.js'
 
 export default {
     components: { Board,  },

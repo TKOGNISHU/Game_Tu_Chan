@@ -5,7 +5,14 @@
 
 <script>
 import { SERVER_URL_LOGIN } from '../../../env'
+import { useUserStore } from '@/stores/useUserStore'
 export default{
+    setup() {
+        const store = useUserStore()
+        return {
+            logIn: store.logIn,
+        }
+    },
     data() {
         return {
             SERVER_URL_LOGIN,

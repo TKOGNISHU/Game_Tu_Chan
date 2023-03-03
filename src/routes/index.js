@@ -5,11 +5,12 @@ import home from './home'
 
 const routes = [
     {
-        path: '/quest/:id',
+        path: '/quest/:idQuest',
         children: [...quest],
     },
     {
         path: '/login',
+        name: 'login',
         component: () => import ('@/resource/views/Login.vue'),
     },
     {

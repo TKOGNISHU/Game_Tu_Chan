@@ -5,6 +5,7 @@ export default [
         children: [
             {
                 path: '',
+                name: 'fight',
                 components: {
                     'bottom-function-fight': () => import ('@/resource/views/function/Bottom-Function-Fight.vue'),
                 },
@@ -17,6 +18,7 @@ export default [
         children: [
             {
                 path: '',
+                name: 'quest',
                 components: {
                     'header-function': () => import ('@/resource/views/function/Header-Function.vue'),
                     'bottom-function': () => import ('@/resource/views/function/Bottom-Function.vue'),

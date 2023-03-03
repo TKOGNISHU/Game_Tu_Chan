@@ -1,7 +1,7 @@
 <template>
     <section :class="`position-absolute d-flex align-items-center justify-content-center board ${!isShow ? 'd-none' : ''}`" style="background: rgba(0, 0, 0, 0.2)">
         <div class="d-flex flex-column align-items-center m-auto position-relative bg-board" style="margin-top: -16px;">
-            <div class="board-content" style="z-index: 10000;">
+            <div :class="`board-content-${index}`" style="z-index: 10000;">
                 <div class="w-100 d-flex align-items-center justify-content-center" style="margin-top: 16px;">
                     <svg height="10px"> <!--  :viewBox="`0 0 ${vx}`" -->
                         <rect x="8" y="4" width="400" height="2" fill="#2656FB" fill-opacity="0.48"/>
@@ -128,6 +128,7 @@ import background from '@/assets/img/board/circle.svg'
 export default {
     props: {
         isShow: { type: Boolean, default: true },
+        index: { type: Number, default: 0, },
     },
     data() {
         return {
@@ -149,7 +150,7 @@ export default {
             return ''
         },
         load() {
-            const boardBackground = $('.board-content')
+            const boardBackground = $(`.board-content-${this.index}`)
             this.vx = boardBackground.offsetWidth
             this.vy = boardBackground.offsetHeight
         }

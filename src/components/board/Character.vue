@@ -53,11 +53,10 @@ export default {
     props: {
         immortalities: { type: Array, default: [] },
     },
-    emits: ['update:modelIndex'],
     setup() {
         const appStore = useAppStore()
         return {
-            getShowCharacter: appStore.getShowCharacter,
+            appStore,
         }
     },
     data() {
@@ -68,9 +67,14 @@ export default {
         }
     },
     watch: {
+        "appStore.showCharacter"() {
+            this.immortality = this.immortalities[this.appStore.getShowCharacter] || {}
+            this.description = ''
+        },
         immortalities() {
-            this.immortality = this.immortalities[this.getShowCharacter()] || {}
-        }
+            this.immortality = this.immortalities[this.appStore.getShowCharacter] || {}
+            this.description = ''
+        },
     },
     methods: {
         displayDescription(e) {

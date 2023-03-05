@@ -12,28 +12,26 @@
             <router-view name="header-function" :user="getUser()"/>
 
             <!-- Bottom -->
-            <router-view
-                @train="actionBoard" @bag="actionBoard" @embattle="actionBoard"
-                :isBoardShow="isShow" name="bottom-function" />
+            <router-view v-model:modelIsBoardShow="isShow" v-model:modelIsBoardBagShow="isShowBag" name="bottom-function" />
         </section>
             
         <Board :isShow="isShow" index="0" @closeStatus="closeStatus" style="top: -6.67rem;">
             <section id="board-status" class="ms-3 me-5" style="min-width: 300px; max-width: 1000px; min-height: 300px; max-height: 500px;">
                 <!-- Header -->
                 <section class="text-start">
-                    <button @click.prevent="handleShowCharacter" data-board-btn-target="character" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn active" style="background-color: #1a8fff6e; color: #05eaff;">Nhân Vật</button>
+                    <button @click.prevent="handleShowCharacter" data-board-btn-target="character" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn active" style="background-color: #1a8fff6e; color: #05eaff;">Đệ Tử</button>
                     
                     <button @click.prevent="handleShowTraining" data-board-btn-target="training" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Tu Luyện</button>
                     
                     <button @click.prevent="handleShowEmbattle" data-board-btn-target="embattle" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Dàn Trận</button>
                     
-                    <button @click.prevent="handleShowEmbattle" data-board-btn-target="roll" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Chiêu mộ</button>
+                    <button @click.prevent="handleShowEmbattle" data-board-btn-target="roll" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Chiêu Mộ</button>
 
                 </section>
 
                 <!-- Body -->
                 <!-- Character -->
-                <Character :immortalities="immortalities" :immortality="immortalities[0]"/>
+                <Character :immortalities="immortalities"/> <!--  @update:modelIndex="displayCharacterIndex" -->
 
                 <!-- Training -->
                 <Training :immortalities="immortalities"/>
@@ -91,9 +89,6 @@ export default {
         return {
             isShow: false,
             isShowBag: false,
-            board: {
-                show: 'character-btn',
-            },
             immortalities: [],
             skills: { // action skill
                 'normal': new Skill({
@@ -134,17 +129,30 @@ export default {
         closeBag() {
             this.isShowBag = false
         },
-        actionBoard(type) {
-            switch (type) {
-                case 'bag':
-                    this.isShowBag = true
-                    break
-                default:
-                    this.isShow = true
-                    break
-            }
+        // actionBoard(type) {
+        //     console.log(type)
+        //     switch (type) {
+        //         case 'character':
+        //             const showCharacterBtn = $(`button[data-board-btn-target="character"]`)
+        //             showCharacterBtn.click()
+        //             this.isShow = true
+        //             break
+        //         case 'training':
+        //             const showTrainingBtn = $(`button[data-board-btn-target="training"]`)
+        //             showTrainingBtn.click()
+        //             this.isShow = true
+        //             break
+        //         case 'embattle':
+        //             const showEmbattleBtn = $(`button[data-board-btn-target="embattle"]`)
+        //             showEmbattleBtn.click()
+        //             this.isShow = true
+        //             break
+        //         case 'bag':
+        //             this.isShowBag = true
+        //             break
+        //     }
 
-        },
+        // },
         async handleShowCharacter(e) {
             
             this.showBoard(e)
@@ -176,7 +184,7 @@ export default {
             currentTargetShow.classList.add('d-none')
             btn.classList.add('active')
             targetWillShow.classList.remove('d-none')
-        }
+        },
     },
     async created() {
         // login

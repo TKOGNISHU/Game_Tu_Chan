@@ -1,6 +1,8 @@
 import Avatar from '@/components/Avatar.vue'
 import Board from '@/components/board/Board.vue'
 
+import ListCharacter from '@/components/List-Character.vue'
+
 import Bag from '@/components/board/Bag.vue'
 import Upgrade from '@/components/board/Upgrade.vue'
 import Character from '@/components/board/Character.vue'
@@ -10,6 +12,9 @@ import Roll from '@/components/board/Roll.vue'
 
 export { Avatar }
 export { Board }
+
+export { ListCharacter }
+
 export { Bag }
 export { Upgrade }
 export { Character }

@@ -10,9 +10,14 @@
             <p class="text-light fs-6">Túi đồ</p>
         </router-link>
 
-        <router-link @click.prevent="actionBoard('train')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
+        <router-link @click.prevent="actionBoard('training')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/book.png" alt="">
             <p class="text-light fs-6">Tu luyện</p>
+        </router-link>
+
+        <router-link @click.prevent="actionBoard('character')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/book.png" alt="">
+            <p class="text-light fs-6">Đệ tử</p>
         </router-link>
 
         <router-link v-if="this.$route.path == '/'" class="d-inline-flex flex-column align-items-center text-decoration-none" :to="{name: 'quest', params: { idQuest: 'a' }}">
@@ -29,19 +34,30 @@
 <script>
 export default {
     props: {
-        isBoardShow: { type: Boolean, default: false },
+        modelIsBoardShow: { type: Boolean, default: false },
+        modelIsBoardBagShow: { type: Boolean, default: false },
     },
+    emits: ['update:modelIsBoardShow', 'update:modelIsBoardBagShow'],
     methods: {
         actionBoard(type) {
             switch (type) {
-                case 'train':
-                    this.$emit('train', type)
+                case 'character':
+                    const showCharacterBtn = $(`button[data-board-btn-target="character"]`)
+                    showCharacterBtn.click()
+                    this.$emit('update:modelIsBoardShow', true)
                     break
-                case 'bag':
-                    this.$emit('bag', type)
+                case 'training':
+                    const showTrainingBtn = $(`button[data-board-btn-target="training"]`)
+                    showTrainingBtn.click()
+                    this.$emit('update:modelIsBoardShow', true)
                     break
                 case 'embattle':
-                    this.$emit('embattle', type)
+                    const showEmbattleBtn = $(`button[data-board-btn-target="embattle"]`)
+                    showEmbattleBtn.click()
+                    this.$emit('update:modelIsBoardShow', true)
+                    break
+                case 'bag':
+                    this.$emit('update:modelIsBoardBagShow', true)
                     break
             }
         },

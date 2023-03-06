@@ -29,38 +29,64 @@
             <p class="text-light fs-6">Về Tông</p>
         </router-link>
     </section>
+
+    <ScreenBoard :immortalities="immortalities" v-model:modelIsShow="isShow" v-model:modelIsShowBag="isShowBag"/>
 </template>
 
 <script>
+import { ScreenBoard, } from '@/util/components.js'
+import { useUserStore } from '@/stores/useUserStore'
+import {
+    UserService
+} from '@/util/index.js'
+
 export default {
-    props: {
-        modelIsBoardShow: { type: Boolean, default: false },
-        modelIsBoardBagShow: { type: Boolean, default: false },
+    setup() {
+        const store = useUserStore()
+        return {
+            store,
+        }
     },
-    emits: ['update:modelIsBoardShow', 'update:modelIsBoardBagShow'],
+    components: { ScreenBoard, },
+    data() {
+        return {
+            isShow: false,
+            isShowBag: false,
+            immortalities: [],
+        }
+    },
+    watch: {
+        async 'store.user'() {
+            this.immortalities = await UserService.getImmortalities(this.store.getUser._id)
+            console.log("immortalities: ", this.immortalities)
+        },
+    },
     methods: {
         actionBoard(type) {
             switch (type) {
                 case 'character':
                     const showCharacterBtn = $(`button[data-board-btn-target="character"]`)
                     showCharacterBtn.click()
-                    this.$emit('update:modelIsBoardShow', true)
+                    this.isShow = true
                     break
                 case 'training':
                     const showTrainingBtn = $(`button[data-board-btn-target="training"]`)
                     showTrainingBtn.click()
-                    this.$emit('update:modelIsBoardShow', true)
+                    this.isShow = true
                     break
                 case 'embattle':
                     const showEmbattleBtn = $(`button[data-board-btn-target="embattle"]`)
                     showEmbattleBtn.click()
-                    this.$emit('update:modelIsBoardShow', true)
+                    this.isShow = true
                     break
                 case 'bag':
-                    this.$emit('update:modelIsBoardBagShow', true)
+                    this.isShowBag = true
                     break
             }
         },
-    }
+    },
+    async created() {
+        this.immortalities = await UserService.getImmortalities(this.store.getUser._id) || []
+    },
 }
 </script>

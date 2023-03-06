@@ -5,7 +5,7 @@
             <img class="" style="height: 100vh;" src="@/assets/img/afab533e-ed85-46ff-bbc9-9f356d94f99b-result (2).png" alt="">
         </section>
 
-        <!--  -->
+        <!-- Content -->
         <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10;">
             <!-- Header -->
             <router-view name="header-function" />
@@ -14,9 +14,9 @@
             <router-link class="d-inline-block" style="height: 100px;" to="/quest/abc/a/fight">
                 <img class="h-100" src="@/assets/img/nam-tu-si/nam_tu_si_no_background.png" alt="">
             </router-link>
-    
+
             <!-- Bottom -->
-            <router-view @actionBoard="actionBoard" :isBoardShow="isShow" name="bottom-function" />
+            <router-view name="bottom-function" />
         </section>
 
         <Board :isShow="isShow" @closeStatus="closeStatus">
@@ -29,8 +29,15 @@
 
 <script>
 import { Board } from '@/util/components.js'
+import { useUserStore } from '@/stores/useUserStore'
 
 export default {
+    setup() {
+        const store = useUserStore()
+        return {
+            store,
+        }
+    },
     components: { Board, },
     data() {
         return {
@@ -44,6 +51,9 @@ export default {
         actionBoard() {
             this.isShow = true
         }
+    },
+    created() {
+        this.store.logIn(this)
     },
 }
 </script>

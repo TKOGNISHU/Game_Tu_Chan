@@ -10,6 +10,8 @@ import Training from '@/components/board/Training.vue'
 import Embattle from '@/components/board/Embattle.vue'
 import Roll from '@/components/board/Roll.vue'
 
+import ScreenBoard from '@/components/board/Screen-Board.vue'
+
 export { Avatar }
 export { Board }
 
@@ -21,3 +23,5 @@ export { Character }
 export { Training }
 export { Embattle }
 export { Roll }
+
+export { ScreenBoard }

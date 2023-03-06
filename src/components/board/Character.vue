@@ -10,6 +10,10 @@
                     <div class="m-auto overflow-hidden" style="height: 100px; width: 46px;">
                         <img class="h-100" :src="`${HTTP_GG_DRIVE}${immortality?.effects?.normal || ''}`" alt="">
                     </div>
+                    <div class="m-auto">
+                        <span class="d-block fs-6 fw-semibold" style="color: #84e1f0;">{{ immortality?.level?.name }}</span>
+                        <span class="d-block fs-6 fw-semibold" style="color: #84e1f0;">{{ immortality?.level?.level }}</span>
+                    </div>
                 </div>
                 <div class="col-4 overflow-auto rounded px-2 py-1 scrollbar" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
                     <p v-if="immortality" class="m-0 ms-1 p-0">HP: <span class="fw-semibold">{{ immortality?.currentlyHP }}/{{ immortality?.hp }}</span></p>
@@ -72,6 +76,7 @@ export default {
             this.description = ''
         },
         immortalities() {
+            console.log("character: ", this.immortalities, this.immortality)
             this.immortality = this.immortalities[this.appStore.getShowCharacter] || {}
             this.description = ''
         },
@@ -81,13 +86,10 @@ export default {
             const key = e.currentTarget.dataset.skill
             this.description = this.immortality.skills[key].description
         },
-        displayCharacterIndex(e) {
-            this.$emit('update:modelIndex', e.currentTarget.dataset.characterBtn)
-        }
     },
     async created() {},
     async mounted() {
-        console.log(this.immortalities, this.immortality)
+        console.log("character: ", this.immortalities, this.immortality)
     }
 }
 </script>

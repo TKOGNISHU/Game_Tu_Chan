@@ -15,14 +15,14 @@ export const useUserStore = defineStore('user', {
             return false
         },
         isAdmin() {
-            console.log(this.user)
+            console.log("store > isAdmin: ", this.user)
             if (this.user) {
                 return this.user.role == 'admin'
             }
             return false
         },
         getUser() {
-            console.log(this.user)
+            console.log("store > getUser: ", this.user)
             if (this.user) {
                 return this.user
             }
@@ -30,10 +30,18 @@ export const useUserStore = defineStore('user', {
         },
     },
     actions: {
-        async logIn() {
-            console.log("Log in...")
-            this.user = await UserService.get()
-            console.log("user: ", this.user)
+        async logIn(_this) {
+            try {
+                console.log("store > Log in...")
+                this.user = await UserService.get()
+                if (!this.getUser) {
+                    return _this.$router.push({ name: 'login' })
+                }
+                console.log("store > user: ", this.user)
+            } catch(e) {
+                console.log(e)
+                _this.$router.push({ name: 'login' })
+            }
         },
         logOut() {
             this.user = undefined

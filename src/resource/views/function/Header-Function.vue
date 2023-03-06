@@ -11,9 +11,25 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/useUserStore.js'
 export default {
-    props: {
-        user: { type: Object, default: {} },
-    }
+    setup() {
+        const store = useUserStore()
+        return {
+            store,
+        }
+    },
+    data() {
+        return {
+            user: this.store.getUser || {},
+        }
+    },
+    watch: {
+        'store.user'() {
+            this.user = this.store.getUser
+        },
+    },
+    created() {
+    },
 }
 </script>

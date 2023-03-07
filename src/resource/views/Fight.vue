@@ -2,17 +2,17 @@
     <section class="position-relative top-0 h-100 background">
         <!-- Background -->
         <section class="" style="z-index: 1;">
-            <img style="height: 100vh;" src="@/assets/img/hinh-anh-may-tuyet-dep(1).jpg" alt="">
+            <img style="height: 100vh;" src="@/assets/img/fight.png" alt="">
         </section>
 
         <!--  -->
-        <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10;">
+        <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10; background-color: #00000050;">
             <!-- Header -->
             <section class="status-bar" style="height: 150px;"><h1>YOU / DEFENSE</h1></section>
     
             <section class="row battle-field ms-5 me-5">
                 <!-- you  @load="chanting('you', i, 1000)" -->
-                <div class="col bg-dark">
+                <div class="col">
                     <div v-for="j of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" class="row g-0">
                         <div v-for="i of j" :class="`col`" style="height: 100px">
                             <div :class="`h-100 ${`you-${i}`}`">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-2"></div>
                 <!-- defense -->
-                <div class="col bg-dark">
+                <div class="col">
                     <div v-for="j of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" class="row g-0">
                         <div v-for="i of j" :class="`col`">
                             <div :class="`${`defense-${i}`}`" style="height: 100px">

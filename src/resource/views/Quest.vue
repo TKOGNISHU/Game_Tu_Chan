@@ -2,7 +2,7 @@
     <section class="position-relative top-0 h-100 background">
         <!-- Background -->
         <section class="" style="z-index: 1;">
-            <img class="" style="height: 100vh;" src="@/assets/img/afab533e-ed85-46ff-bbc9-9f356d94f99b-result (2).png" alt="">
+            <img class="" style="height: 100vh;" src="@/assets/img/quest.png" alt="">
         </section>
 
         <!-- Content -->

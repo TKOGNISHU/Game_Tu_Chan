@@ -8,6 +8,7 @@ import ActionPlot from '@/util/ActionPlot.js'
 // service
 import AuthService from '@/services/auth.service.js'
 import UserService from '@/services/user.service.js'
+import QuestService from '@/services/quest.service'
 
 // 
 import chanting from '@/assets/img/nam-tu-si/Immortality-200-chanting-3pic.png'
@@ -29,6 +30,7 @@ export { ActionPlot }
 // service
 export { AuthService }
 export { UserService }
+export { QuestService }
 
 // 
 export { chanting }

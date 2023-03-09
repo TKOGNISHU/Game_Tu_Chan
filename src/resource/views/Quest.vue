@@ -11,9 +11,11 @@
             <router-view name="header-function" />
 
             <!-- Body -->
-            <router-link class="d-inline-block" style="height: 100px;" to="/quest/abc/a/fight">
-                <img class="h-100" src="@/assets/img/nam-tu-si/nam_tu_si_no_background.png" alt="">
-            </router-link>
+            <template v-for="(e, i) of quest.clusters">
+                <router-link @click.prevent="" :data-cluster="e._id" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="/quest/abc/a/fight">
+                    <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}1A1s6d1GPoz9Yj7R63aS1ZoPDkYQvr6PC`" alt="">
+                </router-link>
+            </template>
 
             <!-- Bottom -->
             <router-view name="bottom-function" />
@@ -28,8 +30,10 @@
 </template>
 
 <script>
+import { HTTP_GG_DRIVE } from '../../../env'
 import { Board } from '@/util/components.js'
 import { useUserStore } from '@/stores/useUserStore'
+import { QuestService } from '@/util/index.js'
 
 export default {
     setup() {
@@ -42,6 +46,8 @@ export default {
     data() {
         return {
             isShow: false,
+            HTTP_GG_DRIVE,
+            quest: [],
         }
     },
     methods: {
@@ -52,8 +58,9 @@ export default {
             this.isShow = true
         }
     },
-    created() {
+    async created() {
         this.store.logIn(this)
+        this.quest = await QuestService.get(this.$route.params.idQuest)
     },
 }
 </script>

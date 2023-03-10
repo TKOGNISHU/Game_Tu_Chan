@@ -1,5 +1,5 @@
 <template>
-    <Board :isShow="modelIsShow" index="0" @closeStatus="closeBoardStatus" style="top: -6.67rem;">
+    <Board :isShow="modelIsShow" index="status" @closeStatus="closeBoardStatus" style="top: -6.67rem;">
         <section id="board-status" class="ms-3 me-5" style="min-width: 300px; max-width: 1000px; min-height: 300px; max-height: 500px;">
             <!-- Header -->
             <section class="text-start">
@@ -29,7 +29,7 @@
         </section>
     </Board>
 
-    <Board :isShow="modelIsShowBag" index="1" @closeStatus="closeBoardBag" style="top: -6.67rem;">
+    <Board :isShow="modelIsShowBag" index="bag" @closeStatus="closeBoardBag" style="top: -6.67rem;">
         <section id="board-bag" class="ms-3 me-5" style="min-width: 300px; max-width: 1000px; min-height: 300px; max-height: 500px;">
             <!-- Header -->
             <section class="text-start">

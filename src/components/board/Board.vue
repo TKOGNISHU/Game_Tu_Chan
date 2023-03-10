@@ -128,6 +128,8 @@ import background from '@/assets/img/board/circle.svg'
 export default {
     props: {
         isShow: { type: Boolean, default: true },
+        // Index to separate this board with that board 
+        // (ex: method load(), class: .board-content-${this.index})
         index: { type: Number, default: 0, },
     },
     data() {

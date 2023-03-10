@@ -12,7 +12,7 @@
 
             <!-- Body -->
             <template v-for="(e, i) of quest.clusters">
-                <router-link @click.prevent="" :data-cluster="e._id" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="/quest/abc/a/fight">
+                <router-link @click.prevent="actionBoard" :data-cluster="e._id" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="">
                     <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}1A1s6d1GPoz9Yj7R63aS1ZoPDkYQvr6PC`" alt="">
                 </router-link>
             </template>
@@ -21,10 +21,33 @@
             <router-view name="bottom-function" />
         </section>
 
-        <Board :isShow="isShow" @closeStatus="closeStatus">
-            <div>
-                <h2 style="width: 700px; height: 550px;">Hahahhah</h2>
-            </div>
+        <Board v-if="quest?.clusters" :isShow="isShowStatusCluster" index="cluster-status" @closeStatus="closeStatus">
+            <!-- Header -->
+            <section class="mx-3 border-bottom border-2" style="border-color: #97d4f1 !important;">
+                <h2 class="fs-5">{{ quest?.clusters[clusterStatusIndex]?.name }}</h2>
+            </section>
+            <!-- Body -->
+            <section class="row mt-2 ms-1" style="width: 700px; height: 300px;">
+                <div class="col-9">
+                    <table class="w-100">
+                        <tbody>
+                            <tr class="row g-0 border-bottom border-1">
+                                <th class="border-end border-1 col fs-6">Tu vi</th>
+                                <td class="col fs-6">
+                                    <span>{{ quest?.clusters[clusterStatusIndex]?.immortalities[0].level.name }}</span>
+                                    <span class="ms-1">{{ quest?.clusters[clusterStatusIndex]?.immortalities[0].level.level }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col mb-4 border-start border-2">
+                    <router-link class="mt-4 d-inline-block text-decoration-none fs-6 fw-semibold px-2 py-1 rounded"
+                        style="background-color: #c70000a0; color: #e1e1e1d6;"
+                        to="/quest/abc/a/fight"
+                    >Tấn Công</router-link>
+                </div>
+            </section>
         </Board>
     </section>
 </template>
@@ -45,17 +68,18 @@ export default {
     components: { Board, },
     data() {
         return {
-            isShow: false,
+            isShowStatusCluster: false,
             HTTP_GG_DRIVE,
             quest: [],
+            clusterStatusIndex: 0,
         }
     },
     methods: {
         closeStatus() {
-            this.isShow = false
+            this.isShowStatusCluster = false
         },
         actionBoard() {
-            this.isShow = true
+            this.isShowStatusCluster = true
         }
     },
     async created() {

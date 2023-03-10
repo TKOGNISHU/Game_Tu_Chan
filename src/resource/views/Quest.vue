@@ -12,7 +12,7 @@
 
             <!-- Body -->
             <template v-for="(e, i) of quest.clusters">
-                <router-link @click.prevent="actionBoard" :data-cluster="e._id" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="">
+                <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="">
                     <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}1A1s6d1GPoz9Yj7R63aS1ZoPDkYQvr6PC`" alt="">
                 </router-link>
             </template>
@@ -32,10 +32,27 @@
                     <table class="w-100">
                         <tbody>
                             <tr class="row g-0 border-bottom border-1">
-                                <th class="border-end border-1 col fs-6">Tu vi</th>
+                                <th class="border-end border-1 col-4 fs-6">Tu vi</th>
                                 <td class="col fs-6">
-                                    <span>{{ quest?.clusters[clusterStatusIndex]?.immortalities[0].level.name }}</span>
-                                    <span class="ms-1">{{ quest?.clusters[clusterStatusIndex]?.immortalities[0].level.level }}</span>
+                                    <span class="fw-semibold">{{ quest?.clusters[clusterStatusIndex]?.maxLevel?.name }}</span>
+                                    <span class="ms-1 fw-semibold">{{ quest?.clusters[clusterStatusIndex]?.maxLevel?.level }}</span>
+                                </td>
+                            </tr>
+                            <tr class="row g-0 border-bottom border-1">
+                                <th class="border-end border-1 col-4 fs-6">Chiến lợi</th>
+                                <td class="col fs-6">
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.items">
+                                        <span class="fw-semibold">{{ item.item.name }}</span>
+                                        <span class="ms-1 fw-semibold">x{{ item.quantity }}</span>
+                                    </div>
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.equipments">
+                                        <span class="fw-semibold">{{ item?.equip?.name }}</span>
+                                        <span class="ms-1 fw-semibold">x{{ item?.quantity }}</span>
+                                    </div>
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.skills">
+                                        <span class="fw-semibold">{{ item?.skill?.name }}</span>
+                                        <span class="ms-1 fw-semibold">x{{ item?.quantity }}</span>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -44,7 +61,7 @@
                 <div class="col mb-4 border-start border-2">
                     <router-link class="mt-4 d-inline-block text-decoration-none fs-6 fw-semibold px-2 py-1 rounded"
                         style="background-color: #c70000a0; color: #e1e1e1d6;"
-                        to="/quest/abc/a/fight"
+                        :to="{name: 'fight', params: {idCluster: `${quest?.clusters[clusterStatusIndex]?._id}`}}"
                     >Tấn Công</router-link>
                 </div>
             </section>
@@ -78,7 +95,8 @@ export default {
         closeStatus() {
             this.isShowStatusCluster = false
         },
-        actionBoard() {
+        actionBoard(e) {
+            this.clusterStatusIndex = Number.parseInt(e.currentTarget.dataset.cluster)
             this.isShowStatusCluster = true
         }
     },

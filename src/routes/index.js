@@ -5,7 +5,7 @@ import home from './home'
 
 const routes = [
     {
-        path: '/quest/:idQuest',
+        path: '/quests/:idQuest',
         children: [...quest],
     },
     {

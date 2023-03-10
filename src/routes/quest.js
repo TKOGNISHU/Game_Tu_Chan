@@ -1,6 +1,6 @@
 export default [
     {
-        path: ':id/fight',
+        path: 'clusters/:idCluster/fight',
         component: () => import ('@/resource/views/Fight.vue'),
         children: [
             {

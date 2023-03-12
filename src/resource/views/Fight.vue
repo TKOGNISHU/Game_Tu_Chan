@@ -88,278 +88,282 @@ import {
     Figure,
     State,
     ActionPlot,
-    chanting,
-    chantingFinish,
-    magic_ring_normal,
-    normal_finally,
-    heal_1s,
-    fire,
+    QuestService
 } from '@/util/index.js'
 
 export default {
     components: { Avatar, },
     data() {
+        const { idQuest, idCluster } = this.$route.params
         return {
+            already: false,
+            idQuest, idCluster,
             avatars: {
-                'monk': {
-                    'chanting-normal': {
-                        effect: chanting,
-                        animation: 'animation-50-3pic',
-                    },
-                    'chantingFinish-normal':  {
-                        effect: chantingFinish,
-                        animation: 'animation-50-4pic',
-                    },
-                },
+                // 'monk': {
+                //     'chanting-normal': {
+                //         effect: chanting,
+                //         animation: 'animation-50-3pic',
+                //     },
+                //     'chantingFinish-normal':  {
+                //         effect: chantingFinish,
+                //         animation: 'animation-50-4pic',
+                //     },
+                // },
             },
             skysState: {
 
             },
             figures: {
-                magic_ring_normal: new Figure({
-                    name: 'magic_ring_normal',
-                    effect: magic_ring_normal,
-                    style: 'width: 100px; margin-top: -150px;',
-                    animation: '',
-                }),
+                // magic_ring_normal: new Figure({
+                //     name: 'magic_ring_normal',
+                //     effect: magic_ring_normal,
+                //     style: 'width: 100px; margin-top: -150px;',
+                //     animation: '',
+                // }),
             },
             skills: { // action skill
-                'normal': new Skill({
-                    name: 'normal',
-                    type: 'damage',
-                    amount: 5, // number of skill attend to defense same time
-                    style: 'width: 100px; background-size: 100%; background-position-y: 75%',
-                    animation: '',
-                    startIs: 'you',
-                    delay: 2000, // delay between (sky/figure) and action
-                    effects: {
-                        sky: '',
-                        figure: 'magic_ring_normal', // from you
-                        action: normal_finally, // animation from you -> object / immediately object
-                    }
-                }),
-                'normal-heal': new Skill({
-                    name: 'normal-heal',
-                    type: 'heal',
-                    amount: 2, // number of skill attend to defense same time
-                    style: 'width: 100px; background-size: auto; background-position-y: 100%;',
-                    animation: 'animation-100',
-                    startIs: 'object', // sky: from sky / you: from people action skill / object: immediacy from object be attacked, vd skill from earth, ect.
-                    delay: 2000, // delay between (sky/figure) and action
-                    effects: {
-                        sky: '',
-                        figure: 'magic_ring_normal', // from you
-                        action: heal_1s, // animation from you -> object / immediately object
-                    },
-                }),
+                // 'normal': new Skill({
+                //     name: 'normal',
+                //     type: 'damage',
+                //     amount: 5, // number of skill attend to defense same time
+                //     style: 'width: 100px; background-size: 100%; background-position-y: 75%',
+                //     animation: '',
+                //     startIs: 'you',
+                //     delay: 2000, // delay between (sky/figure) and action
+                //     effects: {
+                //         sky: '',
+                //         figure: 'magic_ring_normal', // from you
+                //         action: normal_finally, // animation from you -> object / immediately object
+                //     }
+                // }),
+                // 'normal-heal': new Skill({
+                //     name: 'normal-heal',
+                //     type: 'heal',
+                //     amount: 2, // number of skill attend to defense same time
+                //     style: 'width: 100px; background-size: auto; background-position-y: 100%;',
+                //     animation: 'animation-100',
+                //     startIs: 'object', // sky: from sky / you: from people action skill / object: immediacy from object be attacked, vd skill from earth, ect.
+                //     delay: 2000, // delay between (sky/figure) and action
+                //     effects: {
+                //         sky: '',
+                //         figure: 'magic_ring_normal', // from you
+                //         action: heal_1s, // animation from you -> object / immediately object
+                //     },
+                // }),
             },
             states: {
-                fire: new State({
-                    name: 'fire',
-                    type: 'damage', // damage/heal/'' ('' when effect decrease atk/... not hp or mp)
-                    amount: 1,
-                    effect: fire,
-                    style: '',
-                    animation: 'animation-100-04-2-infinite',
-                })
+                // fire: new State({
+                //     name: 'fire',
+                //     type: 'damage', // damage/heal/'' ('' when effect decrease atk/... not hp or mp)
+                //     amount: 1,
+                //     effect: fire,
+                //     style: '',
+                //     animation: 'animation-100-04-2-infinite',
+                // })
             },
             status: {
-                you: {
-                    1: new Immortality({
-                        index: -1,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                    3: new Immortality({
-                        index: -3,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                    5: new Immortality({
-                        index: -5,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                        states: ['fire',],
-                    }),
-                    7: new Immortality({
-                        index: -7,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                    9: new Immortality({
-                        index: -9,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                },
-                defense: {
-                    1: new Immortality({
-                        index: 1,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                        states: ['fire','fire',],
-                    }),
-                    3: new Immortality({
-                        index: 3,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                    5: new Immortality({
-                        index: 5,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                        states: ['fire',],
-                    }),
-                    7: new Immortality({
-                        index: 7,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                    9: new Immortality({
-                        index: 9,
-                        avatar: 'monk',
-                        hp: 1000,
-                        mp: 100,
-                        currentHp: 1000,
-                        currentMp: 100,
-                    }),
-                }
+                // you: {
+                //     1: new Immortality({
+                //         index: -1,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                //     3: new Immortality({
+                //         index: -3,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                //     5: new Immortality({
+                //         index: -5,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //         states: ['fire',],
+                //     }),
+                //     7: new Immortality({
+                //         index: -7,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                //     9: new Immortality({
+                //         index: -9,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                // },
+                // defense: {
+                //     1: new Immortality({
+                //         index: 1,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //         states: ['fire','fire',],
+                //     }),
+                //     3: new Immortality({
+                //         index: 3,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                //     5: new Immortality({
+                //         index: 5,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //         states: ['fire',],
+                //     }),
+                //     7: new Immortality({
+                //         index: 7,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                //     9: new Immortality({
+                //         index: 9,
+                //         avatar: 'monk',
+                //         hp: 1000,
+                //         mp: 100,
+                //         currentHp: 1000,
+                //         currentMp: 100,
+                //     }),
+                // }
             },
             plot: [ // turn // if actor / object < 0 => you else defense
-                { // turn 1
-                    you: {
-                        actor: -1,
-                        effects: [
-                            {
-                                type: 'skill',
-                                name: 'normal-heal',
-                                objects: [-1],
-                                damages: [],
-                                heals: ['+200'],
-                            }
-                        ]
-                    },
-                    defense: {
-                        actor: 1,
-                        effects: [
-                            {
-                                type: 'skill',
-                                name: 'normal-heal',
-                                objects: [9],
-                                damages: [],
-                                heals: ['+600'],
-                            }
-                        ]
-                    },
-                },
-                { // turn 2
-                    you: {
-                        actor: -3,
-                        effects: [
-                            {
-                                type: 'skill',
-                                name: 'normal',
-                                objects: [5, 1],
-                                damages: ['-200', '-300'],
-                            },
-                            {
-                                type: 'action',
-                                name: 'fire',
-                                objects: [5],
-                            }
-                        ]
-                    },
-                    defense: {
-                        actor: 3,
-                        effects: [
-                            {
-                                type: 'skill',
-                                name: 'normal',
-                                objects: [-5],
-                                damages: ['-200'],
-                            },
-                            {
-                                type: 'action',
-                                name: 'fire',
-                                objects: [-5],
-                            }
-                        ]
-                    },
-                },
-                { // turn 3
-                    you: {
-                        actor: -5,
-                        effects: [
-                            {
-                                type: 'damage',
-                                damages: ['-50'],
-                            },
-                            {
-                                type: 'skill',
-                                name: 'normal',
-                                objects: [1, 3, 5, 7, 9],
-                                damages: ['-1000', '-1000', '-100', '-1000', '-1000']
-                            }
-                        ]
-                    },
-                    defense: {
-                        actor: 5,
-                        effects: [
-                            {
-                                type: 'damage',
-                                damages: ['-50'],
-                            },
-                            {
-                                type: 'remove',
-                                name: 'fire',
-                            },
-                            {
-                                type: 'skill',
-                                name: 'normal',
-                                objects: [-1, -3, -5, -7, -9],
-                                damages: ['-20000', '-30000', '-10000', '-10000', '-10000'],
-                            },
-                        ]
-                    },
-                },
+                // { // turn 1
+                //     you: {
+                //         actor: -1,
+                //         effects: [
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal-heal',
+                //                 objects: [-1],
+                //                 damages: [],
+                //                 heals: ['+200'],
+                //             }
+                //         ]
+                //     },
+                //     defense: {
+                //         actor: 1,
+                //         effects: [
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal-heal',
+                //                 objects: [9],
+                //                 damages: [],
+                //                 heals: ['+600'],
+                //             }
+                //         ]
+                //     },
+                // },
+                // { // turn 2
+                //     you: {
+                //         actor: -3,
+                //         effects: [
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal',
+                //                 objects: [5, 1],
+                //                 damages: ['-200', '-300'],
+                //             },
+                //             {
+                //                 type: 'action',
+                //                 name: 'fire',
+                //                 objects: [5],
+                //             }
+                //         ]
+                //     },
+                //     defense: {
+                //         actor: 3,
+                //         effects: [
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal',
+                //                 objects: [-5],
+                //                 damages: ['-200'],
+                //             },
+                //             {
+                //                 type: 'action',
+                //                 name: 'fire',
+                //                 objects: [-5],
+                //             }
+                //         ]
+                //     },
+                // },
+                // { // turn 3
+                //     you: {
+                //         actor: -5,
+                //         effects: [
+                //             {
+                //                 type: 'damage',
+                //                 damages: ['-50'],
+                //             },
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal',
+                //                 objects: [1, 3, 5, 7, 9],
+                //                 damages: ['-1000', '-1000', '-100', '-1000', '-1000']
+                //             }
+                //         ]
+                //     },
+                //     defense: {
+                //         actor: 5,
+                //         effects: [
+                //             {
+                //                 type: 'damage',
+                //                 damages: ['-50'],
+                //             },
+                //             {
+                //                 type: 'remove',
+                //                 name: 'fire',
+                //             },
+                //             {
+                //                 type: 'skill',
+                //                 name: 'normal',
+                //                 objects: [-1, -3, -5, -7, -9],
+                //                 damages: ['-20000', '-30000', '-10000', '-10000', '-10000'],
+                //             },
+                //         ]
+                //     },
+                // },
             ]
         }
     },
-    methods: {
-        async test() {
-            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
-        }
+    watch: {
+        already() {
+            // new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+        },
     },
-    mounted() {
-        new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
-    }
+    async created() {
+        const result = await QuestService.fight(this.idQuest, this.idCluster)
+    },
+    methods: {
+        // async test() {
+        //     new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+        // }
+    },
+    mounted() {}
 }
 </script>
 

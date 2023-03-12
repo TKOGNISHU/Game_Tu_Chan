@@ -16,13 +16,13 @@
                     </div>
                 </div>
                 <div class="col-4 overflow-auto rounded px-2 py-1 scrollbar" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
-                    <p v-if="immortality" class="m-0 ms-1 p-0">HP: <span class="fw-semibold">{{ immortality?.currentlyHP }}/{{ immortality?.hp }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">MP: <span class="fw-semibold">{{ immortality?.currentlyMP }}/{{ immortality?.mp }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">Công Vật Lý: <span class="fw-semibold">{{ immortality?.ATK }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">Sát Thương Phép: <span class="fw-semibold">{{ immortality?.INT }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">Phòng Thủ: <span class="fw-semibold">{{ immortality?.DEF }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">Thần Thức: <span class="fw-semibold">{{ immortality?.ACC }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">Thân Pháp: <span class="fw-semibold">{{ immortality?.AGI }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">HP: <span class="fw-semibold">{{ immortality?.currentlyStatus?.currentlyHP }}/{{ immortality?.status?.hp }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">MP: <span class="fw-semibold">{{ immortality?.currentlyStatus?.currentlyMP }}/{{ immortality?.status?.mp }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">Công Vật Lý: <span class="fw-semibold">{{ immortality?.status?.ATK }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">Sát Thương Phép: <span class="fw-semibold">{{ immortality?.status?.INT }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">Phòng Thủ: <span class="fw-semibold">{{ immortality?.status?.DEF }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">Thần Thức: <span class="fw-semibold">{{ immortality?.status?.ACC }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">Thân Pháp: <span class="fw-semibold">{{ immortality?.status?.AGI }}</span></p>
                 </div>
             </div>
             <!-- Body - skills -->

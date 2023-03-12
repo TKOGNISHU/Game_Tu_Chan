@@ -1,22 +1,22 @@
 <template>
     <section class="position-absolute bottom-0 end-0" style="z-index: 100;">
         <router-link @click.prevent="actionBoard('embattle')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
-            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/embattle.png" alt="">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}1YWjsvLEXSlvnU94WTBGGhoaHfHjdJmj6`" alt="">
             <p class="text-light fs-6">Trận đồ</p>
         </router-link>
 
         <router-link @click.prevent="actionBoard('bag')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
-            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/bag.png" alt="">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}1hYRKxyrwmey_0R8p2cnZp5y9IHYcRGP2`" alt="">
             <p class="text-light fs-6">Túi đồ</p>
         </router-link>
 
         <router-link @click.prevent="actionBoard('training')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
-            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/book.png" alt="">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}14kNhVdA4TdG0IrHTcmI9CdbvHU7lMdCi`" alt="">
             <p class="text-light fs-6">Tu luyện</p>
         </router-link>
 
         <router-link @click.prevent="actionBoard('character')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
-            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/book.png" alt="">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}1WV4DTJ3KNnnYbROiuFyuxKgjM_wvYfIB`" alt="">
             <p class="text-light fs-6">Đệ tử</p>
         </router-link>
 
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { HTTP_GG_DRIVE } from '../../../../env'
 import { ScreenBoard, Board, } from '@/util/components.js'
 import { useUserStore } from '@/stores/useUserStore'
 import {
@@ -69,6 +70,7 @@ export default {
     components: { ScreenBoard, Board, },
     data() {
         return {
+            HTTP_GG_DRIVE,
             isShow: false,
             isShowBag: false,
             questsIsShow: false,

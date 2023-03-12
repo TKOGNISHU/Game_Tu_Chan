@@ -12,8 +12,8 @@
 
             <!-- Body -->
             <template v-for="(e, i) of quest.clusters">
-                <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: 450px; left: ${10 + i*100}px;`" class="position-absolute d-inline-block" to="">
-                    <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}1A1s6d1GPoz9Yj7R63aS1ZoPDkYQvr6PC`" alt="">
+                <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: ${e?.location?.top}; left: ${e?.location?.left};`" class="position-absolute d-inline-block" to="">
+                    <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}${e?.image}`" alt="">
                 </router-link>
             </template>
 

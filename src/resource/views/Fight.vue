@@ -358,11 +358,7 @@ export default {
     async created() {
         const result = await QuestService.fight(this.idQuest, this.idCluster)
     },
-    methods: {
-        // async test() {
-        //     new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
-        // }
-    },
+    methods: {},
     mounted() {}
 }
 </script>

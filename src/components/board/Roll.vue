@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { ListCharacter } from '@/util/components.js'
+import { ListCharacter } from '@/components/index.js'
 import { useAppStore } from '@/stores/useAppStore'
 export default {
     components: { ListCharacter, },

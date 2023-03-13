@@ -13,8 +13,8 @@
             <section class="row battle-field ms-5 me-5">
                 <!-- you  @load="chanting('you', i, 1000)" -->
                 <div class="col">
-                    <div v-for="j of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" class="row g-0">
-                        <div v-for="i of j" :class="`col`" style="height: 100px">
+                    <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
+                        <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
                             <div :class="`h-100 ${`you-${i}`}`">
                                 <Avatar v-if="status.you[i]" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
                             </div>
@@ -24,8 +24,8 @@
                 <div class="col-2"></div>
                 <!-- defense -->
                 <div class="col">
-                    <div v-for="j of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" class="row g-0">
-                        <div v-for="i of j" :class="`col`">
+                    <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
+                        <div v-for="(i, index) of j" :key="index" :class="`col`">
                             <div :class="`${`defense-${i}`}`" style="height: 100px">
                                 <Avatar v-if="status.defense[i]" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
                             </div>
@@ -37,7 +37,7 @@
             <!-- Skills -->
             <section>
                 <!-- Sky -->
-                <template v-for="(value, key, index) in skysState">
+                <template v-for="(value, key, index) in skysState" :key="`sky-key-${index}`">
                     <div
                         :class="`position-fixed top-0 start-0 end-0 d-none ${value.animation} ${key}`"
                         :style="`height: 200px;
@@ -47,7 +47,7 @@
                     ></div>
                 </template>
                 <!-- Figure -->
-                <template v-for="(value, key, index) in figures">
+                <template v-for="(value, key, index) in figures" :key="`figure-key-${index}`">
                     <div
                         :class="`position-fixed top-0 start-0 d-none ${value.animation} ${key}`"
                         :style="`height: 200px; margin-left: -100px;
@@ -58,8 +58,8 @@
                     <!-- <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="`z-index: 1000; ${value.style}`" alt=""> -->
                 </template>
                 <!-- Skill -->
-                <template v-for="(value, key, index) in skills">
-                    <div v-for="i in value.amount"
+                <template v-for="(value, key, index) in skills" :key="`skill-key-temp-${index}`">
+                    <div v-for="(i, index) in value.amount" :key="`skill-key-${index}`"
                         :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
                         :style="`height: 200px; margin-top: -100px;
                                 z-index: 1001; 
@@ -68,7 +68,7 @@
                     ></div>
                 </template>
             </section>
-    
+
             <!-- damage -->
             <!-- <section>
                 <button @click="test" class="position-fixed">Click me!</button>
@@ -81,15 +81,15 @@
 </template>
 
 <script>
-import { Avatar } from '@/util/components.js'
+import { Avatar } from '@/components/index'
+import { QuestService } from '@/services/index'
 import {
     Immortality,
     Skill,
     Figure,
     State,
     ActionPlot,
-    QuestService
-} from '@/util/index.js'
+} from '@util/index'
 
 export default {
     components: { Avatar, },

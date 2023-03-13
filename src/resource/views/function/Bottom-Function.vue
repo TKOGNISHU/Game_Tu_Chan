@@ -52,13 +52,13 @@
 </template>
 
 <script>
-import { HTTP_GG_DRIVE } from '../../../../env'
-import { ScreenBoard, Board, } from '@/util/components.js'
-import { useUserStore } from '@/stores/useUserStore'
+import { HTTP_GG_DRIVE } from '#/env'
+import { ScreenBoard, Board, } from '@/components/index'
+import { useUserStore } from '@/stores/index'
 import {
     UserService,
     QuestService,
-} from '@/util/index.js'
+} from '@/services/index'
 
 export default {
     setup() {

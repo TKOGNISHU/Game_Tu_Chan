@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import { SERVER_URL_LOGIN } from '../../../env'
-import { useUserStore } from '@/stores/useUserStore'
+import { SERVER_URL_LOGIN } from '#/env'
+import { useUserStore } from '@/stores/index'
 export default{
     setup() {
         const store = useUserStore()

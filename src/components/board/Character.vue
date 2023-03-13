@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import { ListCharacter } from '@/util/components.js'
+import { HTTP_GG_DRIVE } from '#/env'
+import { ListCharacter } from '@/components/index.js'
 import { useAppStore } from '@/stores/useAppStore'
-import { HTTP_GG_DRIVE } from '../../../env'
 export default {
     components: { ListCharacter, },
     props: {

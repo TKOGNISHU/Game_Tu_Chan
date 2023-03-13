@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/useUserStore.js'
+import { useUserStore } from '@/stores/index'
 export default {
     setup() {
         const store = useUserStore()

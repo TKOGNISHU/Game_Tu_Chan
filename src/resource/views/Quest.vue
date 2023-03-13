@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import { HTTP_GG_DRIVE } from '../../../env'
-import { Board } from '@/util/components.js'
-import { useUserStore } from '@/stores/useUserStore'
-import { QuestService } from '@/util/index.js'
+import { HTTP_GG_DRIVE } from '#/env'
+import { Board } from '@/components/index'
+import { useUserStore } from '@/stores/index'
+import { QuestService } from '@/services/index'
 
 export default {
     setup() {

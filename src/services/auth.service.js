@@ -1,4 +1,4 @@
-import { SERVER_URL_BLANK } from '../../env'
+import { SERVER_URL_BLANK } from '#/env'
 
 import BaseService from './base.service'
 

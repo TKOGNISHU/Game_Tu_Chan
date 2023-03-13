@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/useUserStore'
-import { Board } from '@/util/components.js'
+import { useUserStore } from '@/stores/index'
+import { Board } from '@/components/index'
 import {
     Skill,
     normal_finally,
     heal_1s,
-} from '@/util/index.js'
+} from '@/util/index'
 
 export default {
     setup() {

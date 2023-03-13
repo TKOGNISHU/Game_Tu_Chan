@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { Board, Bag, Upgrade, Character, Training, Embattle, Roll, } from '@/util/components.js'
+import { Board, Bag, Upgrade, Character, Training, Embattle, Roll, } from '@/components/index.js'
 export default {
     props: {
         immortalities: { type: Array, default: [] },

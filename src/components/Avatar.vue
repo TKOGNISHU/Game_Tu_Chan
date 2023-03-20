@@ -5,19 +5,19 @@
             <div
                 :class="`h-100 ${status.who}-${status.indexABS}-normal`"
                 :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
-                        background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
+                        background-image: url('${HTTP_GG_DRIVE}${avatars && avatars[avatarType] && avatars[avatarType]['normal']}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
             <div
-                :class="`h-100 ${avatars[avatarType]['chanting-normal'].animation} ${status.who}-${status.indexABS}-chanting d-none`"
+                :class="`h-100 ${avatars && avatars[avatarType] && avatars[avatarType]['chanting'].animation} ${status.who}-${status.indexABS}-chanting d-none`"
                 :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
-                        background-image: url('${avatars[avatarType]['chanting-normal'].effect}');
+                        background-image: url('${HTTP_GG_DRIVE}${avatars && avatars[avatarType] && avatars[avatarType]['chanting'].effect}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
             <div
-                :class="`h-100 ${avatars[avatarType]['chantingFinish-normal'].animation} ${status.who}-${status.indexABS}-chantingFinish d-none`"
+                :class="`h-100 ${avatars && avatars[avatarType] && avatars[avatarType]['chantingFinish'].animation} ${status.who}-${status.indexABS}-chantingFinish d-none`"
                 :style="`z-index: 100; ${status.who == 'defense' && 'transform: scaleX(-1)'};
-                        background-image: url('${avatars[avatarType]['chantingFinish-normal'].effect}');
+                        background-image: url('${HTTP_GG_DRIVE}${avatars && avatars[avatarType] && avatars[avatarType]['chantingFinish'].effect}');
                         background-size: cover; background-repeat: no-repeat;`"
             ></div>
         </div>
@@ -34,7 +34,7 @@
         <!-- state -->
         <div class="position-absolute top-0" 
             :style="`${status.who == 'you' ? 'left: -50%;' : 'right: -50%;'} width: 25px; z-index: 1002;`">
-            <div v-for="(e, i) in status.states"
+            <div v-for="(e, i) in status.states" :key="`you-state-${i}-state`"
                 :class="`${states[e].animation} ${status.who}__state-${e}-${status.indexABS} d-none`"
                 :style="`height: 25px;
                         background-image: url('${states[e].effect}');
@@ -49,6 +49,7 @@
 
 <script>
 import BoardStatus from '@/components/board/Board-Status.vue'
+import { HTTP_GG_DRIVE } from '#/env'
 
 import Immortality from '@/util/Immortality.js'
 
@@ -60,10 +61,18 @@ export default {
         states: { type: Object, default: {} },
     },
     data() {
+        console.log("Avatar > status", this.status)
         return {
+            HTTP_GG_DRIVE,
             avatarType: this.status.avatar,
         }
     },
+    // watch: {
+    //     status() {
+    //         console.log("Avatar > status", this.status)
+    //         // avatarType= this.status.avatar
+    //     }
+    // },
     methods: {
     },
     mounted() {

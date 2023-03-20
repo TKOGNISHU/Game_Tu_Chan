@@ -14,8 +14,8 @@ class ActionPlot {
         this.plot = plot
     }
 
-    getTypeEffect(skillType) {
-        return `${skillType}s`
+    getTypeEffect(type) {
+        return `${type}s`
     }
 
     handleHP(who, objectIndex) {
@@ -182,12 +182,16 @@ class ActionPlot {
         }
     }
 
-    toggleNumber(skillType, effect, who, objectIndex, indexSkill) {
+    toggleNumber(typeEffect, effect, who, objectIndex, indexSkill) {
         // Damage effect, [100, 10, ...]
-        const effectNumbers = effect[this.getTypeEffect(skillType)]
+        let type = typeEffect || 'heal'
+        if (!effect[type]) {
+            type = 'damage'
+        }
+        const effectNumbers = effect[this.getTypeEffect(type)]
 
         if (effectNumbers.length > 0) {
-            this.ToggleNumberAnimation(skillType, who, objectIndex, effectNumbers[indexSkill])
+            this.ToggleNumberAnimation(type, who, objectIndex, effectNumbers[indexSkill])
         }
     }
 
@@ -202,8 +206,12 @@ class ActionPlot {
     }
 
     computedDamage(who, objectIndex, effect, index, skillName) {
-        const skillType = this.skills[skillName].type
-        const hpBeChanged = effect[this.getTypeEffect(skillType)][index]
+        // const skillType = this.skills[skillName].type
+        let type = 'heals'
+        if (!effect[type]) {
+            type = 'damages'
+        }
+        const hpBeChanged = effect[type][index]
         
         this.status[who][objectIndex].currentHp += new Number(hpBeChanged)
 

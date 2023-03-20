@@ -2,7 +2,7 @@ import Base from './Base'
 
 class Immortality extends Base {
     constructor({
-        index = -1, avatar = 'monk', hp = 99999, mp = 99999, currentHp = 0, currentMp = 0, states = []
+        index, avatar, hp, mp, currentHp, currentMp, states
     }) {
         super()
         this.index = index
@@ -24,7 +24,7 @@ class Immortality extends Base {
     async chanting(timeout, type) {
         const _this = this
 
-        const chantingClass = `.${this.who}-${this.indexABS}-chanting${type ? `-${type}` : ''}`
+        const chantingClass = `.${this.who}-${this.indexABS}-chanting` //${type ? `-${type}` : ''}
         const normal = $(`.${this.who}-${this.indexABS}-normal`)
         const chantingObject = $(chantingClass)
 

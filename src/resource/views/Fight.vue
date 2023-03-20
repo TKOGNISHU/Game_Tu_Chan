@@ -16,7 +16,9 @@
                     <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
                         <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
                             <div :class="`h-100 ${`you-${i}`}`">
-                                <Avatar v-if="status.you[i]" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                                <template v-if="status?.you[i]">
+                                    <Avatar :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -27,7 +29,9 @@
                     <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
                         <div v-for="(i, index) of j" :key="index" :class="`col`">
                             <div :class="`${`defense-${i}`}`" style="height: 100px">
-                                <Avatar v-if="status.defense[i]" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                                <template v-if="status?.defense[i]">
+                                    <Avatar :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -89,7 +93,7 @@ import {
     Figure,
     State,
     ActionPlot,
-} from '@util/index'
+} from '@/util/index'
 
 export default {
     components: { Avatar, },
@@ -100,11 +104,11 @@ export default {
             idQuest, idCluster,
             avatars: {
                 // 'monk': {
-                //     'chanting-normal': {
+                //     'chanting': {
                 //         effect: chanting,
                 //         animation: 'animation-50-3pic',
                 //     },
-                //     'chantingFinish-normal':  {
+                //     'chantingFinish':  {
                 //         effect: chantingFinish,
                 //         animation: 'animation-50-4pic',
                 //     },
@@ -124,7 +128,7 @@ export default {
             skills: { // action skill
                 // 'normal': new Skill({
                 //     name: 'normal',
-                //     type: 'damage',
+                ////     type: 'damage',
                 //     amount: 5, // number of skill attend to defense same time
                 //     style: 'width: 100px; background-size: 100%; background-position-y: 75%',
                 //     animation: '',
@@ -138,7 +142,7 @@ export default {
                 // }),
                 // 'normal-heal': new Skill({
                 //     name: 'normal-heal',
-                //     type: 'heal',
+                ////     type: 'heal',
                 //     amount: 2, // number of skill attend to defense same time
                 //     style: 'width: 100px; background-size: auto; background-position-y: 100%;',
                 //     animation: 'animation-100',
@@ -154,7 +158,7 @@ export default {
             states: {
                 // fire: new State({
                 //     name: 'fire',
-                //     type: 'damage', // damage/heal/'' ('' when effect decrease atk/... not hp or mp)
+                //    // type: 'damage', // damage/heal/'' ('' when effect decrease atk/... not hp or mp)
                 //     amount: 1,
                 //     effect: fire,
                 //     style: '',
@@ -162,93 +166,93 @@ export default {
                 // })
             },
             status: {
-                // you: {
-                //     1: new Immortality({
-                //         index: -1,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                //     3: new Immortality({
-                //         index: -3,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                //     5: new Immortality({
-                //         index: -5,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //         states: ['fire',],
-                //     }),
-                //     7: new Immortality({
-                //         index: -7,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                //     9: new Immortality({
-                //         index: -9,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                // },
-                // defense: {
-                //     1: new Immortality({
-                //         index: 1,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //         states: ['fire','fire',],
-                //     }),
-                //     3: new Immortality({
-                //         index: 3,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                //     5: new Immortality({
-                //         index: 5,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //         states: ['fire',],
-                //     }),
-                //     7: new Immortality({
-                //         index: 7,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                //     9: new Immortality({
-                //         index: 9,
-                //         avatar: 'monk',
-                //         hp: 1000,
-                //         mp: 100,
-                //         currentHp: 1000,
-                //         currentMp: 100,
-                //     }),
-                // }
+                you: {
+                    // 1: new Immortality({
+                    //     index: -1,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                    // 3: new Immortality({
+                    //     index: -3,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                    // 5: new Immortality({
+                    //     index: -5,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    //     states: ['fire',],
+                    // }),
+                    // 7: new Immortality({
+                    //     index: -7,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                    // 9: new Immortality({
+                    //     index: -9,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                },
+                defense: {
+                    // 1: new Immortality({
+                    //     index: 1,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    //     states: ['fire','fire',],
+                    // }),
+                    // 3: new Immortality({
+                    //     index: 3,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                    // 5: new Immortality({
+                    //     index: 5,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    //     states: ['fire',],
+                    // }),
+                    // 7: new Immortality({
+                    //     index: 7,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                    // 9: new Immortality({
+                    //     index: 9,
+                    //     avatar: 'monk',
+                    //     hp: 1000,
+                    //     mp: 100,
+                    //     currentHp: 1000,
+                    //     currentMp: 100,
+                    // }),
+                }
             },
             plot: [ // turn // if actor / object < 0 => you else defense
                 // { // turn 1
@@ -352,15 +356,130 @@ export default {
     },
     watch: {
         already() {
-            // new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+            console.log('aaaaaaaaaaaaaaa')
+            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
         },
     },
     async created() {
         const result = await QuestService.fight(this.idQuest, this.idCluster)
+        console.log(result)
+        this.avatars = new Object(result.avatars)
+        console.log('Avatars', this.avatars)
+        this.skills = Object.keys(result.skills).map(key => {
+            return {
+                [key]: new Skill(result.skills[key])
+            }
+        })
+        console.log('Skills', this.skills)
+        this.states = Object.keys(result.states).map(key => {
+            return {
+                [key]: new State(result.states[key])
+            }
+        })
+        console.log('States', this.skills)
+        this.status.you = Object.keys(result.status.you).reduce((newObj, key) => {
+            newObj[key] = new Immortality(result.status.you[key])
+            return newObj
+        }, {})
+        this.status.defense = Object.keys(result.status.defense).reduce((newObj, key) => {
+            newObj[key] = new Immortality(result.status.defense[key])
+            return newObj
+        }, {})
+        // for(let i = 1; i < 10; i ++) {
+        //     if (!this.status.you[i]) this.status.you[i] = {}
+        //     if (!this.status.defense[i]) this.status.defense[i] = {}
+        // }
+        console.log('Status', this.status)
+        this.plot = new Object(result.plot)
+        console.log('Plot', this.skills)
     },
     methods: {},
-    mounted() {}
+    mounted() {
+        // this.already = true
+    }
 }
+
+/**
+ * <section class="position-relative top-0 h-100 background">
+        <!-- Background -->
+        <section class="" style="z-index: 1;">
+            <img style="height: 100vh;" src="@/assets/img/fight.png" alt="">
+        </section>
+
+        <!--  -->
+        <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10; background-color: #00000050;">
+            <!-- Header -->
+            <section class="status-bar" style="height: 150px;"><h1>YOU / DEFENSE</h1></section>
+    
+            <section class="row battle-field ms-5 me-5">
+                <!-- you  @load="chanting('you', i, 1000)" -->
+                <div class="col">
+                    <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
+                        <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
+                            <div :class="`h-100 ${`you-${i}`}`">
+                                <Avatar v-if="status.you[i]" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+                <!-- defense -->
+                <div class="col">
+                    <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
+                        <div v-for="(i, index) of j" :key="index" :class="`col`">
+                            <div :class="`${`defense-${i}`}`" style="height: 100px">
+                                <Avatar v-if="status.defense[i]" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Skills -->
+            <section>
+                <!-- Sky -->
+                <template v-for="(value, key, index) in skysState" :key="`sky-key-${index}`">
+                    <div
+                        :class="`position-fixed top-0 start-0 end-0 d-none ${value.animation} ${key}`"
+                        :style="`height: 200px;
+                                z-index: 1000; 
+                                background-image: url('${value.effect}');
+                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
+                    ></div>
+                </template>
+                <!-- Figure -->
+                <template v-for="(value, key, index) in figures" :key="`figure-key-${index}`">
+                    <div
+                        :class="`position-fixed top-0 start-0 d-none ${value.animation} ${key}`"
+                        :style="`height: 200px; margin-left: -100px;
+                                z-index: 1000; 
+                                background-image: url('${value.effect}');
+                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
+                    ></div>
+                    <!-- <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="`z-index: 1000; ${value.style}`" alt=""> -->
+                </template>
+                <!-- Skill -->
+                <template v-for="(value, key, index) in skills" :key="`skill-key-temp-${index}`">
+                    <div v-for="(i, index) in value.amount" :key="`skill-key-${index}`"
+                        :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
+                        :style="`height: 200px; margin-top: -100px;
+                                z-index: 1001; 
+                                background-image: url('${value.effects.action}');
+                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
+                    ></div>
+                </template>
+            </section>
+
+            <!-- damage -->
+            <!-- <section>
+                <button @click="test" class="position-fixed">Click me!</button>
+            </section> -->
+    
+            <!-- Bottom -->
+            <router-view name="bottom-function-fight" />
+        </section>
+    </section>
+ */
 </script>
 
 <style>

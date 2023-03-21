@@ -371,7 +371,7 @@ export default {
             this.countLoaded()
         },
         loadings(newValue) {
-            console.log('newValue: ', newValue, " ", this.loadings)
+            // console.log('newValue: ', newValue, " ", this.loadings)
             if (this.loadings == this.totalData) {
                 this.already = true
             }

@@ -37,6 +37,9 @@ export default {
         name: { type: String, default: 'N/A' },
         status: { type: Immortality, default: new Immortality({}) }
     },
+    mounted() {
+        console.log(this.status)
+    },
 }
 </script>
 

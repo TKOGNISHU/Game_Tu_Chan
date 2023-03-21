@@ -2,7 +2,7 @@ import Base from './Base'
 
 class Immortality extends Base {
     constructor({
-        index, avatar, hp, mp, currentHp, currentMp, states
+        index, avatar, hp, mp, currentHP, currentMP, states
     }) {
         super()
         this.index = index
@@ -10,8 +10,8 @@ class Immortality extends Base {
         this.avatar = avatar
         this.hp = hp
         this.mp = mp
-        this.currentHp = currentHp
-        this.currentMp = currentMp
+        this.currentHp = currentHP
+        this.currentMp = currentMP
         this.states = states
 
         this.who = (index < 0) ? 'you' : 'defense'

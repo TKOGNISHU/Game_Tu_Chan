@@ -127,10 +127,15 @@ class ActionPlot {
                             case 'remove': {
                                 const index = turn[actor].actor
                                 const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
-                                const skill = $(`.${objectTypeBeEffected}__state-${effect.name.replace(/ /g, '-')}-${index}`)
+                                const skill = $(`.${objectTypeBeEffected}__state-${effect.name.replace(/ /g, '-')}-${Math.abs(index)}`)
 
-                                console.log(skill, ", objectTypeBeEffected: ", objectTypeBeEffected, ', effect.name: ', effect.name.replace(/ /g, '-'), ', index: ', index)
+                                console.group('--------')
+                                console.log(skill)
+                                console.log("%c objectTypeBeEffected: ", 'color: yellow;', objectTypeBeEffected)
+                                console.log('%c effect.name: ', 'color: yellow;', effect.name.replace(/ /g, '-'))
+                                console.log('%c index: ', 'color: yellow;', index)
                                 skill.classList.add('d-none')
+                                console.groupEnd
                                 break
                             }
                             default: {// damage/heal, it's display number

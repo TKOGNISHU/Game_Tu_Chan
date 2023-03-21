@@ -6,19 +6,24 @@
             <div class="col">
                 <div class="row align-items-center">
                     <p class="col-1 my-1">HP</p>
-                    <p class="col my-1 d-flex align-items-center">
+                    <div class="col my-1 d-flex align-items-center">
                         <div class="progress w-100">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" :style="`width: ${status.currentHp/status.hp*100}%`" :aria-valuenow="status.currentHp/status.hp*100" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" role="progressbar" aria-label="Basic example" 
+                                :style="`width: ${status.currentHp/status.hp*100}%`"
+                                :aria-valuenow="status.currentHp/status.hp*100"
+                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="row align-items-center">
                     <p class="col-1 my-1">MP</p>
-                    <p class="col my-1 d-flex align-items-center">
+                    <div class="col my-1 d-flex align-items-center">
                         <div class="progress w-100">
-                            <div class="progress-bar" role="progressbar" aria-label="Basic example" :style="`width: ${status.currentMp/status.mp*100}%`" :aria-valuenow="status.currentMp/status.mp*100" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar" role="progressbar" aria-label="Basic example"
+                                :style="`width: ${status.currentMp/status.mp*100}%`" :aria-valuenow="status.currentMp/status.mp*100"
+                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,10 +31,11 @@
 </template>
 
 <script>
+import {Immortality} from '@/util/index'
 export default {
     props: {
         name: { type: String, default: 'N/A' },
-        status: { type: Object, default: {} }
+        status: { type: Immortality, default: new Immortality({}) }
     },
 }
 </script>

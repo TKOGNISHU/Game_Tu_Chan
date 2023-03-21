@@ -47,8 +47,8 @@ class ActionPlot {
                             case 'skill': {
                                 // every effect only one object type who is effected, object type is effected!
                                 const skillName = effect.name
-                                const skillType = this.skills[skillName].type
-                                const skillClass = `.skill-${skillName}`
+                                // const skillType = this.skills[skillName].type
+                                const skillClass = `.skill-${skillName.replace(/ /g, '-')}`
                                 const index = Math.abs(turn[actor].actor)
                                 // figure
                                 const figureName = this.skills[skillName].effects.figure
@@ -78,7 +78,7 @@ class ActionPlot {
             
                                     // attacking
                                     await this.timeout(0).then(async () => {
-                                        if (this.skills[skillName].startIs == 'object') {
+                                        if (this.skills[skillName].startIs == 'enemy') {
                                             $(presentSkillClass).classList.remove('d-none')
                                         }
                                         this.setLocalSkillWithObject(actor, presentSkillClass, defense)
@@ -88,16 +88,16 @@ class ActionPlot {
                                     this.computedDamage(objectTypeBeEffected, objectIndex, effect, i, skillName)
     
                                     // Display number animation
-                                    this.toggleNumber(skillType, effect, objectTypeBeEffected, objectIndex, i)
+                                    this.toggleNumber('', effect, objectTypeBeEffected, objectIndex, i)
                                 }
 
                                 // Hidden skills
                                 await this.timeout(900).then(() => {
                                     // hidden figure
-                                    if (figureName) {
-                                        $(figureClass).classList.add('d-none')
-                                        this.setLocalFirst(figureClass)
-                                    }
+                                    // if (figureName) {
+                                    //     $(figureClass).classList.add('d-none')
+                                    //     this.setLocalFirst(figureClass)
+                                    // }
                                     // hidden skills
                                     for(let i = 0; i < effect.objects.length; i++) {
                                         const presentSkillClass = `${skillClass}-${i + 1}`
@@ -116,7 +116,8 @@ class ActionPlot {
                                     const objectTypeBeEffected = (effect.objects[i] < 0) ? 'you' : 'defense'
                                     const objectIndex = Math.abs(effect.objects[i])
                                     const stateClass = 
-                                        `.${objectTypeBeEffected}__state-${stateName}-${objectIndex}`
+                                        `.${objectTypeBeEffected}__state-${stateName.replace(/ /g, '-')}-${objectIndex}`
+                                    // console.log(stateClass)
                                     const state = $(stateClass)
 
                                     state.classList.remove('d-none')
@@ -126,8 +127,9 @@ class ActionPlot {
                             case 'remove': {
                                 const index = turn[actor].actor
                                 const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
-                                const skill = $(`.${objectTypeBeEffected}__state-${effect.name}-${index}`)
+                                const skill = $(`.${objectTypeBeEffected}__state-${effect.name.replace(/ /g, '-')}-${index}`)
 
+                                console.log(skill, ", objectTypeBeEffected: ", objectTypeBeEffected, ', effect.name: ', effect.name.replace(/ /g, '-'), ', index: ', index)
                                 skill.classList.add('d-none')
                                 break
                             }
@@ -185,12 +187,12 @@ class ActionPlot {
     toggleNumber(typeEffect, effect, who, objectIndex, indexSkill) {
         // Damage effect, [100, 10, ...]
         let type = typeEffect || 'heal'
-        if (!effect[type]) {
+        if (!effect[`${type}s`] && effect['damages'][0] < 0) {
             type = 'damage'
         }
         const effectNumbers = effect[this.getTypeEffect(type)]
 
-        if (effectNumbers.length > 0) {
+        if (effectNumbers && effectNumbers.length > 0) {
             this.ToggleNumberAnimation(type, who, objectIndex, effectNumbers[indexSkill])
         }
     }

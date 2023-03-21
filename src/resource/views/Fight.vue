@@ -17,7 +17,7 @@
                         <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
                             <div :class="`h-100 ${`you-${i}`}`">
                                 <template v-if="status?.you[i]">
-                                    <Avatar :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                                    <Avatar @update:loaded="countLoaded" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
                                 </template>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                         <div v-for="(i, index) of j" :key="index" :class="`col`">
                             <div :class="`${`defense-${i}`}`" style="height: 100px">
                                 <template v-if="status?.defense[i]">
-                                    <Avatar :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                                    <Avatar @update:loaded="countLoaded" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
                                 </template>
                             </div>
                         </div>
@@ -63,11 +63,12 @@
                 </template>
                 <!-- Skill -->
                 <template v-for="(value, key, index) in skills" :key="`skill-key-temp-${index}`">
-                    <div v-for="(i, index) in value.amount" :key="`skill-key-${index}`"
-                        :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
+                    <div
+                        v-for="(i, index) in value.amount" :key="`skill-key-${index}`"
+                        :class="`position-fixed d-none top-0 start-0 ${value.animation} skill-${key.replace(/ /g, '-')}-${i}`"
                         :style="`height: 200px; margin-top: -100px;
                                 z-index: 1001; 
-                                background-image: url('${value.effects.action}');
+                                background-image: url('${loadingSkills[key.replace(/ /g, '-')][i] ? loadingSkills[key.replace(/ /g, '-')][i] : ''}');
                                 background-size: cover; background-repeat: no-repeat; ${value.style};`"
                     ></div>
                 </template>
@@ -85,6 +86,7 @@
 </template>
 
 <script>
+import { HTTP_GG_DRIVE } from '#/env'
 import { Avatar } from '@/components/index'
 import { QuestService } from '@/services/index'
 import {
@@ -93,15 +95,25 @@ import {
     Figure,
     State,
     ActionPlot,
+    loadImage
 } from '@/util/index'
 
 export default {
     components: { Avatar, },
+    setup() {
+        return {
+            HTTP_GG_DRIVE
+        }
+    },
     data() {
         const { idQuest, idCluster } = this.$route.params
         return {
             already: false,
             idQuest, idCluster,
+            loadings: 0,
+            totalData: 100,
+            notify: { index: 0 },
+            loadingSkills: {},
             avatars: {
                 // 'monk': {
                 //     'chanting': {
@@ -355,131 +367,80 @@ export default {
         }
     },
     watch: {
+        'notify.index'() {
+            this.countLoaded()
+        },
+        loadings(newValue) {
+            console.log('newValue: ', newValue, " ", this.loadings)
+            if (this.loadings == this.totalData) {
+                this.already = true
+            }
+        },
         already() {
-            console.log('aaaaaaaaaaaaaaa')
+            console.log('%c READY FIGHT! ', 'font-size: 40px; font-weight: 700; color: #f629b0; background: #cccccc50; padding: 5px 12px;')
             new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
         },
     },
     async created() {
+        console.group('%c-- SET UP --', 'color: #fff; background: red; font-size: 16px; padding: 5px 12px;')
         const result = await QuestService.fight(this.idQuest, this.idCluster)
         console.log(result)
+        this.totalData = result.totalData
+        console.log('Total data: ', this.totalData)
+
         this.avatars = new Object(result.avatars)
         console.log('Avatars', this.avatars)
-        this.skills = Object.keys(result.skills).map(key => {
-            return {
-                [key]: new Skill(result.skills[key])
+
+
+        this.skills = Object.keys(result.skills).reduce((newObj, key) => {
+            newObj[key] = new Skill(result.skills[key])
+            this.loadingSkills[key.replace(/ /g, '-')] = {}
+            for(let i = 1; i <= newObj[key].amount; i++) {
+                this.loadImage(this.loadingSkills[key.replace(/ /g, '-')], i, `${HTTP_GG_DRIVE}${newObj[key].effects.action}`, this.notify)
             }
-        })
+            return newObj
+        }, {})
+        console.log(this.loadingSkills)
         console.log('Skills', this.skills)
-        this.states = Object.keys(result.states).map(key => {
-            return {
-                [key]: new State(result.states[key])
-            }
-        })
-        console.log('States', this.skills)
+
+        this.states = Object.keys(result.states).reduce((newObj, key) => {
+            newObj[key] = new State(result.states[key])
+            return newObj
+        }, {})
+        console.log('States', this.states)
+
         this.status.you = Object.keys(result.status.you).reduce((newObj, key) => {
+            // const base = result.status.you[key]
+            // base.states = []
+            // Object.keys(this.states).forEach(key => {
+            //     base.states.push(key)
+            // })
             newObj[key] = new Immortality(result.status.you[key])
             return newObj
         }, {})
         this.status.defense = Object.keys(result.status.defense).reduce((newObj, key) => {
+            // const base = result.status.you[key]
+            // base.states = []
+            // Object.keys(this.states).forEach(key => {
+            //     base.states.push(key)
+            // })
             newObj[key] = new Immortality(result.status.defense[key])
             return newObj
         }, {})
-        // for(let i = 1; i < 10; i ++) {
-        //     if (!this.status.you[i]) this.status.you[i] = {}
-        //     if (!this.status.defense[i]) this.status.defense[i] = {}
-        // }
         console.log('Status', this.status)
+
         this.plot = new Object(result.plot)
-        console.log('Plot', this.skills)
+        console.log('Plot', this.plot)
+        console.groupEnd()
     },
-    methods: {},
-    mounted() {
-        // this.already = true
-    }
+    methods: {
+        loadImage,
+        countLoaded() {
+            this.loadings += 1
+        }
+    },
+    mounted() {}
 }
-
-/**
- * <section class="position-relative top-0 h-100 background">
-        <!-- Background -->
-        <section class="" style="z-index: 1;">
-            <img style="height: 100vh;" src="@/assets/img/fight.png" alt="">
-        </section>
-
-        <!--  -->
-        <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10; background-color: #00000050;">
-            <!-- Header -->
-            <section class="status-bar" style="height: 150px;"><h1>YOU / DEFENSE</h1></section>
-    
-            <section class="row battle-field ms-5 me-5">
-                <!-- you  @load="chanting('you', i, 1000)" -->
-                <div class="col">
-                    <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
-                        <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
-                            <div :class="`h-100 ${`you-${i}`}`">
-                                <Avatar v-if="status.you[i]" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2"></div>
-                <!-- defense -->
-                <div class="col">
-                    <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
-                        <div v-for="(i, index) of j" :key="index" :class="`col`">
-                            <div :class="`${`defense-${i}`}`" style="height: 100px">
-                                <Avatar v-if="status.defense[i]" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-    
-            <!-- Skills -->
-            <section>
-                <!-- Sky -->
-                <template v-for="(value, key, index) in skysState" :key="`sky-key-${index}`">
-                    <div
-                        :class="`position-fixed top-0 start-0 end-0 d-none ${value.animation} ${key}`"
-                        :style="`height: 200px;
-                                z-index: 1000; 
-                                background-image: url('${value.effect}');
-                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
-                    ></div>
-                </template>
-                <!-- Figure -->
-                <template v-for="(value, key, index) in figures" :key="`figure-key-${index}`">
-                    <div
-                        :class="`position-fixed top-0 start-0 d-none ${value.animation} ${key}`"
-                        :style="`height: 200px; margin-left: -100px;
-                                z-index: 1000; 
-                                background-image: url('${value.effect}');
-                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
-                    ></div>
-                    <!-- <img :class="`position-fixed d-inline-block d-none ${key}`" :src="value.image" :style="`z-index: 1000; ${value.style}`" alt=""> -->
-                </template>
-                <!-- Skill -->
-                <template v-for="(value, key, index) in skills" :key="`skill-key-temp-${index}`">
-                    <div v-for="(i, index) in value.amount" :key="`skill-key-${index}`"
-                        :class="`position-fixed top-0 start-0 d-none ${value.animation} skill-${key}-${i}`"
-                        :style="`height: 200px; margin-top: -100px;
-                                z-index: 1001; 
-                                background-image: url('${value.effects.action}');
-                                background-size: cover; background-repeat: no-repeat; ${value.style};`"
-                    ></div>
-                </template>
-            </section>
-
-            <!-- damage -->
-            <!-- <section>
-                <button @click="test" class="position-fixed">Click me!</button>
-            </section> -->
-    
-            <!-- Bottom -->
-            <router-view name="bottom-function-fight" />
-        </section>
-    </section>
- */
 </script>
 
 <style>

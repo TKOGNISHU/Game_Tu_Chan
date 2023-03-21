@@ -12,7 +12,8 @@
             <router-view name="header-function"/>
 
             <!-- Main -->
-
+            <section>
+            </section>
 
             <!-- Bottom -->
             <router-view name="bottom-function" />

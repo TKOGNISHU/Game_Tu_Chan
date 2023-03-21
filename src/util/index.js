@@ -29,3 +29,17 @@ export { magic_ring_normal }
 export { normal_finally }
 export { heal_1s }
 export { fire }
+
+function loadImage(obj, index, url, countLoaded) {
+    const img = new Image()
+    // console.log(url)
+    img.onload = () => {
+        console.log(index)
+        obj[index] = img.src
+        if (countLoaded) {
+            countLoaded.index += 1
+        }
+    }
+    img.src = url
+}
+export { loadImage }

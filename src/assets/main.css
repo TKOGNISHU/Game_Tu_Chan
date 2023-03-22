@@ -48,6 +48,13 @@
     animation-timing-function: steps(2);
 }
 
+.skill-3pic {
+  animation-name: skill-3pic;
+  animation-duration: 0.4s; /** specify duration before and after*/
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(1);
+}
+
 .left-100 {
   left: 100px !important;
 }

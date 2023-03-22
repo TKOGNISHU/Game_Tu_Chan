@@ -1,5 +1,7 @@
 <template>
     <section class="position-relative top-0 h-100 background">
+        <Loading v-if="!already" :process="loadings" :total="totalData"/>
+
         <!-- Background -->
         <section class="" style="z-index: 1;">
             <img style="height: 100vh;" src="@/assets/img/fight.png" alt="">
@@ -87,7 +89,7 @@
 
 <script>
 import { HTTP_GG_DRIVE } from '#/env'
-import { Avatar } from '@/components/index'
+import { Avatar, Loading, } from '@/components/index'
 import { QuestService } from '@/services/index'
 import {
     Immortality,
@@ -99,7 +101,7 @@ import {
 } from '@/util/index'
 
 export default {
-    components: { Avatar, },
+    components: { Avatar, Loading, },
     setup() {
         return {
             HTTP_GG_DRIVE
@@ -376,8 +378,13 @@ export default {
                 this.already = true
             }
         },
-        already() {
+        async already() {
             console.log('%c READY FIGHT! ', 'font-size: 40px; font-weight: 700; color: #f629b0; background: #cccccc50; padding: 5px 12px;')
+            await new Promise(resolve => {
+                return setTimeout(() => {
+                    return resolve()
+                }, 2000)
+            }).then()
             new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
         },
     },

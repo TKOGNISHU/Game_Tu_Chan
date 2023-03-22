@@ -36,6 +36,17 @@
     }
 }
 
+@keyframes skill-3pic {
+    0% {
+        background-position-x: 0px;
+    }
+    50% {
+        background-position-x: -100px;
+    }
+    100% {
+        background-position-x: -200px;
+    }
+}
 @keyframes you-number {
     from {
         margin-top: 10px;

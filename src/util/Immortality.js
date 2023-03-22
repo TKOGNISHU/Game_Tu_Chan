@@ -1,4 +1,5 @@
 import Base from './Base'
+import logger from './logger'
 
 class Immortality extends Base {
     constructor({

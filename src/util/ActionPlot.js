@@ -1,3 +1,5 @@
+import logger from './logger'
+
 import Immortality from './Immortality.js'
 import Skill from './Skill.js'
 import Figure from './Figures.js'
@@ -16,6 +18,15 @@ class ActionPlot {
 
     getTypeEffect(type) {
         return `${type}s`
+    }
+
+    findTypeEffect(effect) {
+        let type = 'heal'
+        if (!effect[`${type}s`] && effect['damages'][0] < 0) {
+            type = 'damage'
+        }
+
+        return type
     }
 
     handleHP(who, objectIndex) {
@@ -139,12 +150,13 @@ class ActionPlot {
                                 break
                             }
                             default: {// damage/heal, it's display number
-                                const skillType = effect.type
-                                const index = turn[actor].actor
-                                const objectTypeBeEffected = (index < 0) ? 'you' : 'defense'
-                                
-                                this.toggleNumber(skillType, effect, objectTypeBeEffected, index, 0)
-                                
+                                let type = this.findTypeEffect(effect)
+                                for (let i = 0; i < effect.objects.length; i++) {
+                                    const objectTypeBeEffected = (effect.objects[i] < 0) ? 'you' : 'defense'
+    
+                                    this.toggleNumber(type, effect, objectTypeBeEffected, effect.objects[i], i)
+                                }
+
                                 break
                             }
                         }
@@ -178,7 +190,17 @@ class ActionPlot {
             }
         }
         // Display skills
+        console.log(this.skills[skillName].startIs)
         if (this.skills[skillName].startIs == 'you') {
+            for(let i = 0; i < objects.length; i++) {
+                $(`${skillClass}-${i + 1}`).classList.remove('d-none')
+                this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
+                if (who == 'defense') {
+                    $(`${skillClass}-${i+1}`).classList.add('flip-horizontal')
+                }
+            }
+        }
+        if (this.skills[skillName].startIs == 'object') {
             for(let i = 0; i < objects.length; i++) {
                 $(`${skillClass}-${i + 1}`).classList.remove('d-none')
                 this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
@@ -191,10 +213,7 @@ class ActionPlot {
 
     toggleNumber(typeEffect, effect, who, objectIndex, indexSkill) {
         // Damage effect, [100, 10, ...]
-        let type = typeEffect || 'heal'
-        if (!effect[`${type}s`] && effect['damages'][0] < 0) {
-            type = 'damage'
-        }
+        let type = typeEffect || this.findTypeEffect(effect)
         const effectNumbers = effect[this.getTypeEffect(type)]
 
         if (effectNumbers && effectNumbers.length > 0) {

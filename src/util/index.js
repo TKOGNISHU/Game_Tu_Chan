@@ -1,3 +1,6 @@
+import logger from './logger'
+export { logger }
+
 // object
 import Immortality from '@/util/Immortality.js'
 import Skill from '@/util/Skill.js'

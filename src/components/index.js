@@ -12,6 +12,8 @@ import Roll from '@/components/board/Roll.vue'
 
 import ScreenBoard from '@/components/board/Screen-Board.vue'
 
+import Loading from '@/components/Loading.vue'
+
 export { Avatar }
 export { Board }
 
@@ -25,3 +27,5 @@ export { Embattle }
 export { Roll }
 
 export { ScreenBoard }
+
+export { Loading }

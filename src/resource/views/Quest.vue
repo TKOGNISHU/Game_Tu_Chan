@@ -11,7 +11,7 @@
             <router-view name="header-function" />
 
             <!-- Body -->
-            <template v-for="(e, i) of quest.clusters">
+            <template v-for="(e, i) of quest.clusters" :key="`quest-${e._id}-${i}`">
                 <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: ${e?.location?.top}; left: ${e?.location?.left};`" class="position-absolute d-inline-block" to="">
                     <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}${e?.image}`" alt="">
                 </router-link>
@@ -41,15 +41,15 @@
                             <tr class="row g-0 border-bottom border-1">
                                 <th class="border-end border-1 col-4 fs-6">Chiến lợi</th>
                                 <td class="col fs-6">
-                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.items">
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.items" :key="`quest-board-${item}`">
                                         <span class="fw-semibold">{{ item.item.name }}</span>
                                         <span class="ms-1 fw-semibold">x{{ item.quantity }}</span>
                                     </div>
-                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.equipments">
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.equipments" :key="`quest-board-${item}`">
                                         <span class="fw-semibold">{{ item?.equip?.name }}</span>
                                         <span class="ms-1 fw-semibold">x{{ item?.quantity }}</span>
                                     </div>
-                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.skills">
+                                    <div v-for="item of quest?.clusters[clusterStatusIndex]?.awards.skills" :key="`quest-board-${item}`">
                                         <span class="fw-semibold">{{ item?.skill?.name }}</span>
                                         <span class="ms-1 fw-semibold">x{{ item?.quantity }}</span>
                                     </div>

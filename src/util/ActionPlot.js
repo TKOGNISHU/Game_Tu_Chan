@@ -6,7 +6,7 @@ import Figure from './Figures.js'
 import State from './State.js'
 
 class ActionPlot {
-    constructor(avatars, skysState, figures, skills, states, status, plot) {
+    constructor(avatars, skysState, figures, skills, states, status, plot, round) {
         this.avatars = avatars
         this.skysState = skysState
         this.figures = figures
@@ -14,6 +14,7 @@ class ActionPlot {
         this.states = states
         this.status = status
         this.plot = plot
+        this.round = round
     }
 
     getTypeEffect(type) {
@@ -170,6 +171,7 @@ class ActionPlot {
                 }
                 // this.Timeout each turn
                 await this.timeout(changeTurnTimeout)
+                this.round.index += 1
             }
         // } catch (e) {
         //     console.log('ERROR: ', e)

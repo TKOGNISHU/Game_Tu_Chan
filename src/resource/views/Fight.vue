@@ -10,8 +10,13 @@
         <!--  -->
         <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10; background-color: #00000050;">
             <!-- Header -->
-            <section class="status-bar" style="height: 150px;"><h1>YOU / DEFENSE</h1></section>
-    
+            <section class="status-bar" style="height: 150px;">
+                <h1>YOU / DEFENSE</h1> 
+                <p class="position-relative text-center">
+                    <span class="fight-text fight-round">Lượt</span> <span class="ms-3 fight-text fight-round-text">{{ round.index }}</span>
+                </p>
+            </section>
+
             <section class="row battle-field ms-5 me-5">
                 <!-- you  @load="chanting('you', i, 1000)" -->
                 <div class="col">
@@ -80,16 +85,39 @@
             <!-- <section>
                 <button @click="test" class="position-fixed">Click me!</button>
             </section> -->
-    
+
             <!-- Bottom -->
             <router-view name="bottom-function-fight" />
         </section>
+
+        <Board style="margin-top: -50px;" :isShow="round.index > plot.length">
+            <section>
+                <!-- Header -->
+                <section class="mb-auto">
+                    <h3 v-if="resultFight == 'Thắng Lợi'" class="fight-result-victory">
+                        {{ resultFight }}
+                    </h3>
+                    <h3 v-else class="fight-result-failure">{{ resultFight }}</h3>
+                </section>
+
+                <!-- Body -->
+                <section class="d-flex g-0 flex-column">
+                    <div class="" style="min-width: 500px; min-height: 200px;">Chiến tích</div>
+
+                    <div class="mb-5 me-5 text-end">
+                        <router-link class="text-light btn btn-secondary d-inline-flex flex-column align-items-center text-decoration-none" style="opacity: 0.8;" :to="{name: 'quest'}">
+                            Thoát
+                        </router-link>
+                    </div>
+                </section>
+            </section>
+        </Board>
     </section>
 </template>
 
 <script>
 import { HTTP_GG_DRIVE } from '#/env'
-import { Avatar, Loading, } from '@/components/index'
+import { Avatar, Loading, Board, } from '@/components/index'
 import { QuestService } from '@/services/index'
 import {
     Immortality,
@@ -101,7 +129,7 @@ import {
 } from '@/util/index'
 
 export default {
-    components: { Avatar, Loading, },
+    components: { Avatar, Loading, Board, },
     setup() {
         return {
             HTTP_GG_DRIVE
@@ -114,6 +142,8 @@ export default {
             idQuest, idCluster,
             loadings: 0,
             totalData: 100,
+            resultFight: 'Thắng Lợi',
+            round: { index: 1, },
             notify: { index: 0 },
             loadingSkills: {},
             avatars: {
@@ -385,7 +415,7 @@ export default {
                     return resolve()
                 }, 2000)
             }).then()
-            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot).play()
+            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot, this.round).play()
         },
     },
     async created() {
@@ -438,6 +468,8 @@ export default {
 
         this.plot = new Object(result.plot)
         console.log('Plot', this.plot)
+
+        this.resultFight = result.resultFight
         console.groupEnd()
     },
     methods: {
@@ -451,6 +483,71 @@ export default {
 </script>
 
 <style>
+.fight-text {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 470;
+    font-size: 40px;
+    line-height: 52px;
+    /* identical to box height */
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.fight-round {
+    display: inline-block;
+
+    background: linear-gradient(113.38deg, rgba(0, 0, 0, 0.2) -4.48%, rgba(245, 236, 0, 0) 18.09%), radial-gradient(110.95% 217.39% at 82.09% -31.88%, #F50000 0%, rgba(235, 255, 0, 0.98) 88.5%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variation-settings: 'slnt' -6;
+}
+
+.fight-round-text {
+    display: inline-block;
+
+    background: linear-gradient(240.09deg, #ED0707 3.74%, rgba(255, 245, 6, 0) 126.72%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variation-settings: 'slnt' -6;
+}
+
+.fight-result-victory {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 470;
+    font-size: 57px;
+    line-height: 69px;
+    /* identical to box height */
+
+    background: linear-gradient(113.38deg, rgba(0, 0, 0, 0.2) -4.48%, rgba(245, 236, 0, 0) 18.09%), radial-gradient(110.95% 217.39% at 82.09% -31.88%, #F50000 9.9%, rgba(239, 157, 0, 0.987665) 82.82%, #5200FF 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variation-settings: 'slnt' -6;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.fight-result-failure {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 470;
+    font-size: 57px;
+    line-height: 69px;
+    /* identical to box height */
+
+    background: linear-gradient(113.38deg, rgba(0, 0, 0, 0.2) -4.48%, rgba(245, 236, 0, 0) 18.09%), radial-gradient(224.93% 427.54% at 50% -108.7%, #000000 0%, rgba(163, 163, 167, 0.987665) 56.47%, rgba(142, 43, 0, 0.987665) 97.09%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-variation-settings: 'slnt' -6;
+
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 </style>
 
 <!-- 

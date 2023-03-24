@@ -32,27 +32,33 @@
     animation-timing-function: steps(1);
 }
 
-.animation-100 {
-    /* animation: translateBackground 1.0s steps(10) infinite; */
-    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-    animation-name: translateBackground-100;
-    animation-duration: 2.0s; /** specify duration before and after*/
-    /* animation-iteration-count: infinite; */
-    animation-timing-function: steps(10);
-}
-
-.animation-100-04-2-infinite {
-    animation-name: translateBackground-100;
-    animation-duration: 0.4s; /** specify duration before and after*/
-    animation-iteration-count: infinite;
-    animation-timing-function: steps(2);
-}
-
 .skill-3pic {
   animation-name: skill-3pic;
   animation-duration: 0.4s; /** specify duration before and after*/
   animation-iteration-count: infinite;
   animation-timing-function: steps(1);
+}
+
+.skill-5pic {
+    /* animation: translateBackground 1.0s steps(10) infinite; */
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+    animation-name: skill-5pic;
+    animation-duration: 3.0s; /** specify duration before and after*/
+    /* animation-iteration-count: infinite; */
+    animation-timing-function: steps(5);
+}
+
+.skill-5pic-infinite {
+    animation-name: skill-5pic;
+    animation-duration: 0.4s; /** specify duration before and after*/
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(2);
+}
+
+.skill-name {
+  animation-name: skill-name;
+  animation-duration: 0.5s;
+  transform-origin: 30% bottom;
 }
 
 .left-100 {

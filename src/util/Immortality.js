@@ -15,7 +15,38 @@ class Immortality extends Base {
         this.currentMp = currentMP
         this.states = states
 
+        this.skillName = 'Hoa Giang Kiếm Chỉ'
+
         this.who = (index < 0) ? 'you' : 'defense'
+
+        this.container = `${this.who}-${this.indexABS}`
+        this.containerClass = `.${this.who}-${this.indexABS}`
+
+        this.normal = `${this.who}-${this.indexABS}-normal`
+        this.normalClass = `.${this.normal}`
+
+        this.chantingName = `${this.who}-${this.indexABS}-chanting` //${type ? `-${type}` : ''}
+        this.chantingClass = `.${this.chantingName}` //${type ? `-${type}` : ''}
+
+        this.chantingFinishName = `${this.who}-${this.indexABS}-chantingFinish`
+        this.chantingFinishClass = `.${this.chantingFinishName}`
+
+        this.skillName = `${this.who}__fight-skill-name-${this.indexABS}`
+        this.skillNameClass = `.${this.who}__fight-skill-name-${this.indexABS}`
+
+        this.numberHealEffect = `${this.who}__heal-${this.indexABS}`
+        this.numberHealEffectClass = `.${this.who}__heal-${this.indexABS}`
+
+        this.numberDamageEffect = `${this.who}__damage-${this.indexABS}`
+        this.numberDamageEffectClass = `.${this.who}__damage-${this.indexABS}`
+    }
+
+    get heal() {
+        return this.numberHealEffectClass
+    }
+
+    get damage() {
+        return this.numberDamageEffectClass
     }
 
     async setState(states) {
@@ -24,10 +55,8 @@ class Immortality extends Base {
 
     async chanting(timeout, type) {
         const _this = this
-
-        const chantingClass = `.${this.who}-${this.indexABS}-chanting` //${type ? `-${type}` : ''}
-        const normal = $(`.${this.who}-${this.indexABS}-normal`)
-        const chantingObject = $(chantingClass)
+        const normal = $(this.normalClass)
+        const chantingObject = $(this.chantingClass)
 
         normal.classList.toggle('d-none')
         chantingObject.classList.toggle('d-none')
@@ -38,9 +67,8 @@ class Immortality extends Base {
     }
 
     async chantingFinish() {
-        const normal = $(`.${this.who}-${this.indexABS}-normal`)
-        const chantingFinish = $(`.${this.who}-${this.indexABS}-chantingFinish`)
-
+        const normal = $(this.normalClass)
+        const chantingFinish = $(this.chantingFinishClass)
         chantingFinish.classList.toggle('d-none')
         this.timeout(1000).then(() => {
             normal.classList.toggle('d-none')

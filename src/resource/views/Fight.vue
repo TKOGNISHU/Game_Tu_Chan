@@ -22,9 +22,9 @@
                 <div class="col">
                     <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
                         <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
-                            <div :class="`h-100 ${`you-${i}`}`">
+                            <div :class="`h-100 ${status?.you[i] && status.you[i].container}`">
                                 <template v-if="status?.you[i]">
-                                    <Avatar @update:loaded="countLoaded" :status="status.you[i]" :avatars="avatars" :states="states" who="you" :index="i"/>
+                                    <Avatar @update:loaded="countLoaded" :status="status.you[i]" :avatars="avatars" :states="states" :index="i"/>
                                 </template>
                             </div>
                         </div>
@@ -35,9 +35,9 @@
                 <div class="col">
                     <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
                         <div v-for="(i, index) of j" :key="index" :class="`col`">
-                            <div :class="`${`defense-${i}`}`" style="height: 100px">
+                            <div :class="`${status?.defense[i] && status.defense[i].container}`" style="height: 100px">
                                 <template v-if="status?.defense[i]">
-                                    <Avatar @update:loaded="countLoaded" :status="status.defense[i]" :avatars="avatars" :states="states" who="defense" :index="i"/>
+                                    <Avatar @update:loaded="countLoaded" :status="status.defense[i]" :avatars="avatars" :states="states" :index="i"/>
                                 </template>
                             </div>
                         </div>
@@ -79,6 +79,7 @@
                                 background-size: cover; background-repeat: no-repeat; ${value.style};`"
                     ></div>
                 </template>
+
             </section>
 
             <!-- damage -->
@@ -447,20 +448,12 @@ export default {
         console.log('States', this.states)
 
         this.status.you = Object.keys(result.status.you).reduce((newObj, key) => {
-            // const base = result.status.you[key]
-            // base.states = []
-            // Object.keys(this.states).forEach(key => {
-            //     base.states.push(key)
-            // })
+            // every immortality, every state
             newObj[key] = new Immortality(result.status.you[key])
             return newObj
         }, {})
         this.status.defense = Object.keys(result.status.defense).reduce((newObj, key) => {
-            // const base = result.status.you[key]
-            // base.states = []
-            // Object.keys(this.states).forEach(key => {
-            //     base.states.push(key)
-            // })
+            // every immortality, every state
             newObj[key] = new Immortality(result.status.defense[key])
             return newObj
         }, {})

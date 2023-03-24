@@ -37,7 +37,7 @@ function loadImage(obj, index, url, countLoaded) {
     const img = new Image()
     // console.log(url)
     img.onload = () => {
-        console.log(index)
+        // console.log(index)
         obj[index] = img.src
         if (countLoaded) {
             countLoaded.index += 1

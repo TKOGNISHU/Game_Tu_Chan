@@ -43,9 +43,9 @@
         </div>
 
         <!-- Effect name -->
-        <section :class="`d-flex d-none justify-content-center ${status.classSkillName}`" style="margin-top: 50px;">
+        <section :class="`d-flex d-none justify-content-center ${status.skillName_name} skill-name`" style="z-index: 999; margin-top: 50px;">
             <section :class="`rounded  fight-skill-background`"
-                style="z-index: 999; height: 10px;"
+                style="height: 10px;"
             >
                 <p :class="`mb-0 fight-skill-name`"
                     style="margin-top: -8px; width: 200px;"

@@ -144,6 +144,7 @@ export default {
             loadings: 0,
             totalData: 100,
             resultFight: 'Thắng Lợi',
+            locationSkill: {},
             round: { index: 1, },
             notify: { index: 0 },
             loadingSkills: {},
@@ -416,7 +417,7 @@ export default {
                     return resolve()
                 }, 2000)
             }).then()
-            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot, this.round).play()
+            new ActionPlot(this.avatars, this.skysState, this.figures, this.skills, this.states, this.status, this.plot, this.round, this.locationSkill).play()
         },
     },
     async created() {
@@ -463,6 +464,10 @@ export default {
         console.log('Plot', this.plot)
 
         this.resultFight = result.resultFight
+        console.log('resultFight', this.resultFight)
+
+        this.locationSkill = result.locationSkill
+        console.log('locationSkill', this.locationSkill)
         console.groupEnd()
     },
     methods: {

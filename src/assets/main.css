@@ -45,6 +45,7 @@
     animation-name: skill-5pic;
     animation-duration: 3.0s; /** specify duration before and after*/
     /* animation-iteration-count: infinite; */
+    animation-iteration-count: infinite;
     animation-timing-function: steps(5);
 }
 
@@ -59,6 +60,13 @@
   animation-name: skill-name;
   animation-duration: 0.5s;
   transform-origin: 30% bottom;
+}
+
+.state-100-infinite {
+  animation-name: skill-5pic;
+  animation-duration: 0.4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(2);
 }
 
 .left-100 {

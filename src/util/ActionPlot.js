@@ -1,7 +1,7 @@
 import logger from './logger'
 
 class ActionPlot {
-    constructor(avatars, skysState, figures, skills, states, status, plot, round) {
+    constructor(avatars, skysState, figures, skills, states, status, plot, round, locationSkill) {
         this.avatars = avatars
         this.skysState = skysState
         this.figures = figures
@@ -10,6 +10,7 @@ class ActionPlot {
         this.status = status
         this.plot = plot
         this.round = round
+        this.locationSkill = locationSkill
     }
 
     getTypeEffect(type) {
@@ -61,6 +62,38 @@ class ActionPlot {
         }
     }
 
+    computedConsume(who, objectIndex, consume) {
+        const _this = this
+        const changes = {
+            hp() {
+                const hpBeChanged = consume.value
+                _this.status[who][objectIndex].currentHp += new Number(hpBeChanged)
+
+                this.formatStatus('hp', 'currentHp')
+                if (_this.status[who][objectIndex].currentHp <= 0) {
+                    const objectDeath = $(_this.status[who][objectIndex].containerClass)
+                    objectDeath.classList.add('d-none')
+                }
+            },
+            mp() {
+                const mpBeChanged = consume.value
+                _this.status[who][objectIndex].currentMp += new Number(mpBeChanged)
+
+                this.formatStatus('mp', 'currentMp')
+            },
+            formatStatus(baseType, type) {
+                const current = _this.status[who][objectIndex][type]
+                if (current > _this.status[who][objectIndex][baseType]) {
+                    _this.status[who][objectIndex][type] = _this.status[who][objectIndex][baseType]
+                } else if (current <= 0) { _this.status[who][objectIndex][type] = 0 }
+            }
+        }
+        const typeChanged = consume.type.toLowerCase()
+        if (typeChanged) {
+            changes[typeChanged] && changes[typeChanged]()
+        }
+    }
+
     async play() {
         const chantingFinishTimeout = 2500
         const effectTimeout = 500
@@ -69,6 +102,9 @@ class ActionPlot {
         // try {
             for (let turn of this.plot) {
                 for(const actor of Object.keys(turn)) {
+                    turn[actor].consumes.forEach((consume, index) => {
+                        this.computedConsume(actor, Math.abs(turn[actor].actor), consume)
+                    })
                     // every effect only one actor who is effecting
                     // effect on a turn
                     for(let i = 0; i < turn[actor].effects.length; i++) {
@@ -87,6 +123,11 @@ class ActionPlot {
                             // Chanting
                             await this.status[actor][index].chanting(chantingFinishTimeout)
                             // await this.timeout(100)
+
+                            // display skill's name
+                            this.status[actor][Math.abs(turn[actor].actor)].skillName = skillName
+                            $(this.status[actor][Math.abs(turn[actor].actor)].skillName_nameClass).classList.remove('d-none')
+                            this.timeout(1500).then(() => $(this.status[actor][Math.abs(turn[actor].actor)].skillName_nameClass).classList.add('d-none'))
 
                             // Display skill, set local
                             this.displaySkill(
@@ -111,7 +152,8 @@ class ActionPlot {
                                     if (this.skills[skillName].startIs == 'enemy') {
                                         $(presentSkillClass).classList.remove('d-none')
                                     }
-                                    this.setLocalSkillWithObject(actor, presentSkillClass, defense)
+                                    // this.setLocalSkillWithObject(actor, presentSkillClass, defense, this.skills[skillName].location)
+                                    this.setLocalSkillToObject(presentSkillClass, objectTypeBeEffected, defense, this.skills[skillName].location)
                                 })
 
                                 // Computed damage
@@ -200,7 +242,7 @@ class ActionPlot {
         if (skyName) {}
         // Display figure
         if (figureName) {
-            this.setLocalSkillWithObject(who, figureClass, `.${who}-${actorIndex}`)
+            this.setLocalSkillWithObject(who, figureClass, `.${who}-${actorIndex}`, this.skills[skillName].location)
             $(figureClass).classList.remove('d-none')
             // Flip horizontally
             if (who == 'defense') {
@@ -213,7 +255,7 @@ class ActionPlot {
         if (this.skills[skillName].startIs == 'you') {
             for(let i = 0; i < objects.length; i++) {
                 $(`${skillClass}-${i + 1}`).classList.remove('d-none')
-                this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
+                this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`, this.skills[skillName].location)
                 if (who == 'defense') {
                     $(`${skillClass}-${i+1}`).classList.add('flip-horizontal')
                 }
@@ -222,7 +264,7 @@ class ActionPlot {
         if (this.skills[skillName].startIs == 'object') {
             for(let i = 0; i < objects.length; i++) {
                 $(`${skillClass}-${i + 1}`).classList.remove('d-none')
-                this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`)
+                this.setLocalSkillWithObject(who, `${skillClass}-${i+1}`, `.${who}-${actorIndex}`, this.skills[skillName].location)
                 if (who == 'defense') {
                     $(`${skillClass}-${i+1}`).classList.add('flip-horizontal')
                 }
@@ -266,8 +308,11 @@ class ActionPlot {
         skill.style.translate = `0px 0px`
     }
 
-    async setLocalSkillWithObject(who, yourSkill, object) {//(who, yourSkill, object)
+    async setLocalSkillWithObject(who, yourSkill, object, location) {//(who, yourSkill, object)
         const skill = $(yourSkill)
+        const sign = (who == 'you') ? 1 : -1
+        location = location || 'middle'
+        console.log(this.locationSkill, location)
         // Local rect on viewport
         const skillRect = skill.getBoundingClientRect()
         const defense = $(object).getBoundingClientRect()
@@ -275,7 +320,25 @@ class ActionPlot {
         let x =   defense.x
                     + defense.width / 2
                     - skillRect.width / 2
+                    - (-this.locationSkill[location]) * sign
+        const y =   defense.y
 
+        skill.style.translate = `${x}px ${y}px`
+    }
+
+    async setLocalSkillToObject(yourSkill, object, objectClass, location) {//(who, yourSkill, object)
+        const skill = $(yourSkill)
+        const sign = (object == 'you') ? 1 : -1
+        location = location || 'middle'
+        console.log(this.locationSkill, location)
+        // Local rect on viewport
+        const skillRect = skill.getBoundingClientRect()
+        const defense = $(objectClass).getBoundingClientRect()
+        // 
+        let x =   defense.x
+                    + defense.width / 2
+                    - skillRect.width / 2
+                    - (-this.locationSkill[location]) * sign
         const y =   defense.y
 
         skill.style.translate = `${x}px ${y}px`

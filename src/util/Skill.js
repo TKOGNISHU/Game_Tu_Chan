@@ -14,6 +14,7 @@ class Skill {
             figure: 'magic_ring_normal', // from you
             action: heal_1s, // animation from you -> object / immediately object
         },
+        location
     }) {
         this.type = type
         this.name = name
@@ -22,6 +23,7 @@ class Skill {
         this.animation = animation
         this.startIs = startIs
         this.delay = delay
+        this.location = location
         this.effects = {}
 
         this.effects.sky = effects.sky

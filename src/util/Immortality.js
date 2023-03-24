@@ -31,8 +31,8 @@ class Immortality extends Base {
         this.chantingFinishName = `${this.who}-${this.indexABS}-chantingFinish`
         this.chantingFinishClass = `.${this.chantingFinishName}`
 
-        this.skillName = `${this.who}__fight-skill-name-${this.indexABS}`
-        this.skillNameClass = `.${this.who}__fight-skill-name-${this.indexABS}`
+        this.skillName_name = `${this.who}__fight-skill-name-${this.indexABS}`
+        this.skillName_nameClass = `.${this.who}__fight-skill-name-${this.indexABS}`
 
         this.numberHealEffect = `${this.who}__heal-${this.indexABS}`
         this.numberHealEffectClass = `.${this.who}__heal-${this.indexABS}`

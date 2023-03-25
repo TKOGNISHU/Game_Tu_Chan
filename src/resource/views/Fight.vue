@@ -22,24 +22,22 @@
                 <div class="col">
                     <div v-for="(j, index) of [[7, 4, 1], [8, 5, 2], [9, 6, 3]]" :key="`you-key-temp${index}`" class="row g-0">
                         <div v-for="(i, index) of j" :key="`you-key-${index}`" :class="`col`" style="height: 100px">
-                            <div :class="`h-100 ${status?.you[i] && status.you[i].container}`">
-                                <template v-if="status?.you[i]">
-                                    <Avatar @update:loaded="countLoaded" :status="status.you[i]" :avatars="avatars" :states="states" :index="i"/>
-                                </template>
-                            </div>
+                            <template v-if="status?.you[i]">
+                                <Avatar @update:loaded="countLoaded" :status="status.you[i]" :avatars="avatars" :states="states" :index="i"/>
+                            </template>
                         </div>
                     </div>
                 </div>
                 <div class="col-2"></div>
                 <!-- defense -->
                 <div class="col">
-                    <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="index" class="row g-0">
-                        <div v-for="(i, index) of j" :key="index" :class="`col`">
-                            <div :class="`${status?.defense[i] && status.defense[i].container}`" style="height: 100px">
-                                <template v-if="status?.defense[i]">
-                                    <Avatar @update:loaded="countLoaded" :status="status.defense[i]" :avatars="avatars" :states="states" :index="i"/>
-                                </template>
-                            </div>
+                    <div v-for="(j, index) of [[1, 4, 7], [2, 5, 8], [3, 6, 9]]" :key="`defense-key-temp${index}`" class="row g-0">
+                        <div v-for="(i, index) of j" :key="`defense-key-${index}`" :class="`col`" style="height: 100px">
+                            <template v-if="status?.defense[i]">
+                                <Avatar @update:loaded="countLoaded" :status="status.defense[i]" :avatars="avatars" :states="states" :index="i"/>
+                            </template>
+                            <!-- <div :class="`${status?.defense[i] && status.defense[i].container}`" style="height: 100px">
+                            </div> -->
                         </div>
                     </div>
                 </div>

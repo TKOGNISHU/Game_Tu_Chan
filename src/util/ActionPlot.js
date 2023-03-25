@@ -102,7 +102,7 @@ class ActionPlot {
         // try {
             for (let turn of this.plot) {
                 for(const actor of Object.keys(turn)) {
-                    turn[actor].consumes.forEach((consume, index) => {
+                    turn[actor]?.consumes?.forEach((consume, index) => {
                         this.computedConsume(actor, Math.abs(turn[actor].actor), consume)
                     })
                     // every effect only one actor who is effecting
@@ -156,11 +156,11 @@ class ActionPlot {
                                     this.setLocalSkillToObject(presentSkillClass, objectTypeBeEffected, defense, this.skills[skillName].location)
                                 })
 
-                                // Computed damage
-                                this.computedDamage(objectTypeBeEffected, objectIndex, effect, i, skillName)
-
                                 // Display number animation
                                 this.toggleNumber('', effect, objectTypeBeEffected, objectIndex, i)
+
+                                // Computed damage
+                                this.computedDamage(objectTypeBeEffected, objectIndex, effect, i, skillName)
                             }
 
                             // Hidden skills

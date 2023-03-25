@@ -57,15 +57,32 @@
         background-position-x: -200px;
     }
 }
+
+@keyframes state-5pic {
+    0% {}
+    25% { /** vị trí hiển thị trên màn hình không phải kích thước thực tế của ảnh */
+        background-position-x: -25px;
+    }
+    50% {
+        background-position-x: -50px;
+    }
+    75% {
+        background-position-x: -75px;
+    }
+    100% {
+        background-position-x: -100px;
+    }
+}
+
 @keyframes you-number {
     from {
         margin-top: 10px;
-        margin-left: 50%;
+        margin-left: 30%;
         opacity: 0;
     }
     to {
         margin-top: 0px;
-        margin-left: 0;
+        margin-left: 15%;
         opacity: 1;
     }
 }
@@ -73,12 +90,12 @@
 @keyframes defense-number {
     from {
         margin-top: 10px;
-        margin-left: -50%;
+        margin-left: 50%;
         opacity: 0;
     }
     to {
         margin-top: 0px;
-        margin-left: 0;
+        margin-left: 60%;
         opacity: 1;
     }
 }

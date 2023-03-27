@@ -1,6 +1,6 @@
 <template>
     <div :class="`position-absolute top-0 ${(status.index == 7 || status.index == 8 || status.index == 9) && 'end-0'} border bg-secondary mt-5 px-2 rounded board-info`" style="width: 250px; z-index: 10000">
-        <h5 class="text-start ps-3 py-1 border-bottom">{{ name }}</h5>
+        <h5 class="text-start ps-3 py-1 border-bottom">{{ status.name }}</h5>
         <div class="row">
             <div class="col-3"></div>
             <div class="col">
@@ -34,12 +34,9 @@
 import {Immortality} from '@/util/index'
 export default {
     props: {
-        name: { type: String, default: 'N/A' },
         status: { type: Immortality, default: new Immortality({}) }
     },
-    mounted() {
-        console.log(this.status)
-    },
+    mounted() {},
 }
 </script>
 

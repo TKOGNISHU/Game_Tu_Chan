@@ -34,20 +34,20 @@
                 ></div>
             </div>
     
-            <!-- Effect name -->
-            <section :class="`d-flex d-none justify-content-center ${status.skillName_name} skill-name`" style="z-index: 999; margin-top: 50px;">
-                <section :class="`rounded  fight-skill-background`"
-                    style="height: 10px;"
-                >
-                    <p :class="`mb-0 fight-skill-name`"
-                        style="margin-top: -8px; width: 200px;"
-                    > {{ status.skillName }} </p>
-                </section>
-            </section>
         
             <!-- Status -->
-            <BoardStatus name="Hạo Thiên" :status="status"/>
+            <BoardStatus :status="status"/>
         </div>
+        <!-- Effect name -->
+        <section :class="`d-flex d-none justify-content-center ${status.skillName_name} skill-name`" style="z-index: 999; margin-top: 50px;">
+            <section :class="`d-inline-block rounded fight-skill-background`"
+                style="height: 10px; margin-top: -100px;"
+            >
+                <p :class="`mb-0 fight-skill-name`"
+                    style="margin-top: -8px;"
+                > {{ status.skillName }} </p>
+            </section>
+        </section>
     
         <!-- heal -->
         <p :class="`position-absolute bottom-0 fw-bold text-success fs-5
@@ -121,9 +121,9 @@ export default {
         defense-number 0.2s linear forwards;
 }
 
-.fight-skill-background {
+/* .fight-skill-background {
     background-color: #e8e8e826;
-}
+} */
 
 .fight-skill-name {
     font-family: 'Inter';
@@ -138,6 +138,6 @@ export default {
     background-clip: text;
     font-variation-settings: 'slnt' -10;
 
-    text-shadow: 0px 6px 10px rgba(0, 0, 0, 0.28);
+    text-shadow: 0px 6px 10px rgb(0 0 0 / 50%);
 }
 </style>

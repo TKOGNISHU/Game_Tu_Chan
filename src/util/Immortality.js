@@ -3,11 +3,12 @@ import logger from './logger'
 
 class Immortality extends Base {
     constructor({
-        index, avatar, hp, mp, currentHP, currentMP, states
+        index, name, avatar, hp, mp, currentHP, currentMP, states
     }) {
         super()
         this.index = index
         this.indexABS = Math.abs(index)
+        this.name = name
         this.avatar = avatar
         this.hp = hp
         this.mp = mp

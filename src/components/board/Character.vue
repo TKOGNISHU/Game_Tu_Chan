@@ -16,8 +16,8 @@
                     </div>
                 </div>
                 <div class="col-4 overflow-auto rounded px-2 py-1 scrollbar" style="height: 100px; margin-left: 10px; background-color: #cccccc50;">
-                    <p v-if="immortality" class="m-0 ms-1 p-0">HP: <span class="fw-semibold">{{ immortality?.currentlyStatus?.currentlyHP }}/{{ immortality?.status?.hp }}</span></p>
-                    <p v-if="immortality" class="m-0 ms-1 p-0">MP: <span class="fw-semibold">{{ immortality?.currentlyStatus?.currentlyMP }}/{{ immortality?.status?.mp }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">HP: <span class="fw-semibold">{{ immortality?.currentStatus?.HP }}/{{ immortality?.status?.HP }}</span></p>
+                    <p v-if="immortality" class="m-0 ms-1 p-0">MP: <span class="fw-semibold">{{ immortality?.currentStatus?.MP }}/{{ immortality?.status?.MP }}</span></p>
                     <p v-if="immortality" class="m-0 ms-1 p-0">Công Vật Lý: <span class="fw-semibold">{{ immortality?.status?.ATK }}</span></p>
                     <p v-if="immortality" class="m-0 ms-1 p-0">Sát Thương Phép: <span class="fw-semibold">{{ immortality?.status?.INT }}</span></p>
                     <p v-if="immortality" class="m-0 ms-1 p-0">Phòng Thủ: <span class="fw-semibold">{{ immortality?.status?.DEF }}</span></p>
@@ -29,10 +29,10 @@
             <div class="mt-3 row g-1">
                 <div class="col-4">
                     <div class="row g-1 overflow-auto scrollbar" style="height: 100px; margin-left: 10px;">
-                        <template v-for="(value, key, index) in immortality?.skills">
+                        <template v-for="(value, key, index) in immortality?.skills" :key="`character-${index}`">
                             <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
                                 <button @click="displayDescription" :data-skill="key" class="d-inline-block p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
-                                    <img :class="`h-100 w-100`" :src="`${HTTP_GG_DRIVE}${value?.floor ? value?.floor?.effects?.image : 'ERR'}`" alt="">
+                                    <img :class="`h-100 w-100`" :src="`${HTTP_GG_DRIVE}${value ? value?.image : 'ERR'}`" alt="">
                                 </button>
                             </div>
                         </template>

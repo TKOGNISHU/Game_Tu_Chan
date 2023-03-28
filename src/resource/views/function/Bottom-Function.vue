@@ -37,8 +37,12 @@
         </section>
         <!-- Body -->
         <section class="text-start px-2" style="min-height: 300px;">
-            <template v-for="(e, i) of quests">
-                <router-link v-if="store?.getUser?.quests[e.name]" class="d-inline-block mt-2 text-center text-decoration-none" :to="{name: 'quest', params: { idQuest: `${e._id}` }}">
+            <template v-for="(e, i) of quests" :key="`bottom-function-${i}`">
+                <router-link
+                    v-if="store?.getUser?.quests[e.name]"
+                    class="d-inline-block mt-2 text-center text-decoration-none"
+                    :to="{name: 'quest', params: { idQuest: `${e._id}` }}"
+                >
                     <img class="d-inline-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/Ảnh chụp màn hình 2023-01-08 091407123123.png" alt="">
                     <p class="mb-0 text-light fs-6 text-center" style="width: 70px; height: 52px; overflow: hidden; display: block; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; height: ;">
                         {{ e?.name }}

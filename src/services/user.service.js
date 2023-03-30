@@ -17,6 +17,13 @@ class UserService extends BaseService {
         return (await this.api.get(`/${id}/immortalities`)).data
     }
 
+    async training(id, idImmortality, skillName) {
+        return (await this.api.patch(`/${id}/immortalities/${idImmortality}/training/${skillName}`)).data
+    }
+
+    async increaseSpeed(id, idImmortality, skillName) {
+        return (await this.api.patch(`/${id}/immortalities/${idImmortality}/training/${skillName}/increaseSpeed`)).data
+    }
 
 }
 

@@ -37,7 +37,7 @@
         </section>
         <!-- Body -->
         <section class="text-start px-2" style="min-height: 300px;">
-            <template v-for="(e, i) of quests" :key="`bottom-function-${i}`">
+            <template v-for="(e, i) of (store.quests || [])" :key="`bottom-function-${i}`">
                 <router-link
                     v-if="store?.getUser?.quests[e.name]"
                     class="d-inline-block mt-2 text-center text-decoration-none"
@@ -52,7 +52,7 @@
         </section>
     </Board>
 
-    <ScreenBoard :immortalities="immortalities" v-model:modelIsShow="isShow" v-model:modelIsShowBag="isShowBag"/>
+    <ScreenBoard v-model:modelIsShow="isShow" v-model:modelIsShowBag="isShowBag"/>
 </template>
 
 <script>
@@ -61,7 +61,6 @@ import { ScreenBoard, Board, } from '@/components/index'
 import { useUserStore } from '@/stores/index'
 import {
     UserService,
-    QuestService,
 } from '@/services/index'
 
 export default {
@@ -78,14 +77,11 @@ export default {
             isShow: false,
             isShowBag: false,
             questsIsShow: false,
-            immortalities: [],
-            quests: [],
         }
     },
     watch: {
         async 'store.user'() {
-            this.immortalities = await UserService.getImmortalities(this.store.getUser._id)
-            console.log("immortalities: ", this.immortalities)
+            await this.store.getData()
         },
     },
     methods: {
@@ -112,11 +108,6 @@ export default {
             }
         },
     },
-    async created() {
-        if (this.store.getUser._id) {
-            this.immortalities = await UserService.getImmortalities(this.store.getUser._id) || []
-        }
-        this.quests = await QuestService.getAll()
-    },
+    async created() {},
 }
 </script>

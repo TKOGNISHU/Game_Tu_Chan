@@ -7,7 +7,6 @@ class ImmortalityService extends BaseService {
         super(baseURL)
     }
 
-
 }
 
 export default new ImmortalityService()

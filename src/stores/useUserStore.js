@@ -1,11 +1,13 @@
 import { defineStore } from "pinia"
 
-import AuthService from "@/services/auth.service"
-import UserService from "@/services/user.service"
+import { AuthService, UserService, SkillService, QuestService } from "../services"
 
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: undefined,
+        skills: {},
+        immortalities: [],
+        quests: [],
     }),
     getters: {
         isLoggedIn() {
@@ -38,6 +40,10 @@ export const useUserStore = defineStore('user', {
                     return _this.$router.push({ name: 'login' })
                 }
                 console.log("store > user: ", this.user)
+                await this.getData()
+                console.log("store > skills: ", this.skills)
+                console.log("store > immortalities: ", this.immortalities)
+                console.log("store > quests: ", this.quests)
             } catch(e) {
                 console.log(e)
                 _this.$router.push({ name: 'login' })
@@ -45,6 +51,20 @@ export const useUserStore = defineStore('user', {
         },
         logOut() {
             this.user = undefined
+        },
+        async getData() {
+            try {
+                const result = await Promise.all([
+                    SkillService.getAll(),
+                    UserService.getImmortalities(this.user._id),
+                    QuestService.getAll(),
+                ])
+                this.skills = result[0] || []
+                this.immortalities = result[1] || []
+                this.quests = result[2] || []
+            } catch (error) {
+                console.log('GET DATA ERROR!')
+            }
         },
     }
 }) 

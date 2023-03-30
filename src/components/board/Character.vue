@@ -1,7 +1,7 @@
 <template>
-    <section v-if="immortalities" data-board-body-show="character" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2" style="border-color: #05ffe0 !important; width: 900px;">
+    <section v-if="store.immortalities" data-board-body-show="character" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2" style="border-color: #05ffe0 !important; width: 900px;">
         <!-- Left -->
-        <ListCharacter :immortalities="immortalities"/>
+        <ListCharacter :immortalities="store.immortalities"/>
         <!-- Right -->
         <section class="col">
             <!-- Header -->
@@ -51,15 +51,15 @@
 <script>
 import { HTTP_GG_DRIVE } from '#/env'
 import { ListCharacter } from '@/components/index.js'
-import { useAppStore } from '@/stores/useAppStore'
+import { useUserStore, useAppStore } from '@/stores/index'
 export default {
     components: { ListCharacter, },
-    props: {
-        immortalities: { type: Array, default: [] },
-    },
+    props: {},
     setup() {
+        const store = useUserStore()
         const appStore = useAppStore()
         return {
+            store,
             appStore,
         }
     },
@@ -72,12 +72,12 @@ export default {
     },
     watch: {
         "appStore.showCharacter"() {
-            this.immortality = this.immortalities[this.appStore.getShowCharacter] || {}
+            this.immortality = this.store.immortalities[this.appStore.getShowCharacter] || {}
             this.description = ''
         },
-        immortalities() {
-            console.log("character: ", this.immortalities, this.immortality)
-            this.immortality = this.immortalities[this.appStore.getShowCharacter] || {}
+        'store.immortalities'() {
+            console.log("character: ", this.store.immortalities, this.immortality)
+            this.immortality = this.store.immortalities[this.appStore.getShowCharacter] || {}
             this.description = ''
         },
     },
@@ -89,7 +89,7 @@ export default {
     },
     async created() {},
     async mounted() {
-        console.log("character: ", this.immortalities, this.immortality)
+        // console.log("character: ", this.store.immortalities, this.immortality)
     }
 }
 </script>

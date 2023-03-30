@@ -153,8 +153,10 @@ export default {
         },
         load() {
             const boardBackground = $(`.board-content-${this.index}`)
-            this.vx = boardBackground.offsetWidth
-            this.vy = boardBackground.offsetHeight
+            if (boardBackground) {
+                this.vx = boardBackground.offsetWidth
+                this.vy = boardBackground.offsetHeight
+            }
         }
     },
     updated() {

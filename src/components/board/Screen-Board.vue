@@ -15,16 +15,16 @@
 
             <!-- Body -->
             <!-- Character -->
-            <Character :immortalities="immortalities"/> <!--  @update:modelIndex="displayCharacterIndex" -->
+            <Character /> <!--  @update:modelIndex="displayCharacterIndex" -->
 
             <!-- Training -->
-            <Training :immortalities="immortalities"/>
+            <Training />
 
             <!-- Embattle -->
-            <Embattle :immortalities="immortalities"/>
+            <Embattle />
 
             <!-- Roll -->
-            <Roll :immortalities="immortalities"/>
+            <Roll />
             
         </section>
     </Board>
@@ -51,7 +51,6 @@
 import { Board, Bag, Upgrade, Character, Training, Embattle, Roll, } from '@/components/index.js'
 export default {
     props: {
-        immortalities: { type: Array, default: [] },
         // props v-model modelIsShow and modelIsShowBag 
         // because component ScreenBoard have methods close Board 
         // (it's closeBoardStatus, closeBoardBag)

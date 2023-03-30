@@ -3,7 +3,7 @@
         <button
             @click="appStore.setShowCharacter(i)"
             :data-character-btn="i" v-for="(e, i) of immortalities" :key="`list-character-${i}`"
-            :class="`w-100 py-1 mb-1 border-0 fw-semibold rounded ${i == appStore.getShowCharacter ? 'active' : ''}`"
+            :class="`w-100 py-1 mb-1 border-0 fw-semibold rounded ${(i == appStore.getShowCharacter) ? 'active' : ''}`"
             style="background-color: #006bff99; color: #05eaff;"
         >
             {{ e.name }}

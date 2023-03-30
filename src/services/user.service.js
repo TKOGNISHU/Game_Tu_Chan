@@ -17,12 +17,27 @@ class UserService extends BaseService {
         return (await this.api.get(`/${id}/immortalities`)).data
     }
 
+    // [PATCH] /api/users/:idUser/embattle
+    async embattle(idUser, idImmortality, index) {
+        return (await this.api.patch(`/${idUser}/embattle`, {
+            idImmortality,
+            index,
+        })).data
+    }
+
+    // [PATCH] /api/users/:idUser/immortalities/:idImmortality/enlist
+    async enlist(idUser, idImmortality) {
+        return (await this.api.patch(`/${idUser}/immortalities/${idImmortality}/enlist`)).data
+    }
+
+    // [PATCH] /api/users/:idUser/immortalities/:idImmortality/training/:skillName
     async training(id, idImmortality, skillName) {
         return (await this.api.patch(`/${id}/immortalities/${idImmortality}/training/${skillName}`)).data
     }
 
-    async increaseSpeed(id, idImmortality, skillName) {
-        return (await this.api.patch(`/${id}/immortalities/${idImmortality}/training/${skillName}/increaseSpeed`)).data
+    // [PATCH] /api/users/:idUser/immortalities/:idImmortality/training/:skillName/increaseSpeed
+    async increaseSpeed(idUser, idImmortality, skillName) {
+        return (await this.api.patch(`/${idUser}/immortalities/${idImmortality}/training/${skillName}/increaseSpeed`)).data
     }
 
 }

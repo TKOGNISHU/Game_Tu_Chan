@@ -27,7 +27,8 @@
                     </div>
 
                     <div class="mt-3">
-                        <button @click.prevent="embattle" class="btn btn-warning">Dàn Xếp</button>
+                        <button @click.prevent="embattle" class="btn btn-info">Xuất Trận</button>
+                        <button @click.prevent="embattle" class="btn btn-danger ms-3">Thu Hồi</button>
                     </div>
                 </div>
                 <div class="col-4"></div>

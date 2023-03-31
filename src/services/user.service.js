@@ -40,6 +40,11 @@ class UserService extends BaseService {
         return (await this.api.patch(`/${idUser}/immortalities/${idImmortality}/training/${skillName}/increaseSpeed`)).data
     }
 
+    // [DELETE] /api/users/:idUser/immortalities/:idImmortality
+    async deleteImmortality(idUser, idImmortality) {
+        return (await this.api.delete(`/${idUser}/immortalities/${idImmortality}`)).data
+    }
+
 }
 
 export default new UserService()

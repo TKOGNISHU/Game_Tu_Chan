@@ -39,6 +39,9 @@
                     style="background-color: #ff1a1a6e; color: #fdfefe85;"
                 >Chiêu Mộ</button>
             </div>
+            <div class="mt-3">
+                <button v-if="chooseImmortalityId" @click.prevent="deleteImmortality" class="btn btn-danger">Sa Thải</button>
+            </div>
         </section>
     </section>
 </template>
@@ -65,7 +68,14 @@ export default {
     data() {
         return {
             immortality: {},
+            chooseImmortalityId: '',
         }
+    },
+    watch: {
+        'appStore.getShowCharacter'() {
+            this.chooseImmortalityId = this.store.immortalities[this.appStore.getShowCharacter]._id
+            console.log(this.chooseImmortalityId)
+        },
     },
     methods: {
         async findImmortality() {
@@ -81,6 +91,10 @@ export default {
             await this.store.getData()
             this.immortality = {}
         },
+        async deleteImmortality() {
+            await UserService.deleteImmortality(this.store.user._id, this.chooseImmortalityId)
+            await this.store.getData() 
+        }
     }
 }
 </script>

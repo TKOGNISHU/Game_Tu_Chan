@@ -36,7 +36,9 @@
                 <button @click.prevent="showTabStatus" data-board-btn-target="bag" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn active" style="background-color: #1a8fff6e; color: #05eaff;">Túi đồ</button>
                 
                 <button @click.prevent="showTabStatus" data-board-btn-target="upgrade" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Cường hóa</button>
-                
+
+                <button @click.prevent="showTabStatus" data-board-btn-target="market" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Cửa hàng</button>
+
             </section>
 
             <!-- Bag -->

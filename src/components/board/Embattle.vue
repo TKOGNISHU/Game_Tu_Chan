@@ -28,7 +28,7 @@
 
                     <div class="mt-3">
                         <button @click.prevent="embattle" class="btn btn-info">Xuất Trận</button>
-                        <button @click.prevent="embattle" class="btn btn-danger ms-3">Thu Hồi</button>
+                        <button @click.prevent="recover" class="btn btn-danger ms-3">Thu Hồi</button>
                     </div>
                 </div>
                 <div class="col-4"></div>
@@ -93,7 +93,8 @@ export default {
                 this.focusIndex,
             )
             await this.store.getData()
-        }
+        },
+        async recover() {},
     }
 }
 </script>

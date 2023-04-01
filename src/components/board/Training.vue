@@ -94,9 +94,26 @@
                     </section>
 
                     <!-- increase btn -->
-                    <section class="d-flex mt-2">
+                    <section :class="`d-flex mt-2 ${
+                        (Object.keys(newFloorSkill).length == 0 &&
+                        (
+                            (
+                                showSkill && immortality.skills[showSkill] &&
+                                immortality.skills[showSkill].exp
+                            ) ==
+                            (
+                                showSkill && immortality.skills[showSkill] &&
+                                immortality.skills[showSkill].floor.trainedTime
+                            )
+                        )
+                        ) ? 'd-none' : ''}`"
+                    >
                         <button v-if="immortality.trainingSkill == showSkill" @click.prevent="increaseSpeedTraining" class="d-inline-block ms-auto rounded border-0 px-3 py-1 me-1 fw-semibold" style="background-color: #ff1a1a6e; color: #fdfefe85;">Tăng Tốc</button>
-                        <button v-else @click.prevent="training" :data-skill-key="showSkill" class="d-inline-block ms-auto rounded border-0 px-3 py-1 me-1 fw-semibold" style="background-color: #ff1a1a6e; color: #fdfefe85;">Tu Luyện</button>
+                        <button
+                            v-else @click.prevent="training" :data-skill-key="showSkill"
+                            class="d-inline-block ms-auto rounded border-0 px-3 py-1 me-1 fw-semibold"
+                            style="background-color: #ff1a1a6e; color: #fdfefe85;"
+                        >Tu Luyện</button>
                     </section>
                 </section>
                 <!-- SKills Bag -->
@@ -183,6 +200,12 @@ export default {
                     break
                 }
             }
+            console.log(
+                this.newFloorSkill,
+                this.immortality.skills[this.showSkill].exp,
+                this.immortality.skills[this.showSkill].floor.trainedTime,
+                Object.keys(this.newFloorSkill).length == 0 && this.immortality.skills[this.showSkill].exp == this.immortality.skills[this.showSkill].floor.trainedTime
+            )
         }
     },
     methods: {

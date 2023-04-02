@@ -57,7 +57,7 @@ export const useUserStore = defineStore('user', {
                 const result = await Promise.all([
                     SkillService.getAll(),
                     UserService.getImmortalities(this.user._id),
-                    QuestService.getAll(),
+                    UserService.getAllQuests(this.user._id),
                 ])
                 this.skills = result[0] || []
                 this.immortalities = result[1] || []

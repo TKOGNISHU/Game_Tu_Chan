@@ -45,12 +45,14 @@
             <Bag :skills="skills" />
             <!-- Upgrade -->
             <Upgrade/>
+            <!-- Market -->
+            <Market/>
         </section>
     </Board>
 </template>
 
 <script>
-import { Board, Bag, Upgrade, Character, Training, Embattle, Roll, } from '@/components/index.js'
+import { Board, Bag, Upgrade, Market, Character, Training, Embattle, Roll, } from '@/components/index.js'
 export default {
     props: {
         // props v-model modelIsShow and modelIsShowBag 
@@ -60,7 +62,7 @@ export default {
         modelIsShowBag: false,
     },
     emits: ['update:modelIsShow', 'update:modelIsShowBag', ],
-    components: { Board, Bag, Upgrade, Character, Training, Embattle, Roll, },
+    components: { Board, Bag, Upgrade, Market, Character, Training, Embattle, Roll, },
     data() {
         return {}
     },

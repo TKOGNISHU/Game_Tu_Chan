@@ -5,9 +5,9 @@ import { AuthService, UserService, SkillService, QuestService } from "../service
 export const useUserStore = defineStore('user', {
     state: () => ({
         user: undefined,
-        skills: {},
         immortalities: [],
         quests: [],
+        skills: {}, // all skills (have and not have)
     }),
     getters: {
         isLoggedIn() {
@@ -59,7 +59,7 @@ export const useUserStore = defineStore('user', {
                     UserService.getImmortalities(this.user._id),
                     UserService.getAllQuests(this.user._id),
                 ])
-                this.skills = result[0] || []
+                this.skills = result[0] || {}
                 this.immortalities = result[1] || []
                 this.quests = result[2] || []
             } catch (error) {

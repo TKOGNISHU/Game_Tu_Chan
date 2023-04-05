@@ -8,6 +8,7 @@ import Upgrade from '@/components/board/Upgrade.vue'
 import Market from '@/components/board/Market.vue'
 import Character from '@/components/board/Character.vue'
 import Training from '@/components/board/Training.vue'
+import Equipment from '@/components/board/Equipment.vue'
 import Embattle from '@/components/board/Embattle.vue'
 import Roll from '@/components/board/Roll.vue'
 
@@ -25,6 +26,7 @@ export { Upgrade }
 export { Market }
 export { Character }
 export { Training }
+export { Equipment }
 export { Embattle }
 export { Roll }
 

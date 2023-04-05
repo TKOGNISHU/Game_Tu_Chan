@@ -7,6 +7,8 @@
                 
                 <button @click.prevent="showTabStatus" data-board-btn-target="training" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Tu Luyện</button>
                 
+                <button @click.prevent="showTabStatus" data-board-btn-target="equipment" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Trang Bị</button>
+                
                 <button @click.prevent="showTabStatus" data-board-btn-target="embattle" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Dàn Trận</button>
                 
                 <button @click.prevent="showTabStatus" data-board-btn-target="roll" class="rounded border-0 px-3 py-1 me-1 fw-semibold board-header-btn" style="background-color: #1a8fff6e; color: #05eaff;">Chiêu Mộ</button>
@@ -20,12 +22,15 @@
             <!-- Training -->
             <Training />
 
+            <!-- Equipment -->
+            <Equipment />
+
             <!-- Embattle -->
             <Embattle />
 
             <!-- Roll -->
             <Roll />
-            
+
         </section>
     </Board>
 
@@ -52,7 +57,7 @@
 </template>
 
 <script>
-import { Board, Bag, Upgrade, Market, Character, Training, Embattle, Roll, } from '@/components/index.js'
+import { Board, Bag, Upgrade, Market, Character, Training, Equipment, Embattle, Roll, } from '@/components/index.js'
 export default {
     props: {
         // props v-model modelIsShow and modelIsShowBag 
@@ -62,7 +67,7 @@ export default {
         modelIsShowBag: false,
     },
     emits: ['update:modelIsShow', 'update:modelIsShowBag', ],
-    components: { Board, Bag, Upgrade, Market, Character, Training, Embattle, Roll, },
+    components: { Board, Bag, Upgrade, Market, Character, Training, Equipment, Embattle, Roll, },
     data() {
         return {}
     },

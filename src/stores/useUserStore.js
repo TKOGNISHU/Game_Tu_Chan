@@ -66,5 +66,16 @@ export const useUserStore = defineStore('user', {
                 console.log('GET DATA ERROR!')
             }
         },
+        async refreshUser(_this) {
+            try {
+                this.user = await UserService.get()
+                if (!this.getUser) {
+                    return _this.$router.push({ name: 'login' })
+                }
+            } catch (error) {
+                console.log(e)
+                _this.$router.push({ name: 'login' })
+            }
+        },
     }
 }) 

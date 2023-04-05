@@ -45,6 +45,17 @@ class UserService extends BaseService {
         return (await this.api.patch(`/${idUser}/immortalities/${idImmortality}/training/${skillName}/increaseSpeed`)).data
     }
 
+    // [PATCH] /api/users/:idUser/equipments/remove
+    async removeEquip(idUser, idEquip) {
+        return (await this.api.patch(`/${idUser}/equipments/remove`, { idEquipment: idEquip, })).data
+    }
+
+    // [PATCH] /api/users/:idUser/equipments/equip
+    async equip(idUser, idImmortality, idEquip) {
+        console.log(idImmortality, idEquip)
+        return (await this.api.patch(`/${idUser}/equipments/equip`, { idImmortality, idEquipment: idEquip, })).data
+    }
+
     // [DELETE] /api/users/:idUser/immortalities/:idImmortality
     async deleteImmortality(idUser, idImmortality) {
         return (await this.api.delete(`/${idUser}/immortalities/${idImmortality}`)).data

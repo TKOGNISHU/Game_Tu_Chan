@@ -87,6 +87,12 @@
   border-radius: 50%;
 }
 
+/* width */
+.scrollbar-horizontal::-webkit-scrollbar {
+  height: 4px;
+  border-radius: 50%;
+}
+
 /* Track */
 .scrollbar::-webkit-scrollbar-track {
   background: #ffffff69; 

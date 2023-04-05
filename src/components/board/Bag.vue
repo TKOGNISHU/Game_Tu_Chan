@@ -18,7 +18,7 @@
                         </div>
                     </template>
                     <template v-for="(value, index) of (store.user ? store.user.bag.equipments : [])" :key="`bag-equips-${index}`">
-                        <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
+                        <div v-if="value.wearIs == '000000000000000000000000'" class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
                             <button @click.prevent="showEquip" :data-bag-id="index" class="d-inline-flex align-items-center justify-content-center p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">
                                 <img :class="`h-100 skill-${key}-${i}`" :src="`${HTTP_GG_DRIVE}${value.equip.image}`" alt="">
                             </button>

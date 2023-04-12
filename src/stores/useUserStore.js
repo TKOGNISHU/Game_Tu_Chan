@@ -49,8 +49,10 @@ export const useUserStore = defineStore('user', {
                 _this.$router.push({ name: 'login' })
             }
         },
-        logOut() {
+        async logOut(_this) {
             this.user = undefined
+            await AuthService.logout()
+            _this.$router.push({ name: 'login' })
         },
         async getData() {
             try {

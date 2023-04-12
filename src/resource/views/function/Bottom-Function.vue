@@ -1,4 +1,5 @@
 <template>
+    <!-- Bottom right -->
     <section class="position-absolute bottom-0 end-0" style="z-index: 100;">
         <router-link @click.prevent="actionBoard('embattle')" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" to="">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}1YWjsvLEXSlvnU94WTBGGhoaHfHjdJmj6`" alt="">
@@ -27,6 +28,14 @@
         <router-link v-else class="d-inline-flex flex-column align-items-center text-decoration-none" :to="{name: 'home'}">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/Ảnh chụp màn hình 2023-01-08 091407123123.png" alt="">
             <p class="text-light fs-6">Về Tông</p>
+        </router-link>
+    </section>
+
+    <!-- Right bottom -->
+    <section class="position-absolute end-0" style="bottom: 15%; z-index: 100;">
+        <router-link @click.prevent="" class="d-inline-flex flex-column align-items-center text-decoration-none me-2" :to="{name: 'world', query: { page: 1 }}">
+            <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" :src="`${HTTP_GG_DRIVE}19TdJQWky4C7z0HTs1OYTTBeryGyCcPkN`" alt="">
+            <p class="text-light fs-6">Thế Giới Chủ</p>
         </router-link>
     </section>
 

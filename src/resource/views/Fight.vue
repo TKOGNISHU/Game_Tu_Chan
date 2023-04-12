@@ -117,7 +117,7 @@
 <script>
 import { HTTP_GG_DRIVE } from '#/env'
 import { Avatar, Loading, Board, } from '@/components/index'
-import { QuestService } from '@/services/index'
+import { QuestService, UserService } from '@/services/index'
 import {
     Immortality,
     Skill,
@@ -126,19 +126,22 @@ import {
     ActionPlot,
     loadImage
 } from '@/util/index'
+import { useUserStore } from '#/src/stores'
 
 export default {
     components: { Avatar, Loading, Board, },
     setup() {
+        const store = useUserStore
         return {
+            store,
             HTTP_GG_DRIVE
         }
     },
     data() {
-        const { idQuest, idCluster } = this.$route.params
+        const { idQuest, idCluster, idPlayer } = this.$route.params
         return {
             already: false,
-            idQuest, idCluster,
+            idQuest, idCluster, idPlayer,
             loadings: 0,
             totalData: 100,
             resultFight: 'Thắng Lợi',
@@ -420,7 +423,12 @@ export default {
     },
     async created() {
         console.group('%c-- SET UP --', 'color: #fff; background: red; font-size: 16px; padding: 5px 12px;')
-        const result = await QuestService.fight(this.idQuest, this.idCluster)
+        let result = {}
+        if (this.idQuest) {
+            result = await QuestService.fight(this.idQuest, this.idCluster)
+        } else {
+            result = await UserService.fightPlayer(this.store.user._id, this.idPlayer)
+        }
         console.log(result)
         this.totalData = result.totalData
         console.log('Total data: ', this.totalData)

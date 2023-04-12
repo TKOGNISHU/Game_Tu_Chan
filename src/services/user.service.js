@@ -22,6 +22,11 @@ class UserService extends BaseService {
         return (await this.api.get(`/${idUser}/quests`)).data
     }
 
+    // [GET] /api/users/:id/fightPlayer/:idPlayer
+    async fightPlayer(idUser, idPlayer) {
+        return (await this.api.get(`/${idUser}/fightPlayer/${idPlayer}`)).data
+    }
+
     // [PATCH] /api/users/:idUser/embattle
     async embattle(idUser, idImmortality, index) {
         return (await this.api.patch(`/${idUser}/embattle`, {

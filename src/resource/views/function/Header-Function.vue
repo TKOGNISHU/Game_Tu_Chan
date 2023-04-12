@@ -4,10 +4,12 @@
         <div class="h-100 ms-3">
             <p class="fs-5 fw-semibold mb-0">{{ store && store.user && store.user.name }}</p>
             <p class="fs-6 text-start mb-0">Linh Thạch: {{ stones }}</p>
-            <p class="fs-6 text-start"></p>
+            <p class="fs-6 text-start"><a @click.prevent="logOut" href="" class="btn btn-danger" style="font-size: 10px;">Đăng xuất</a></p>
         </div>
     </section>
-    <section class="position-absolute top-0 end-0 d-flex"></section>
+    <section class="position-absolute top-0 end-0 d-flex">
+        <h6 style="color: #00000050;">1.0.0x (Beta)</h6>
+    </section>
 </template>
 
 <script>
@@ -32,6 +34,11 @@ export default {
                 }
             });
         },
+    },
+    methods: {
+        async logOut() {
+            await this.store.logOut(this)
+        }
     },
     created() {
     },

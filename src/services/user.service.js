@@ -24,6 +24,7 @@ class UserService extends BaseService {
 
     // [GET] /api/users/:id/fightPlayer/:idPlayer
     async fightPlayer(idUser, idPlayer) {
+        console.log(idUser, idPlayer)
         return (await this.api.get(`/${idUser}/fightPlayer/${idPlayer}`)).data
     }
 

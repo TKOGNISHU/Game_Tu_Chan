@@ -35,8 +35,9 @@ export { fire }
 
 function loadImage(obj, index, url, countLoaded) {
     const img = new Image()
-    // console.log(url)
+    console.log(`Loading: ${url}`)
     img.onload = () => {
+        console.log(url)
         // console.log(index)
         obj[index] = img.src
         if (countLoaded) {

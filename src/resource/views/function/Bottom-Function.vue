@@ -21,11 +21,11 @@
             <p class="text-light fs-6">Đệ tử</p>
         </router-link>
 
-        <router-link v-if="this.$route.path == '/'" @click.prevent="questsIsShow = true" class="d-inline-flex flex-column align-items-center text-decoration-none" to="">
+        <router-link @click.prevent="questsIsShow = true" class="d-inline-flex flex-column align-items-center text-decoration-none" to="">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/sword.png" alt="">
             <p class="text-light fs-6">Phó bản</p>
         </router-link>
-        <router-link v-else class="d-inline-flex flex-column align-items-center text-decoration-none" :to="{name: 'home'}">
+        <router-link v-if="this.$route.path != '/'" class="d-inline-flex flex-column align-items-center text-decoration-none" :to="{name: 'home'}">
             <img class="d-block border border-2 border-secondary object-fit rounded-circle" style="width: 40px; height: 40px;" src="@/assets/img/Ảnh chụp màn hình 2023-01-08 091407123123.png" alt="">
             <p class="text-light fs-6">Về Tông</p>
         </router-link>

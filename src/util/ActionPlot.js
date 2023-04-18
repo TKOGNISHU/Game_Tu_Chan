@@ -19,19 +19,18 @@ class ActionPlot {
 
     findTypeEffect(effect) {
         let type = 'heal'
-        if (!effect[`${type}s`] && effect['damages'][0] < 0) {
+        if (!effect[`${type}s`] && effect['damages'].length > 0) {
             type = 'damage'
         }
 
         return type
     }
 
-    computedDamage(who, objectIndex, effect, index) {
+    computedDamage(who, ObjIndex, effect, index) {
         const _this = this
-        let type = 'heals'
-        if (!effect[type]) {
-            type = 'damages'
-        }
+        const objectIndex = Math.abs(ObjIndex)
+        let t = this.findTypeEffect(effect)
+        let type = `${t}s`
         const changes = {
             hp() {
                 const hpBeChanged = effect[type][index]
@@ -56,9 +55,15 @@ class ActionPlot {
                 } else if (current <= 0) { _this.status[who][objectIndex][type] = 0 }
             }
         }
-        const typeChanged = effect.type.replace('skill-', '').toLowerCase()
-        if (typeChanged) {
+        const isSkill = effect.type.indexOf('skill-')
+        if (isSkill != -1) {
+            const typeChanged = effect.type.replace('skill-', '').toLowerCase()
+            console.log(typeChanged)
             changes[typeChanged] && changes[typeChanged]()
+        } else {
+            const newTypeChanged = effect.type.replace(`${t}-`, '').toLowerCase()
+            console.log('new: ', newTypeChanged)
+            changes[newTypeChanged] && changes[newTypeChanged]()
         }
     }
 
@@ -197,23 +202,27 @@ class ActionPlot {
                                 }
                                 case 'remove': {
                                     const index = turn[actor].actor
-                                    const objectTypeBeEffected = (actor < 0) ? 'you' : 'defense'
+                                    const objectTypeBeEffected = (index < 0) ? 'you' : 'defense'
+                                    // console.log(`.${objectTypeBeEffected}__state-${effect.name.replace(/ /g, '-')}-${Math.abs(index)}`)
                                     const skill = $(`.${objectTypeBeEffected}__state-${effect.name.replace(/ /g, '-')}-${Math.abs(index)}`)
-                                    skill.classList.add('d-none')
-                                    // console.group('--------')
                                     // console.log(skill)
-                                    // console.log("%c objectTypeBeEffected: ", 'color: yellow;', objectTypeBeEffected)
-                                    // console.log('%c effect.name: ', 'color: yellow;', effect.name.replace(/ /g, '-'))
-                                    // console.log('%c index: ', 'color: yellow;', index)
-                                    // console.groupEnd
+                                    skill.classList.add('d-none')
                                     break
                                 }
-                                default: {// damage/heal, it's display number
+                                default: {// damage/heal, it's display number, effective
                                     let type = this.findTypeEffect(effect)
-                                    for (let i = 0; i < effect.objects.length; i++) {
-                                        const objectTypeBeEffected = (effect.objects[i] < 0) ? 'you' : 'defense'
-        
-                                        this.toggleNumber(type, effect, objectTypeBeEffected, effect.objects[i], i)
+                                    
+                                    if (effect?.objects && effect.objects?.length > 0) {
+                                        for (let i = 0; i < effect.objects.length; i++) {
+                                            const objectTypeBeEffected = (effect.objects[i] < 0) ? 'you' : 'defense'
+            
+                                            this.toggleNumber(type, effect, objectTypeBeEffected, effect.objects[i], i)
+                                        }
+                                    } else {
+                                        const index = turn[actor].actor
+                                        const objectTypeBeEffected = (index < 0) ? 'you' : 'defense'
+                                        this.toggleNumber(type, effect, objectTypeBeEffected, index, 0)
+                                        this.computedDamage(objectTypeBeEffected, index, effect, 0)
                                     }
     
                                     break

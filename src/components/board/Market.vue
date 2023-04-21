@@ -14,34 +14,39 @@
                 </template>
             </div>
         </div>
-        <div class="col-4 overflow-auto scrollbar" style="height: 200px;">
-            <template v-if="showIndex != -1">
-                <div class="d-flex align-items-center justify-content-center border me-1 overflow-hidden" style="height: 50px; background-color: #cccccc80;">
-                    <img :class="`h-100 skill-${key}-${i}`" :src="`${HTTP_GG_DRIVE}${description.image}`" alt="">
-                </div>
-                <div class="row g-0 border-top border-start">
-                    <div class="col-4 ps-1 border-end">Tên</div>
-                    <div class="col ps-1">{{ description.name }}</div>
-                </div>
-                <div v-if="description?.description" class="row g-0 border-top border-start">
-                    <div class="col-4 ps-1 border-end">Mô Tả</div>
-                    <div class="col ps-1">{{ description.description }}</div>
-                </div>
-                <div v-if="description?.type" class="row g-0 border-top border-start">
-                    <div class="col-4 ps-1 border-end">Loại</div>
-                    <div class="col ps-1">{{ description.type }}</div>
-                </div>
-                <div v-if="description?.quantity" class="row g-0 border-top border-start">
-                    <div class="col-4 ps-1 border-end">Số lượng</div>
-                    <div class="col ps-1">{{ description.quantity }}</div>
-                </div>
-                <p class="border mt-2 mb-0">Phí Đổi</p>
-                <div v-for="(e, i) of description.prices" :key="`description-prices-${i}`" class="row g-0 border-top border-start">
-                    <div class="col-4 ps-1 border-end">{{ e.name }}</div>
-                    <div class="col ps-1">{{ e.type }} x {{ e.quantity }}</div>
-                </div>
-                
-            </template>
+        <div class="col-4">
+            <div class="overflow-auto scrollbar" style="height: 200px;">
+                <template v-if="showIndex != -1">
+                    <div class="d-flex align-items-center justify-content-center border me-1 overflow-hidden" style="height: 50px; background-color: #cccccc80;">
+                        <img :class="`h-100 skill-${key}-${i}`" :src="`${HTTP_GG_DRIVE}${description.image}`" alt="">
+                    </div>
+                    <div class="row g-0 border-top border-start">
+                        <div class="col-4 ps-1 border-end">Tên</div>
+                        <div class="col ps-1">{{ description.name }}</div>
+                    </div>
+                    <div v-if="description?.description" class="row g-0 border-top border-start">
+                        <div class="col-4 ps-1 border-end">Mô Tả</div>
+                        <div class="col ps-1">{{ description.description }}</div>
+                    </div>
+                    <div v-if="description?.type" class="row g-0 border-top border-start">
+                        <div class="col-4 ps-1 border-end">Loại</div>
+                        <div class="col ps-1">{{ description.type }}</div>
+                    </div>
+                    <div v-if="description?.quantity" class="row g-0 border-top border-start">
+                        <div class="col-4 ps-1 border-end">Số lượng</div>
+                        <div class="col ps-1">{{ description.quantity }}</div>
+                    </div>
+                    <p class="border mt-2 mb-0">Phí Đổi</p>
+                    <div v-for="(e, i) of description.prices" :key="`description-prices-${i}`" class="row g-0 border-top border-start">
+                        <div class="col-4 ps-1 border-end">{{ e.name }}</div>
+                        <div class="col ps-1">{{ e.type }} x {{ e.quantity }}</div>
+                    </div>
+                    
+                </template>
+            </div>
+            <div>
+                <button @click.prevent="buy" class="btn btn-danger">Đổi</button>
+            </div>
         </div>
     </section>
 </template>
@@ -104,6 +109,9 @@ export default {
             priceInfo.quantity = data.quantity
             return priceInfo
         },
+        async buy() {
+            
+        }
     },
 
 }

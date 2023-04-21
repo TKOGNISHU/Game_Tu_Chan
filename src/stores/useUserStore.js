@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 
-import { AuthService, UserService, SkillService, QuestService } from "../services"
+import { AuthService, UserService, SkillService, QuestService, MarketService } from "../services"
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', {
         immortalities: [],
         quests: [],
         skills: {}, // all skills (have and not have)
+        market: [],
     }),
     getters: {
         isLoggedIn() {
@@ -44,6 +45,7 @@ export const useUserStore = defineStore('user', {
                 console.log("store > skills: ", this.skills)
                 console.log("store > immortalities: ", this.immortalities)
                 console.log("store > quests: ", this.quests)
+                console.log("store > market: ", this.market)
             } catch(e) {
                 console.log(e)
                 _this.$router.push({ name: 'login' })
@@ -60,10 +62,12 @@ export const useUserStore = defineStore('user', {
                     SkillService.getAll(),
                     UserService.getImmortalities(this.user._id),
                     UserService.getAllQuests(this.user._id),
+                    MarketService.getAll(),
                 ])
                 this.skills = result[0] || {}
                 this.immortalities = result[1] || []
                 this.quests = result[2] || []
+                this.market = result[3] || []
             } catch (error) {
                 console.log('GET DATA ERROR!')
             }

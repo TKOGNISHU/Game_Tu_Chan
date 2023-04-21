@@ -2,7 +2,7 @@
     <section data-board-body-show="bag" class="mt-1 mb-5 pt-1 text-start border-top border-1 row gx-2" style="border-color: #05ffe0 !important; width: 800px;">
         <div class="row">
             <div class="col-9">
-                <div class="row g-1 overflow-auto scrollbar" style="margin-left: 10px;">
+                <div class="row g-1 overflow-auto scrollbar" style="height: 200px; margin-left: 10px;">
                     <template v-for="(value, index) of (store.user ? store.user.bag.skills : [])" :key="`bag-skills-${index}`">
                         <div class="d-flex align-items-center me-1" style="height: 34px; width: 34px; background-color: #cccccc80;">
                             <button @click.prevent="showSkill" :data-bag-id="index" class="d-inline-flex align-items-center justify-content-center p-0 border-0 overflow-hidden" style="height: 30px; width: 30px; background-color: #cccccc00;">

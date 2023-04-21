@@ -101,7 +101,29 @@
 
                 <!-- Body -->
                 <section class="d-flex g-0 flex-column">
-                    <div class="" style="min-width: 500px; min-height: 200px;">Chiến tích</div>
+                    <div class=" p-2" style="min-width: 500px; min-height: 200px;">
+                        <h5 class="text-start">Chiến Tích</h5>
+
+                        <ul class="list-group list-group-flush">
+                            <li v-for="(e, i) of receivedAwards" :key="`receivedAward-${i}`" class="list-group-item bg-transparent">
+                                <div class="d-flex align-items-center" style="height: 40px;">
+                                    <img class="h-100"
+                                        :src="`${HTTP_GG_DRIVE}${e?.item.image || e?.skill.image || e?.equip.image}`"
+                                        :alt="`${e?.item.name || e?.skill.name || e?.equip.name}`"
+                                    >
+                                    <p class="pe-1 mb-0 ms-2 border-end">x {{ e.quantity }}</p>
+                                    <p class="mb-0 ms-2">
+                                        {{ e?.item.name || e?.skill.name || e?.equip.name }}
+                                    </p>
+                                    <p v-if="e?.item" class="mb-0 ms-2">({{ e?.item && (e?.item.value) }})</p>
+                                    <p v-if="e?.equip" class="mb-0 ms-2">
+                                        <span>{{ e?.equip && (e?.equip.level.name) }}</span>
+                                        <span class="ms-2">{{ e?.equip && (e?.equip.level.level) }}</span>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
                     <div class="mb-5 me-5 text-end">
                         <router-link @click.prevent="$router.back()" class="text-light btn btn-secondary d-inline-flex flex-column align-items-center text-decoration-none" style="opacity: 0.8;" to="">
@@ -152,6 +174,7 @@ export default {
             round: { index: 1, },
             notify: { index: 0 },
             loadingSkills: {},
+            receivedAwards: [],
             avatars: {
                 // 'monk': {
                 //     'chanting': {
@@ -434,6 +457,7 @@ export default {
             result = await UserService.fightPlayer(this.store.user._id, this.idPlayer)
         }
         console.log(result)
+        this.receivedAwards = result.receivedAwards
         this.totalData = result.totalData
         console.log('Total data: ', this.totalData)
 

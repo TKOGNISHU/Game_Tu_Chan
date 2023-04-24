@@ -52,8 +52,9 @@
 </template>
 
 <script>
-import { HTTP_GG_DRIVE } from '#/env'
-import { useUserStore } from '@/stores/index'
+import { HTTP_GG_DRIVE, } from '#/env'
+import { useUserStore, } from '@/stores/index'
+import { MarketService, } from '#/src/services'
 export default {
     setup() {
         const store = useUserStore()
@@ -110,7 +111,11 @@ export default {
             return priceInfo
         },
         async buy() {
-            
+            if (this.showIndex != -1) {
+                await MarketService.buy(this.store.user._id, this.store.market[this.showIndex])
+
+                await this.store.getData()
+            }
         }
     },
 

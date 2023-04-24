@@ -150,10 +150,28 @@
                 </section>
             </div>
         </section>
+
+        <!-- Toast -->
+        <section class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="trainingToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <!-- <div class="toast-header"> -->
+                    <!-- <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small>11 mins ago</small> -->
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
+                <!-- </div> -->
+                <div class="toast-body d-flex justify-content-between">
+                    {{ message }}
+                    <button type="button" class="btn-close text-end" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </section>
+        <!-- <ShowToast idToast="trainingToast" :isShow="showToast" :message="message" /> -->
     </section>
 </template>
 
 <script>
+import Toast from 'bootstrap/js/dist/toast'
 import { HTTP_GG_DRIVE } from '#/env'
 import { ListCharacter } from '@/components/index.js'
 import { useUserStore, useAppStore } from '@/stores'
@@ -176,6 +194,8 @@ export default {
             immortality: {},
             showSkill: '',
             newFloorSkill: {},
+            message: '',
+            showToast: false,
         }
     },
     watch: {
@@ -221,6 +241,13 @@ export default {
                 )
                 await this.store.getData()
                 this.showSkill = currentShowSKill
+
+                this.message = result.message
+
+                // Show toast
+                const toastLiveExample = document.getElementById('trainingToast')
+                const toast = new Toast(toastLiveExample)
+                toast.show()
                 console.log(result)
             } catch (error) {
                 console.log(error)
@@ -235,7 +262,10 @@ export default {
             } catch (error) {
                 console.log(error)
             }
-        }
+        },
+        // showToast(e) {
+            
+        // }
     },
 }
 </script>

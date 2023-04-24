@@ -36,6 +36,13 @@ class UserService extends BaseService {
         })).data
     }
 
+    // [PATCH] /api/users/:idUser/embattleRecover
+    async embattleRecover(idUser, idImmortality, index) {
+        return (await this.api.patch(`/${idUser}/embattle`, {
+            idImmortality,
+        })).data
+    }
+
     // [PATCH] /api/users/:idUser/immortalities/:idImmortality/enlist
     async enlist(idUser, idImmortality) {
         return (await this.api.patch(`/${idUser}/immortalities/${idImmortality}/enlist`)).data

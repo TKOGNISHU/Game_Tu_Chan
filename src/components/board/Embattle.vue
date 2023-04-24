@@ -58,7 +58,7 @@ export default {
     data() {
         return {
             immortalitiesObject: {},
-            focusIndex: 0,
+            focusIndex: -1,
         }
     },
     watch: {
@@ -86,6 +86,7 @@ export default {
             }
         },
         async embattle(e) {
+            console.log(`Số lượng: ${Object.keys(this.immortalitiesObject).length}`)
             console.log(this.store.immortalities[this.appStore.getShowCharacter].name)
             await UserService.embattle(
                 this.store.user._id,
@@ -94,7 +95,15 @@ export default {
             )
             await this.store.getData()
         },
-        async recover() {},
+        async recover() {
+            console.log(`Số lượng: ${Object.keys(this.immortalitiesObject).length}`)
+            console.log(this.store.immortalities[this.appStore.getShowCharacter].name)
+            await UserService.embattle(
+                this.store.user._id,
+                this.store.immortalities[this.appStore.getShowCharacter]._id,
+            )
+            await this.store.getData()
+        },
     }
 }
 </script>

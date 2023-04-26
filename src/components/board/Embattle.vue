@@ -82,7 +82,7 @@ export default {
 
             this.focusIndex = index
             if (id) {
-                this.appStore.setShowCharacter(this.immortalitiesObject[index].local)
+                this.appStore.setShowCharacter(e)
             }
         },
         async embattle(e) {

@@ -210,22 +210,24 @@ export default {
         },
         immortality() {
             this.showSkill = ''
+            this.newFloorSkill = {}
         },
         showSkill() {
             for(let i = 0; i < this.store?.skills[this.showSkill]?.floors.length - 1; i++) {
                 const floor = this.store.skills[this.showSkill].floors[i]
                 if (floor.name == this.immortality.skills[this.showSkill].floor.name) {
-                    const nextFloor = this.store.skills[this.showSkill].floors[i+1] && {}
+                    const nextFloor = this.store.skills[this.showSkill].floors[i+1] || {}
+                    console.log(nextFloor)
                     if (nextFloor) this.newFloorSkill = new Object(nextFloor)
                     break
                 }
             }
-            console.log(
-                this.newFloorSkill,
-                this.immortality.skills[this.showSkill].exp,
-                this.immortality.skills[this.showSkill].floor.trainedTime,
-                Object.keys(this.newFloorSkill).length == 0 && this.immortality.skills[this.showSkill].exp == this.immortality.skills[this.showSkill].floor.trainedTime
-            )
+            // console.log(
+            //     this.newFloorSkill,
+            //     // this.immortality.skills[this.showSkill]?.exp,
+            //     // this.immortality.skills[this.showSkill]?.floor.trainedTime,
+            //     // Object.keys(this.newFloorSkill).length == 0 && this.immortality.skills[this.showSkill].exp == this.immortality.skills[this.showSkill].floor.trainedTime
+            // )
         }
     },
     methods: {
@@ -239,7 +241,7 @@ export default {
                 const result = await UserService.increaseSpeed(
                     this.store.getUser._id, this.immortality._id, this.showSkill.replace(/ /g, '-')
                 )
-                await this.store.getData()
+                await this.store.logIn()
                 this.showSkill = currentShowSKill
 
                 this.message = result.message
@@ -259,6 +261,7 @@ export default {
                 const result = await UserService.training(
                     this.store.getUser._id, this.immortality._id, key.replace(/ /g, '-')
                 )
+                await this.store.logIn()
             } catch (error) {
                 console.log(error)
             }

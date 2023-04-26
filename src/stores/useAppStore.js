@@ -10,8 +10,9 @@ export const useAppStore = defineStore('app', {
         },
     },
     actions: {
-        setShowCharacter(value) {
-            this.showCharacter = value
+        setShowCharacter(e) {
+            const btn = e.currentTarget.dataset?.characterBtn || e.currentTarget.dataset?.embattleId
+            this.showCharacter = btn
         },
     },
 })

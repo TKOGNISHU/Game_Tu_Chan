@@ -50,6 +50,7 @@ class UserService extends BaseService {
 
     // [PATCH] /api/users/:idUser/immortalities/:idImmortality/training/:skillName
     async training(id, idImmortality, skillName) {
+        console.log('send skillName: ', skillName)
         return (await this.api.patch(`/${id}/immortalities/${idImmortality}/training/${skillName}`)).data
     }
 

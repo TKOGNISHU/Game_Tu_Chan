@@ -4,7 +4,7 @@
 <template>
     <main class="text-center bg-dark">
         <section class="d-inline-block">
-            <router-view />
+            <router-view  :key="$route.fullPath"/>
             <!-- <section class="position-relative" style="top: -100%; z-index: 1;">
             </section> -->
         </section>

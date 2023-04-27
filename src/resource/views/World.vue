@@ -12,16 +12,17 @@
 
             <!-- Body -->
             <div v-for="(i, index) of locations" :key="`world-${index}`" class="row" style="margin-top: 100px;">
-                <div v-for="(j, indexJ) of i" :key="`world-col-${indexJ}`" class="col" style="height: 52px;">
+                <div v-for="(j, indexJ) of i" :key="`world-col-${indexJ}`" class="col" style="height: 62px;">
                     <router-link
                         v-if="locations[index][indexJ] != 0"
                         @click.prevent="actionBoard" :data-point="points[locations[index][indexJ] - 1].i"
-                        class="position-absolute d-inline-block" :to="{ name: 'world', query: { page: page } }"
+                        class="position-absolute d-inline-block text-decoration-none text-light" :to="{ name: 'world', query: { page: page } }"
                     >
                         <img
                             class="" style="height: 52px; width: 92px;"
                             :src="`${HTTP_GG_DRIVE}1A1s6d1GPoz9Yj7R63aS1ZoPDkYQvr6PC`" alt=""
                         >
+                        <p class="">{{ listUser[Number.parseInt(points[locations[index][indexJ] - 1].i)]?.name }}</p>
                     </router-link>
                 </div>
             </div>

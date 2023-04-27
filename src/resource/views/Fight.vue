@@ -1,6 +1,6 @@
 <template>
     <section class="position-relative top-0 h-100 background">
-        <!-- <Loading v-if="!already" :process="loadings" :total="totalData"/> -->
+        <Loading v-if="!already" :process="loadings" :total="totalData"/>
 
         <!-- Background -->
         <section class="" style="z-index: 1;">
@@ -11,7 +11,11 @@
         <section class="position-absolute top-0 start-0 end-0 h-100" style="z-index: 10; background-color: #00000050;">
             <!-- Header -->
             <section class="status-bar" style="height: 150px;">
-                <h1>YOU / DEFENSE</h1> 
+                <div class="d-inline-flex align-items-center">
+                    <span class="fs-5 d-block text-end text-light px-3 py-1" style="width: 400px; background-color: #0099ff70;">{{ store.user.name }}</span>
+                    <span class="mx-2" style="color: #ccc;">VS</span>
+                    <span class="fs-5 d-block text-start text-light px-3 py-1" style="width: 400px; background-color: #ff000080;">{{ defense }}</span>
+                </div>
                 <p class="position-relative text-center">
                     <span class="fight-text fight-round">Lượt</span> <span class="ms-3 fight-text fight-round-text">{{ round.index }}</span>
                 </p>
@@ -79,11 +83,6 @@
                 </template>
 
             </section>
-
-            <!-- damage -->
-            <!-- <section>
-                <button @click="test" class="position-fixed">Click me!</button>
-            </section> -->
 
             <!-- Bottom -->
             <router-view name="bottom-function-fight" />
@@ -168,13 +167,14 @@ export default {
             idCluster,
             idPlayer,
             loadings: 0,
-            totalData: 100,
+            totalData: 1,
             resultFight: 'Thắng Lợi',
             locationSkill: {},
             round: { index: 1, },
             notify: { index: 0 },
             loadingSkills: {},
             receivedAwards: [],
+            defense: '',
             avatars: {
                 // 'monk': {
                 //     'chanting': {
@@ -432,8 +432,8 @@ export default {
             this.countLoaded()
         },
         loadings(newValue) {
-            // console.log('newValue: ', newValue, " ", this.loadings)
-            if (this.loadings == this.totalData) {
+            console.log('newValue: ', newValue, " ", this.loadings, ', total: ', this.totalData)
+            if (this.loadings >= this.totalData - 12) {
                 this.already = true
             }
         },
@@ -456,7 +456,7 @@ export default {
         } else {
             result = await UserService.fightPlayer(this.store.user._id, this.idPlayer)
         }
-        console.log(result)
+        console.log('result:', result)
         this.receivedAwards = result.receivedAwards
         this.totalData = result.totalData
         console.log('Total data: ', this.totalData)
@@ -501,6 +501,8 @@ export default {
 
         this.locationSkill = result.locationSkill
         console.log('locationSkill', this.locationSkill)
+
+        this.defense = result.defense
         console.groupEnd()
     },
     methods: {

@@ -12,13 +12,23 @@
 
             <!-- Body -->
             <template v-for="(e, i) of quest.clusters" :key="`quest-${e._id}-${i}`">
-                <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: ${e?.location?.top}; left: ${e?.location?.left};`" class="position-absolute d-inline-block" to="">
+                <router-link @click.prevent="actionBoard" :data-cluster="i" :style="`top: ${e?.location?.top}; left: ${e?.location?.left};`"
+                    :data-name-cluster="e.name" class="position-absolute d-inline-block" to="">
                     <img class="" style="height: 52px; width: 92px;" :src="`${HTTP_GG_DRIVE}${e?.image}`" alt="">
                 </router-link>
             </template>
 
             <!-- Bottom -->
             <router-view name="bottom-function" />
+        </section>
+
+        <section class="indicator position-fixed d-none" style="width: 25px; height: 96px; z-index: 1000; top: 0px; left: 0px">
+            <div class="animation-indicator">
+                <div class="animation-indicator-scale" :style="
+                    `height: 96px; width: 25px; background-image: url('${indicator}'); 
+                    background-size: cover; background-repeat: no-repeat;`
+                "></div>
+            </div>
         </section>
 
         <Board v-if="quest?.clusters" :isShow="isShowStatusCluster" index="cluster-status" @closeStatus="closeStatus">
@@ -75,6 +85,8 @@ import { Board } from '@/components/index'
 import { useUserStore } from '@/stores/index'
 import { QuestService } from '@/services/index'
 
+import indicator from '@/assets/img/indicator-animation.png'
+
 export default {
     setup() {
         const store = useUserStore()
@@ -87,9 +99,12 @@ export default {
         return {
             isShowStatusCluster: false,
             HTTP_GG_DRIVE,
+            indicator: indicator,
             quest: [],
             clusterStatusIndex: 0,
         }
+    },
+    watch: {
     },
     methods: {
         closeStatus() {
@@ -100,9 +115,48 @@ export default {
             this.isShowStatusCluster = true
         }
     },
+    updated() {
+        console.log('Change indicator')
+        const indicator = $('.indicator')
+        let isExist = false
+        console.log('quest display: ', this.quest)
+        this.quest.clusters.forEach(cluster => {
+            if (this.store.user?.quests.hasOwnProperty(this.quest.name)) {
+                if (this.store.user?.quests[this.quest.name]?.next && this.store.user?.quests[this.quest.name]?.next.hasOwnProperty(cluster?.name)) {
+                    const elementCluster = $(`[data-name-cluster="${cluster.name}"]`).getBoundingClientRect()
+                    indicator.classList.remove('d-none')
+                    isExist = true
+                    indicator.style.translate = `${elementCluster.x + elementCluster.width/3}px ${elementCluster.y - elementCluster.height * 2}px`
+                    console.log('Changed..................')
+                }
+            }
+        })
+
+        if (!isExist) {
+            indicator.classList.add('d-none')
+        }
+    },
     async created() {
         this.store.logIn(this)
         this.quest = await QuestService.get(this.$route.params.idQuest)
     },
+    mounted() {
+    },
 }
 </script>
+
+<style>
+.animation-indicator {
+    animation-name: indicator-top-down-top;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    animation-duration: 1s;
+}
+
+.animation-indicator-scale {
+    animation-name: indicator-scale;
+    animation-duration: 0.4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(1);
+}
+</style>

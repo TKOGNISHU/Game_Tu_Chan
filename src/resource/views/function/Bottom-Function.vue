@@ -48,7 +48,7 @@
         <section class="text-start px-2" style="min-height: 300px;">
             <template v-for="(e, i) of (store.quests || [])" :key="`bottom-function-${i}`">
                 <router-link
-                    v-if="store?.getUser?.quests[e.name]"
+                    v-if="store?.getUser?.quests.hasOwnProperty(e?.name) && store?.getUser?.quests[e?.name]"
                     class="d-inline-block mt-2 text-center text-decoration-none"
                     :to="{name: 'quest', params: { idQuest: `${e._id}` }}"
                 >

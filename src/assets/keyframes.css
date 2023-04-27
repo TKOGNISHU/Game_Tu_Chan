@@ -116,3 +116,27 @@
         transform: scale(1);
     }
 }
+
+@keyframes indicator-top-down-top {
+    0% {
+        margin-top: 0;
+    }
+    50% {
+        margin-top: 10px;
+    }
+    100% {
+        margin-top: 0;
+    }
+}
+
+@keyframes indicator-scale {
+    0% {
+        background-position-x: 0;
+    }
+    50% {
+        background-position-x: -50px;
+    }
+    100% {
+        background-position-x: -50px;
+    }
+}

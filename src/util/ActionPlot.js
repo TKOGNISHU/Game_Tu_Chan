@@ -295,7 +295,7 @@ class ActionPlot {
         const i = Math.abs(index)
         const objectNumberDisplay = $(this.status[who][i][type])
 
-        objectNumberDisplay.innerText = `${number}`
+        objectNumberDisplay.innerText = `${Math.floor(number)}`
         objectNumberDisplay.classList.remove('d-none')
 
         this.timeout(1500).then(() => objectNumberDisplay.classList.add('d-none'))

@@ -45,13 +45,24 @@
                 </template>
             </div>
             <div>
-                <button @click.prevent="buy" class="btn btn-danger">Đổi</button>
+                <button v-if="store.market[showIndex] && store.market[showIndex].quantity > 0" @click.prevent="buy" class="btn btn-danger">Đổi</button>
+                <button v-else @click.prevent="buy" class="btn btn-danger" disabled>Đổi</button>
             </div>
         </div>
+        <!-- Toast -->
+        <section class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="MarketToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body d-flex justify-content-between">
+                    {{ message }}
+                    <button type="button" class="btn-close text-end" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </section>
     </section>
 </template>
 
 <script>
+import Toast from 'bootstrap/js/dist/toast'
 import { HTTP_GG_DRIVE, } from '#/env'
 import { useUserStore, } from '@/stores/index'
 import { MarketService, } from '#/src/services'
@@ -67,6 +78,7 @@ export default {
         return {
             showIndex: -1,
             description: {},
+            message: '',
         }
     },
     watch: {
@@ -74,6 +86,7 @@ export default {
             console.log("bag", this.store.user)
         },
         showIndex() {
+            console.log('----- UPDATE INDEX -----')
             const element = this.store.market[this.showIndex]
             const elementShow = element[element.type]
 
@@ -112,9 +125,21 @@ export default {
         },
         async buy() {
             if (this.showIndex != -1) {
-                await MarketService.buy(this.store.user._id, this.store.market[this.showIndex])
+                const result = await MarketService.buy(this.store.user._id, this.store.market[this.showIndex]._id)
 
-                await this.store.getData()
+                this.message = result.message
+
+                // Show toast
+                const toastLiveExample = document.getElementById('MarketToast')
+                const toast = new Toast(toastLiveExample)
+                toast.show()
+                await this.store.logIn()
+
+                if (this.message == 'Thành Công') {
+                    this.description.quantity --
+                }
+
+                console.log("buy: ", result)
             }
         }
     },

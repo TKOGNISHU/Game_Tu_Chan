@@ -16,7 +16,7 @@ class Immortality extends Base {
         this.currentMp = currentMP
         this.states = states
 
-        this.skillName = 'Hoa Giang Kiếm Chỉ'
+        this.skillName = 'Đánh Thường'
 
         this.who = (index < 0) ? 'you' : 'defense'
 
@@ -59,8 +59,8 @@ class Immortality extends Base {
         const normal = $(this.normalClass)
         const chantingObject = $(this.chantingClass)
 
-        normal.classList.toggle('d-none')
-        chantingObject.classList.toggle('d-none')
+        normal?.classList?.toggle('d-none')
+        chantingObject?.classList?.toggle('d-none')
         this.timeout(timeout).then(() => {
             chantingObject.classList.toggle('d-none')
             _this.chantingFinish()
